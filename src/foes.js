@@ -81,6 +81,12 @@ export const FOES = Object.freeze({
   crow: { name: 'Crow', blurb: 'Here before the band. Will be here after. Wants the demo tape.', move: 'fly', toughness: 2, power: 2, hype: 40, radius: 0.3, speed: 3.6 },
   troll: { name: 'Troll', blurb: 'Under the bridge since the Middle Ages. Wants a toll. Does not take cards.', move: 'walk', toughness: 9, power: 9, hype: 150, radius: 0.62, speed: 1.9, shout: 'TOLL!' },
   skier: { name: 'Skier', blurb: 'Here for the Olympics. Has no idea what is on in the church car park.', move: 'walk', toughness: 4, power: 4, hype: 50, radius: 0.37, speed: 4.0, shout: 'ON YOUR LEFT!' },
+  // New Orleans.
+  stoner: { name: 'Stoner', blurb: 'On the couch since the last record. Will get up in a minute. Has been saying that since the last record.', move: 'walk', toughness: 4, power: 4, hype: 50, radius: 0.4, speed: 1.4 },
+  pallbearer: { name: 'Pallbearer', blurb: 'Carrying one corner of a coffin. The rest of the funeral is late.', move: 'walk', toughness: 5, power: 5, hype: 80, radius: 0.4, speed: 2.0 },
+  brassman: { name: 'Brass Man', blurb: 'A second line, a first line and a one-man blockage of Bourbon Street.', move: 'walk', toughness: 5, power: 5, hype: 70, radius: 0.37, speed: 3.6, shout: 'WOO!' },
+  cultist: { name: 'Cultist', blurb: 'Chanting. Not at you, probably. Candle, book, bad attitude.', move: 'walk', toughness: 5, power: 5, hype: 90, radius: 0.38, speed: 1.8 },
+  doomlord: { name: 'The Doomlord', blurb: 'Plays one chord. It takes six minutes. Everyone is very impressed.', move: 'walk', toughness: 9, power: 8, hype: 700, radius: 1.0, speed: 1.2, boss: true, hp: 45, tactic: 'stomp' },
   pigeon: { name: 'Pigeon', blurb: 'Seen every canal in the Midlands. Has opinions about your tone.', move: 'fly', toughness: 2, power: 2, hype: 30, radius: 0.3, speed: 3.2 },
 });
 

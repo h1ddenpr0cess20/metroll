@@ -256,6 +256,34 @@ export function cape(s, { color = '#10101a', lining = '#8a0a1c', collar = true }
   });
 }
 
+/** A hood: a cowl over the top and sides of the head, the face left in the shade of it. */
+export function hood(s, { color = '#1a1418', lining = '#0a0608' } = {}) {
+  s.part('kit', () => {
+    s.ellipsoid([0, 0.715, -0.025], [0.125, 0.105, 0.13], { ...HEAD, color, mat: 'cloth', k: 0.02 });
+    for (const m of [1, -1]) s.ellipsoid([m * 0.092, 0.65, -0.015], [0.04, 0.08, 0.09], { ...HEAD, color, mat: 'cloth', k: 0.02 });
+    // The deep of it, over the brow, and the point at the back.
+    s.ellipsoid([0, 0.7, 0.07], [0.082, 0.052, 0.04], { ...HEAD, color: lining, mat: 'cloth', k: 0.01 });
+    s.flake([0, 0.7, -0.09], [0, 0.6, -0.17], [1, 0, 0], 0.07, 0.03, 0.3, { ...HEAD, color, mat: 'cloth', k: 0.01 });
+  });
+}
+
+/** A long robe from the hips to the ground, flared at the hem, with a band of `trim` round it. */
+export function robe(s, { color = '#1a1418', trim = null, flare = 1 } = {}) {
+  s.part('kit', () => {
+    s.limb([0, 0.31, 0], [0, 0.045, 0], 0.088, 0.088 + 0.07 * flare, { color, mat: 'cloth', bone: 'hips', k: 0.015 });
+    if (trim) s.torus([0, 0.06, 0], 0.088 + 0.07 * flare, 0.012, { color: trim, mat: 'cloth', bone: 'hips', k: 0.004 });
+  });
+}
+
+/** A top hat: a tall black crown with a band, a narrow brim. */
+export function topHat(s, { color = '#0c0c10', band = '#8a1c2a' } = {}) {
+  s.part('kit', () => {
+    s.cylinder([0, 0.8, -0.005], 0.062, 0.09, { ...HEAD, color, mat: 'cloth', k: 0.006, round: 0.008 });
+    s.torus([0, 0.72, -0.005], 0.1, 0.01, { ...HEAD, color, mat: 'cloth', k: 0.004 });
+    s.torus([0, 0.74, -0.005], 0.064, 0.009, { ...HEAD, color: band, mat: 'cloth', k: 0.003 });
+  });
+}
+
 /** Two fangs, dropped from the top lip. */
 export function fangs(s) {
   s.part('kit', () => {
