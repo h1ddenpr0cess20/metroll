@@ -2,20 +2,20 @@ import { coat } from '../skins.js';
 import { quadruped } from './quadruped.js';
 
 /**
- * The Saltwater Croc: up out of the harbour and onto the rocks, long and
+ * The Gator: up out of the swamp and onto the boardwalk, long and
  * low and armoured, olive-black above and pale underneath, a double row of
  * scutes down the back and along the tail, the eyes and the nostrils up on
  * top so it can lie in the water with only those showing, and the teeth,
  * all of them, showing even with the mouth shut. Has been around since the
- * dinosaurs. About 0.25 tiles tall and 1.2 long.
+ * dinosaurs, and has outlasted the music. About 0.25 tiles tall and 1.2 long.
  */
 
-const HIDE = coat({ over: '#3e4a26', under: '#c8c088', vary: 0.14, freq: 16, edge: [-0.5, 0.1] });
+const HIDE = coat({ over: '#2e4a22', under: '#c8c088', vary: 0.14, freq: 16, edge: [-0.5, 0.1] });
 const TOOTH = { color: '#f0ead8', mat: 'tooth', k: 0.001 };
 const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
 
 export default quadruped({
-  name: 'croc',
+  name: 'gator',
   scale: 1.6,
   hip: 0.07,
   len: 0.2,

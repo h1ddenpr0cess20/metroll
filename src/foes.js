@@ -61,6 +61,20 @@ export const FOES = Object.freeze({
   bat: { name: 'Bat', blurb: 'Lives in the abbey. Has seen things. Mostly goths.', move: 'fly', toughness: 2, power: 2, hype: 40, radius: 0.3, speed: 3.4 },
   blackcat: { name: 'Black Cat', blurb: 'Crosses your path on purpose. Is bad luck, and knows it.', move: 'crawl', toughness: 3, power: 3, hype: 50, radius: 0.28, speed: 3.8 },
   count: { name: 'The Count', blurb: 'Has not been seen in the mirror for some time. Arrives whenever he likes. Hungry.', move: 'walk', toughness: 9, power: 9, hype: 600, radius: 0.9, speed: 1.6, boss: true, hp: 50, tactic: 'lunge' },
+  // New York.
+  punk: { name: 'Punk', blurb: 'Safety pins, a mohawk and an opinion about your band. Hardcore thinks he sold out.', move: 'walk', toughness: 5, power: 6, hype: 70, radius: 0.37, speed: 4.2 },
+  cop: { name: 'Beat Cop', blurb: 'Has a nightstick, a hunch and a coffee. Hates the noise. Hates the kids more.', move: 'walk', toughness: 6, power: 6, hype: 80, radius: 0.37, speed: 3.4, shout: 'FREEZE!' },
+  rat: { name: 'Subway Rat', blurb: 'Carrying a slice of pizza bigger than itself. Wants your demo.', move: 'crawl', toughness: 2, power: 2, hype: 40, radius: 0.28, speed: 3.6 },
+  hxckid: { name: 'Straight Edge Kid', blurb: 'X on each hand. Does not drink. Does not shut up about it.', move: 'walk', toughness: 4, power: 4, hype: 50, radius: 0.35, speed: 4.6, shout: 'STRAIGHT EDGE!' },
+  toughguy: { name: 'Tough Guy', blurb: 'Windmills. Karate kicks. Hits nobody. Hits you.', move: 'walk', toughness: 7, power: 8, hype: 110, radius: 0.46, speed: 3.6, shout: 'HARDCORE!' },
+  diver: { name: 'Stage Diver', blurb: 'Dives off the stage into a crowd that has stepped aside.', move: 'fly', toughness: 3, power: 3, hype: 60, radius: 0.35, speed: 3.0 },
+  zinekid: { name: 'Zine Kid', blurb: 'Has photocopied his opinion of you. Has copies.', move: 'walk', toughness: 4, power: 3, hype: 50, radius: 0.34, speed: 3.6, shout: 'ISSUE #4!' },
+  // Tampa.
+  headbanger: { name: 'Headbanger', blurb: 'Headbangs at a speed that violates several laws.', move: 'walk', toughness: 5, power: 6, hype: 70, radius: 0.38, speed: 4.0 },
+  zombie: { name: 'Zombie', blurb: 'Up out of the swamp for the vocals. A bit underdressed.', move: 'walk', toughness: 6, power: 6, hype: 80, radius: 0.39, speed: 1.8 },
+  gator: { name: 'Gator', blurb: 'Florida\'s second-worst idea. After the other one.', move: 'crawl', toughness: 7, power: 8, hype: 110, radius: 0.48, speed: 2.6 },
+  floridaman: { name: 'Florida Man', blurb: 'Has a story. It is not a good story. It is about you.', move: 'walk', toughness: 5, power: 5, hype: 60, radius: 0.4, speed: 3.4, shout: 'HOLD MY BEER!' },
+  coroner: { name: 'Coroner', blurb: 'Pronounces you dead. Often prematurely.', move: 'walk', toughness: 6, power: 6, hype: 80, radius: 0.37, speed: 3.0, shout: 'TIME OF DEATH!' },
   pigeon: { name: 'Pigeon', blurb: 'Seen every canal in the Midlands. Has opinions about your tone.', move: 'fly', toughness: 2, power: 2, hype: 30, radius: 0.3, speed: 3.2 },
 });
 

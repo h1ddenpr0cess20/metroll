@@ -1,10 +1,12 @@
-import { glass, glow, gloss, kit, metal, seeded, std, Z } from './dressing.js';
+import { glass, glow, gloss, kit, metal, seeded, std, X, Z } from './dressing.js';
 
 /**
  * The furniture of the places on the compilation (see decor.js, which these
  * join): the anvils, furnaces and oil drums of Birmingham's foundry; the
  * pink limousines, hot tubs and motorbikes of the Sunset Strip; a band's van
- * and a boombox in the Bay Area; headstones and box tombs in Whitby's churchyard.
+ * and a boombox in the Bay Area; headstones and box tombs in Whitby's churchyard;
+ * a basement's couch and boiler; a morgue's gurney, a barrel of something green and a
+ * cypress stump in the Florida swamp.
  *
  * Each is built from plain shapes, standing on y = 0 over its footprint
  * (`w` by `d` tiles, centred on the origin) and, if it has a front, facing
@@ -249,7 +251,109 @@ function tomb(GFX, { w = 2, d = 1, rise = 0.8 }) {
   return { group };
 }
 
-export const SIGHTS = { anvil, furnace, oildrums, limo, hottub, motorbike, van, boombox, gravestones, tomb };
+// ———————————————————————————————————————————————— New York
+
+/** A basement couch: plaid, sagging, a cushion gone, a stain; the arms taped with gaffer. Two tiles long, one deep. */
+function couch(GFX, { w = 2, d = 1, rise = 0.7 }) {
+  const group = new GFX.Group();
+  const long = w >= d;
+  const inner = new GFX.Group();
+  if (!long) inner.rotation.y = Math.PI / 2;
+  group.add(inner);
+  const k = kit(GFX, inner);
+  const L = (long ? w : d) * 0.94, S = (long ? d : w) * 0.78;
+  const cloth = std(GFX, '#7a4a2a', { roughness: 0.95 });
+  const back = std(GFX, '#6a3e22', { roughness: 0.95 });
+  k.box([L, 0.26, S], cloth, [0, 0.2, 0]);
+  k.box([L, Math.min(rise, 0.7) - 0.2, 0.2], back, [0, 0.42, -S * 0.42]);
+  for (const e of [-1, 1]) k.box([0.16, 0.34, S], back, [e * (L / 2 - 0.08), 0.3, 0]);
+  for (const x of [-L * 0.24, L * 0.22]) k.box([L * 0.4, 0.1, S * 0.7], std(GFX, '#8a5a34', { roughness: 0.95 }), [x, 0.38, S * 0.1]);
+  k.box([0.1, 0.01, 0.2], std(GFX, '#c8ccd4', { roughness: 0.5, metalness: 0.6 }), [L / 2 - 0.1, 0.48, 0.1], { shadow: false });
+  return { group };
+}
+
+/** A basement boiler: a squat iron tank with a gauge, a flue up the back, pipes along the wall and a little grating that glows. */
+function boiler(GFX, { w = 2, d = 2, rise = 1.3 }) {
+  const group = new GFX.Group();
+  const k = kit(GFX, group);
+  const iron = std(GFX, '#4a4e56', { roughness: 0.5, metalness: 0.7 });
+  const pipe = metal(GFX, '#a8acb4', 0.35);
+  const h = Math.min(rise, 1.3);
+  const r = Math.min(w, d) * 0.4;
+  k.cyl(r, r, h, iron, [0, h / 2, 0], { seg: 18 });
+  k.cyl(r * 1.04, r * 1.04, 0.05, pipe, [0, h * 0.3, 0], { seg: 18 });
+  k.cyl(r * 1.04, r * 1.04, 0.05, pipe, [0, h * 0.7, 0], { seg: 18 });
+  k.cyl(0.07, 0.07, 0.5, pipe, [-r * 0.4, h + 0.2, -r * 0.4], { seg: 8 });
+  k.box([0.22, 0.14, 0.02], glow(GFX, '#ff7a2a'), [0, h * 0.2, r + 0.005], { shadow: false });
+  k.cyl(0.07, 0.07, 0.03, std(GFX, '#e8e4d8', { roughness: 0.4 }), [r * 0.5, h * 0.55, r * 0.85], { rot: Z, seg: 12 });
+  for (const y of [0.3, 0.6]) k.cyl(0.03, 0.03, r * 2, pipe, [0, h * 0.9 - y * 0.2, -r - 0.05], { rot: X, seg: 6 });
+  return { group };
+}
+
+// ———————————————————————————————————————————————— Tampa
+
+/** A morgue gurney: stainless steel on a frame with wheels, a sheet over something the shape of a person. Two tiles long. */
+function gurney(GFX, { w = 2, d = 1 }) {
+  const group = new GFX.Group();
+  const long = w >= d;
+  const inner = new GFX.Group();
+  if (!long) inner.rotation.y = Math.PI / 2;
+  group.add(inner);
+  const k = kit(GFX, inner);
+  const L = (long ? w : d) * 0.9;
+  const steel = metal(GFX, '#c8ccd4', 0.25);
+  const sheet = std(GFX, '#e8e8e4', { roughness: 0.9 });
+  k.box([L, 0.05, 0.5], steel, [0, 0.52, 0]);
+  for (const x of [-L * 0.4, L * 0.4]) for (const z of [-0.2, 0.2]) {
+    k.cyl(0.02, 0.02, 0.4, steel, [x, 0.3, z], { seg: 6 });
+    k.cyl(0.05, 0.05, 0.04, std(GFX, '#16161a', { roughness: 0.9 }), [x, 0.06, z], { rot: X, seg: 10 });
+  }
+  k.box([L * 0.78, 0.1, 0.34], sheet, [0, 0.6, 0]);
+  k.ball(0.09, sheet, [-L * 0.34, 0.66, 0], { seg: 8 });
+  k.box([0.08, 0.04, 0.08], sheet, [L * 0.32, 0.64, 0.06], { rot: [0, 0.3, 0] });
+  k.box([0.1, 0.02, 0.05], std(GFX, '#f4e8b0', { roughness: 0.8 }), [L * 0.4, 0.66, -0.14], { shadow: false });
+  return { group };
+}
+
+/** A barrel of something: yellow, a hazard sign, a green glow where the lid has gone and a puddle of it round the foot. */
+function toxicbarrel(GFX, { rise = 0.8 }) {
+  const group = new GFX.Group();
+  const k = kit(GFX, group);
+  const h = Math.min(rise, 0.78);
+  k.cyl(0.26, 0.26, h, std(GFX, '#d8c020', { roughness: 0.5, metalness: 0.2 }), [0, h / 2, 0], { seg: 16 });
+  for (const y of [0.15, 0.55]) k.cyl(0.265, 0.265, 0.04, std(GFX, '#2a2a2e', { metalness: 0.5, roughness: 0.6 }), [0, y, 0], { seg: 16 });
+  k.cyl(0.21, 0.21, 0.02, glow(GFX, '#6aff3a'), [0, h + 0.002, 0], { seg: 16, shadow: false });
+  k.cyl(0.22, 0.34, 0.012, glow(GFX, '#4acc2a'), [0.1, 0.007, 0.28], { seg: 12, shadow: false });
+  k.ball(0.02, glow(GFX, '#b8ff9a'), [0.05, h + 0.08, 0.02], { seg: 6, shadow: false });
+  k.box([0.2, 0.2, 0.012], std(GFX, '#f4f2ee', { roughness: 0.5 }), [0, h * 0.5, 0.265]);
+  k.box([0.12, 0.12, 0.014], std(GFX, '#16161a', { roughness: 0.6 }), [0, h * 0.5, 0.268], { rot: [0, 0, Math.PI / 4] });
+  return { group };
+}
+
+/** A cypress stump: a flared, fluted foot with knees growing out of the water round it, and Spanish moss hanging off it in rags. */
+function stump(GFX, { rise = 1.1, ...spec }) {
+  const group = new GFX.Group();
+  const k = kit(GFX, group);
+  const rnd = seeded(spec);
+  const bark = std(GFX, '#5a4a3a', { roughness: 1, flatShading: true });
+  const moss = std(GFX, '#8a9a7a', { roughness: 1 });
+  const h = Math.min(rise, 1.1);
+  k.cyl(0.18, 0.4, h, bark, [0, h / 2, 0], { seg: 10 });
+  for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2 + rnd();
+    const r = 0.38 + rnd() * 0.1;
+    k.cyl(0.02, 0.07, 0.18 + rnd() * 0.16, bark, [Math.cos(a) * r, 0.1, Math.sin(a) * r], { seg: 6 });
+  }
+  for (let i = 0; i < 5; i++) {
+    const a = (i / 5) * Math.PI * 2 + 0.4;
+    k.cyl(0.004, 0.012, 0.32 + rnd() * 0.2, moss, [Math.cos(a) * 0.2, h - 0.12, Math.sin(a) * 0.2], { seg: 4, shadow: false });
+  }
+  return { group };
+}
+
+export const SIGHTS = {
+  anvil, furnace, oildrums, limo, hottub, motorbike, van, boombox, gravestones, tomb, couch, boiler, gurney, toxicbarrel, stump,
+};
 
 /** Of these, the ones with a front, which are turned to face the open floor beside them. */
 export const SIGHTS_FACING = ['furnace'];
