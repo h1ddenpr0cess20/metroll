@@ -10,7 +10,7 @@ import { createMace } from './mace.js';
 import { BALL_RADIUS } from './roll.js';
 import { createExit, createVenueMeshes } from './scenery.js';
 import { GRADES } from './smash.js';
-import { say } from './quips.js';
+import { say, sayRock } from './quips.js';
 import { BOARD_DETAIL } from './foes.js';
 import { VENUES } from './venues/index.js';
 
@@ -347,7 +347,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
         seen.add(f.kind);
         hud.say(f.stats.blurb, f.stats.name.toUpperCase(), 4.2);
       } else if (h.multiplier >= 3 && h.multiplier !== lastCombo) hud.say(say('combo', voice()), 'Metroll', 2);
-      else hud.say(say(h.grade === 'crit' ? 'crit' : 'smash', voice()), 'Metroll', 2);
+      else hud.say(f.kind === 'rock' ? sayRock(h.grade === 'crit' ? 'crit' : 'smash') : say(h.grade === 'crit' ? 'crit' : 'smash', voice()), 'Metroll', 2);
       lastCombo = h.multiplier;
       hud.hype(gig.hype.score, { combo: h.combo, multiplier: h.multiplier, left: 1, pulse: true });
     } else {
@@ -355,7 +355,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
       stage.shake = Math.max(stage.shake, 0.1);
       mace.react('hurt', 0.5);
       hud.pop(at.x, at.y, h.damage > 0 ? `−${h.damage}` : grade.title, 'hurt');
-      hud.say(say(h.grade, voice()), 'Metroll', 2.2);
+      hud.say(f.kind === 'rock' ? sayRock(h.grade) : say(h.grade, voice()), 'Metroll', 2.2);
       if (f.stats.flash) { hud.flash(flashing() ? 1 : 0.25); audio.flash(); }
     }
     if (h.damage > 0) {

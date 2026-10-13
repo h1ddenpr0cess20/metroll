@@ -203,4 +203,23 @@ export function say(kind, voice = null, random = Math.random) {
   return lines[Math.floor(random() * lines.length) % lines.length];
 }
 
+/**
+ * What Metroll says to Rock: the granite boulder from the first game, who
+ * rolled through thirty venues before the spikes, and is the last boss at
+ * Wacken. A cameo. They are, at heart, family; it does not stop Metroll.
+ */
+const ROCK = Object.freeze({
+  tap: ['Rock. Buddy. You\'ve put on weight.', 'Bounced off the old man. Respect your elders. Briefly.', 'He\'s harder than he looks. He\'s a rock.'],
+  bonk: ['Ow. He\'s solid. I\'m spiked. Somebody has to give.', 'Okay, that one was family.', 'He is not going down easy. He is a boulder.'],
+  smash: ['Sorry, Rock. Genre\'s moved on.', 'Dad rock, literally. Flattened.', 'The original. Original sin: being in my way.', 'You had a good run. Thirty venues. Now you\'re gravel.'],
+  crit: ['Rock. Sorry. Not sorry. A little sorry.', 'Cracked the original. I\'ll hear about this.'],
+  fell: ['Rock\'s watching. This is humiliating.'],
+});
+
+/** A line for what just happened to or with Rock, the final boss. */
+export function sayRock(kind, random = Math.random) {
+  const lines = ROCK[kind] ?? ROCK.bonk;
+  return lines[Math.floor(random() * lines.length) % lines.length];
+}
+
 export { VOICES };
