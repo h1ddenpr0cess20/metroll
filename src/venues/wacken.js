@@ -1,6 +1,6 @@
 import { digger } from '../dig.js';
 import { Venue } from '../venue.js';
-import { across, backTile, barred, branch, flat, loop, wallTile, wash } from './helpers.js';
+import { across, backTile, barred, branch, flat, wallTile, wash } from './helpers.js';
 
 /**
  * Track 12: Wacken, 2008. Everything, at once, in a field in Schleswig-Holstein
@@ -41,7 +41,6 @@ export function wacken() {
   const sign = (p, along, text, color = FEST[1], size = 0.5, height = 1.6) => g.light('neon', ...wallTile(p, along), { text, color, height, size });
   const lamppost = (p, along) => g.light('streetlamp', ...wallTile(p, along), { height: 2.4 });
   const MUD = { floor: 'mud', wall: 'plywood' };
-  const WOOD = { floor: 'planks', wall: 'timber' };
 
   // The campsite: a field of tents, a stag-night's worth of flags, a bonfire somebody has been feeding since Wednesday.
   g.room(2, 14, 9, 9, 36, { lamps: 2, floor: 'grass', wall: 'hedge' });
