@@ -323,7 +323,7 @@ function toxicbarrel(GFX, { rise = 0.8 }) {
   k.cyl(0.26, 0.26, h, std(GFX, '#d8c020', { roughness: 0.5, metalness: 0.2 }), [0, h / 2, 0], { seg: 16 });
   for (const y of [0.15, 0.55]) k.cyl(0.265, 0.265, 0.04, std(GFX, '#2a2a2e', { metalness: 0.5, roughness: 0.6 }), [0, y, 0], { seg: 16 });
   k.cyl(0.21, 0.21, 0.02, glow(GFX, '#6aff3a'), [0, h + 0.002, 0], { seg: 16, shadow: false });
-  k.cyl(0.22, 0.34, 0.012, glow(GFX, '#4acc2a'), [0.1, 0.007, 0.28], { seg: 12, shadow: false });
+  k.cyl(0.2, 0.3, 0.012, glow(GFX, '#4acc2a'), [0.06, 0.007, 0.16], { seg: 12, shadow: false });
   k.ball(0.02, glow(GFX, '#b8ff9a'), [0.05, h + 0.08, 0.02], { seg: 6, shadow: false });
   k.box([0.2, 0.2, 0.012], std(GFX, '#f4f2ee', { roughness: 0.5 }), [0, h * 0.5, 0.265]);
   k.box([0.12, 0.12, 0.014], std(GFX, '#16161a', { roughness: 0.6 }), [0, h * 0.5, 0.268], { rot: [0, 0, Math.PI / 4] });
@@ -342,7 +342,8 @@ function stump(GFX, { rise = 1.1, ...spec }) {
   for (let i = 0; i < 6; i++) {
     const a = (i / 6) * Math.PI * 2 + rnd();
     const r = 0.38 + rnd() * 0.1;
-    k.cyl(0.02, 0.07, 0.18 + rnd() * 0.16, bark, [Math.cos(a) * r, 0.1, Math.sin(a) * r], { seg: 6 });
+    const knee = 0.18 + rnd() * 0.16;
+    k.cyl(0.02, 0.07, knee, bark, [Math.cos(a) * r, knee / 2, Math.sin(a) * r], { seg: 6 });
   }
   for (let i = 0; i < 5; i++) {
     const a = (i / 5) * Math.PI * 2 + 0.4;
