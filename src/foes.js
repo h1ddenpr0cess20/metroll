@@ -42,6 +42,25 @@ export const FOES = Object.freeze({
   folkie: { name: 'Folkie', blurb: 'An acoustic guitar and a finger in one ear. Would like something nicer.', move: 'walk', toughness: 4, power: 4, hype: 50, radius: 0.37, speed: 3.0 },
   drunk: { name: 'The Regular', blurb: 'Fourth pint. Will explain the riff to you. Wrongly.', move: 'walk', toughness: 5, power: 5, hype: 60, radius: 0.4, speed: 2.4 },
   bobby: { name: 'Bobby', blurb: 'Evening all. Mind how you roll. And the noise.', move: 'walk', toughness: 6, power: 6, hype: 80, radius: 0.38, speed: 3.2, shout: 'OI!' },
+  // The Strip.
+  frontman: { name: 'The Frontman', blurb: 'Has used a whole can of hairspray. Is on his second.', move: 'walk', toughness: 6, power: 6, hype: 90, radius: 0.41, speed: 3.0, shout: 'WE ARE ONE!' },
+  shredder: { name: 'Shredder', blurb: 'Plays a hundred notes a second. Not one of them for you.', move: 'walk', toughness: 5, power: 5, hype: 70, radius: 0.38, speed: 3.4 },
+  promoter: { name: 'A&R Man', blurb: 'Will sign you. Will not pay you. Has a car phone the size of a brick.', move: 'walk', toughness: 5, power: 4, hype: 60, radius: 0.37, speed: 3.6, shout: 'LUNCH!' },
+  blader: { name: 'Rollerblader', blurb: 'Neon, a Walkman, eight wheels. Has right of way. Thinks.', move: 'walk', toughness: 5, power: 5, hype: 70, radius: 0.4, speed: 5.2 },
+  limodriver: { name: 'Limo Driver', blurb: 'Waiting for a Mr. Smith. Has decided that you are Mr. Smith.', move: 'walk', toughness: 6, power: 6, hype: 80, radius: 0.38, speed: 2.8 },
+  // The Bay Area.
+  mosher: { name: 'Mosher', blurb: 'In the pit since 1984. Windmills. Will not leave. Has not been asked to.', move: 'walk', toughness: 5, power: 6, hype: 70, radius: 0.39, speed: 4.4, shout: 'PIT!' },
+  skater: { name: 'Skater', blurb: 'A deck, a grudge, a Walkman. Ollies over everything. Not you.', move: 'walk', toughness: 4, power: 5, hype: 60, radius: 0.38, speed: 5.0 },
+  tapetrader: { name: 'Tape Trader', blurb: 'Has your demo. Bootlegged it. Badly. A copy of a copy of a copy.', move: 'walk', toughness: 4, power: 3, hype: 50, radius: 0.35, speed: 4.2, shout: 'WANNA TRADE?' },
+  crowdsurfer: { name: 'Crowd Surfer', blurb: 'Carried over everybody. Has no plan for coming down. Will land on you.', move: 'fly', toughness: 3, power: 3, hype: 60, radius: 0.36, speed: 3.0 },
+  // Whitby.
+  goth: { name: 'Goth', blurb: 'Black on black on black. Somebody has died. It is always the same one: the sun.', move: 'walk', toughness: 5, power: 5, hype: 70, radius: 0.39, speed: 2.6 },
+  dracfan: { name: 'Dracula Fan', blurb: 'Plastic fangs, a satin cape, a flag on a stick. Has been to Whitby eleven times.', move: 'walk', toughness: 4, power: 4, hype: 60, radius: 0.36, speed: 3.6, shout: 'I VANT TO...' },
+  poet: { name: 'Poet', blurb: 'About to read. At length. Has a scroll. Has a lot of scroll.', move: 'walk', toughness: 4, power: 4, hype: 60, radius: 0.36, speed: 2.8, shout: 'O, DARKNESS!' },
+  mourner: { name: 'Mourner', blurb: 'A funeral. It is always a funeral. The umbrella is for the sun.', move: 'walk', toughness: 6, power: 6, hype: 90, radius: 0.41, speed: 2.2 },
+  bat: { name: 'Bat', blurb: 'Lives in the abbey. Has seen things. Mostly goths.', move: 'fly', toughness: 2, power: 2, hype: 40, radius: 0.3, speed: 3.4 },
+  blackcat: { name: 'Black Cat', blurb: 'Crosses your path on purpose. Is bad luck, and knows it.', move: 'crawl', toughness: 3, power: 3, hype: 50, radius: 0.28, speed: 3.8 },
+  count: { name: 'The Count', blurb: 'Has not been seen in the mirror for some time. Arrives whenever he likes. Hungry.', move: 'walk', toughness: 9, power: 9, hype: 600, radius: 0.9, speed: 1.6, boss: true, hp: 50, tactic: 'lunge' },
   pigeon: { name: 'Pigeon', blurb: 'Seen every canal in the Midlands. Has opinions about your tone.', move: 'fly', toughness: 2, power: 2, hype: 30, radius: 0.3, speed: 3.2 },
 });
 

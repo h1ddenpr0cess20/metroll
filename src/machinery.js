@@ -624,6 +624,36 @@ export function createGateMesh(GFX, { span, height, thickness, across, look }) {
     group.add(sign, band);
     return { group, update() {} };
   }
+  if (look === 'velvet') {
+    // The velvet rope: a brass stanchion at each end, a red rope hung between them in a sag, a sign on a stand in the middle.
+    const brass = dark(GFX, '#d8a848', { metalness: 0.9, roughness: 0.25 });
+    const red = dark(GFX, '#b8121e', { roughness: 0.85 });
+    const along = (m, a) => (across === 'x' ? m.position.setX(a) : m.position.setZ(a));
+    const n = Math.max(2, Math.round(span / 1.6));
+    for (let i = 0; i <= n; i++) {
+      const a = -span / 2 + 0.1 + ((span - 0.2) * i) / n;
+      const post = new GFX.Mesh(new GFX.CylinderGeometry(0.035, 0.045, height * 0.8, 10), brass);
+      post.position.y = -height * 0.1;
+      along(post, a);
+      const knob = new GFX.Mesh(new GFX.SphereGeometry(0.07, 10, 8), brass);
+      knob.position.y = height * 0.3;
+      along(knob, a);
+      const base = new GFX.Mesh(new GFX.CylinderGeometry(0.14, 0.16, 0.05, 14), brass);
+      base.position.y = -height * 0.5 + 0.025;
+      along(base, a);
+      post.castShadow = true;
+      group.add(post, knob, base);
+      if (i < n) {
+        const next = -span / 2 + 0.1 + ((span - 0.2) * (i + 1)) / n;
+        const rope = new GFX.Mesh(new GFX.CylinderGeometry(0.03, 0.03, Math.abs(next - a), 8), red);
+        rope.rotation[across === 'x' ? 'z' : 'x'] = Math.PI / 2;
+        along(rope, (a + next) / 2);
+        rope.position.y = height * 0.18;
+        group.add(rope);
+      }
+    }
+    return { group, update() {} };
+  }
   if (look === 'bars') {
     const iron = dark(GFX, '#2a2a30', { metalness: 0.85, roughness: 0.4 });
     const along = (m, a) => (across === 'x' ? m.position.setX(a) : m.position.setZ(a));
