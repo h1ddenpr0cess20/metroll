@@ -1020,7 +1020,7 @@ export function panelTexture(GFX, look = 'flat') {
   return cached(`panel:${look}`, () => {
     const size = 256;
     const rnd = random(29);
-    const base = { flat: '#34343a', drywall: '#c8c0b0', wood: '#8a6a48', curtain: '#5a1424', foam: '#2a2a30', steel: '#6a707a', canvas: '#c8b890', brick: '#9a5040', glass: '#b8d4e8', backdrop: '#3a5a98', stone: '#7a7068' }[look] ?? '#34343a';
+    const base = { flat: '#34343a', drywall: '#c8c0b0', wood: '#8a6a48', curtain: '#5a1424', foam: '#2a2a30', steel: '#6a707a', canvas: '#c8b890', brick: '#9a5040', glass: '#b8d4e8', backdrop: '#3a5a98', stone: '#7a7068', snow: '#e4eef8' }[look] ?? '#34343a';
     const paint = (relief) => {
       const [c, ctx] = canvas(size);
       ctx.fillStyle = relief ? '#909090' : base;

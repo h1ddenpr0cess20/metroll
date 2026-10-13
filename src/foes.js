@@ -75,6 +75,12 @@ export const FOES = Object.freeze({
   gator: { name: 'Gator', blurb: 'Florida\'s second-worst idea. After the other one.', move: 'crawl', toughness: 7, power: 8, hype: 110, radius: 0.48, speed: 2.6 },
   floridaman: { name: 'Florida Man', blurb: 'Has a story. It is not a good story. It is about you.', move: 'walk', toughness: 5, power: 5, hype: 60, radius: 0.4, speed: 3.4, shout: 'HOLD MY BEER!' },
   coroner: { name: 'Coroner', blurb: 'Pronounces you dead. Often prematurely.', move: 'walk', toughness: 6, power: 6, hype: 80, radius: 0.37, speed: 3.0, shout: 'TIME OF DEATH!' },
+  // Norway.
+  corpsepaint: { name: 'Corpse Paint', blurb: 'Grim. Frostbitten. Has not smiled since 1991 and is not about to start for you.', move: 'walk', toughness: 6, power: 7, hype: 90, radius: 0.37, speed: 3.0, shout: 'TRVE!' },
+  wolf: { name: 'Wolf', blurb: 'Out of the spruce. Has heard every album and is unmoved.', move: 'crawl', toughness: 4, power: 6, hype: 70, radius: 0.34, speed: 4.4 },
+  crow: { name: 'Crow', blurb: 'Here before the band. Will be here after. Wants the demo tape.', move: 'fly', toughness: 2, power: 2, hype: 40, radius: 0.3, speed: 3.6 },
+  troll: { name: 'Troll', blurb: 'Under the bridge since the Middle Ages. Wants a toll. Does not take cards.', move: 'walk', toughness: 9, power: 9, hype: 150, radius: 0.62, speed: 1.9, shout: 'TOLL!' },
+  skier: { name: 'Skier', blurb: 'Here for the Olympics. Has no idea what is on in the church car park.', move: 'walk', toughness: 4, power: 4, hype: 50, radius: 0.37, speed: 4.0, shout: 'ON YOUR LEFT!' },
   pigeon: { name: 'Pigeon', blurb: 'Seen every canal in the Midlands. Has opinions about your tone.', move: 'fly', toughness: 2, power: 2, hype: 30, radius: 0.3, speed: 3.2 },
 });
 
