@@ -12,7 +12,7 @@ import { across, backTile, barred, branch, flat, wallTile, wash } from './helper
  * medieval village in the next field, where there are knights, wizards,
  * and a sword-seller; the gate backstage; and the main stage, where
  * somebody who has been waiting for you for a very long time is sitting in
- * the middle of the floor, in sunglasses. He was here first. He has
+ * the middle of the floor, exactly as he always was. He was here first. He has
  * thoughts about the spikes. He is, and this should be noted, a rock.
  */
 
@@ -144,7 +144,7 @@ export function wacken() {
   sign(gate, 6, 'ARTISTS ONLY', FEST[2], 0.4, 1.7);
   d.hall(2, MUD);
 
-  // The main stage: a stage the size of a block of flats, a wall of speakers, a ring of pyro; a floor of mud and of a rock, in the middle of it, in shades.
+  // The main stage: a stage the size of a block of flats, a wall of speakers, a ring of pyro; a floor of mud and, in the middle of it, Rock.
   const arena = d.room(24, 19, { floor: 'mud', wall: 'plywood' });
   g.pillar(...backTile(arena, 3), 1.3, { prop: 'amp' });
   g.pillar(...backTile(arena, 20), 1.3, { prop: 'speaker' });

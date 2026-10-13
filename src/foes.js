@@ -1,4 +1,5 @@
 import { CAST } from './models/cast/index.js';
+import { createRockMesh } from './rockboss.js';
 import { isBaked, ready } from './models/library.js';
 import { createModel } from './models/model.js';
 
@@ -23,7 +24,8 @@ import { createModel } from './models/model.js';
  *                floor throws Metroll back).
  *
  * How each one looks is its model (models/cast/): sculpted in code, baked in
- * the background as the page loads.
+ * the background as the page loads. The one exception is Rock, the last boss
+ * (`original`): the boulder of the first game, untouched (rockboss.js).
  */
 
 export const FOES = Object.freeze({
@@ -110,7 +112,7 @@ export const FOES = Object.freeze({
   knight: { name: 'Knight', blurb: 'From the re-enactment society in the next field. Cannot see out of the helm. Cannot hear. Cannot be told.', move: 'walk', toughness: 7, power: 7, hype: 100, radius: 0.43, speed: 2.4, shout: 'FOR THE REALM!' },
   beerguy: { name: 'Beer Guy', blurb: 'Thirty beers in. The happiest man in Germany. Will tell you why, at length.', move: 'walk', toughness: 4, power: 4, hype: 60, radius: 0.45, speed: 2.2, shout: 'PROST!' },
   purist: { name: 'Purist', blurb: 'Will tell you which of your favourites are not metal. All of them. Metal ended in 1986.', move: 'walk', toughness: 6, power: 6, hype: 90, radius: 0.37, speed: 2.8, shout: 'POSER!' },
-  rock: { name: 'Rock', blurb: 'The original. Rolled through thirty venues and has taken it badly that somebody gave the spiked one the record.', move: 'walk', toughness: 9, power: 9, hype: 1000, radius: 1.0, speed: 1.6, boss: true, hp: 60, tactic: 'tempo', shout: 'ROCK AND ROLL!' },
+  rock: { name: 'Rock', blurb: 'The original. Rolled through thirty venues and has taken it badly that somebody gave the spiked one the record.', move: 'walk', toughness: 9, power: 9, hype: 1000, radius: 1.0, speed: 1.6, boss: true, hp: 60, tactic: 'tempo', shout: 'ROCK AND ROLL!', original: true },
   pigeon: { name: 'Pigeon', blurb: 'Seen every canal in the Midlands. Has opinions about your tone.', move: 'fly', toughness: 2, power: 2, hype: 30, radius: 0.3, speed: 3.2 },
 });
 
@@ -137,6 +139,8 @@ export const KNOCKED_OUT = 1.35;
  * nothing bakes — a plain stand-in goes in its place.
  */
 export function createFoeMesh(GFX, kind) {
+  // Rock is not sculpted: he is the boulder from the first game, as he was.
+  if (FOES[kind]?.original) return createRockMesh(GFX, FOES[kind].radius);
   const group = new GFX.Group();
   group.name = kind;
   const body = new GFX.Group();

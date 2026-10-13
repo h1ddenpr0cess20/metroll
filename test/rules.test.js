@@ -60,7 +60,8 @@ test('every foe can be smashed by a charge Metroll can actually make', () => {
 });
 
 test('everyone in the way is sculpted, and nobody is sculpted who is not in the way', () => {
-  assert.deepEqual(Object.keys(CAST).sort(), Object.keys(FOES).sort());
+  // Everyone is sculpted, but Rock: he is the boulder from the first game, as it was.
+  assert.deepEqual(Object.keys(CAST).sort(), Object.keys(FOES).filter((k) => !FOES[k].original).sort());
   for (const [kind, def] of Object.entries(CAST)) {
     assert.equal(def.name, kind);
     assert.ok(def.bones.some(([name, parent]) => name === 'root' && parent === null), `${kind} has a root`);

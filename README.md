@@ -18,8 +18,9 @@ the genres, and above all you.
 A spinoff of the [Rock 'n' Roller](https://github.com/h1ddenpr0cess20/rocknroller)
 games, on the engine of [Rock 'n' Roller III](https://github.com/h1ddenpr0cess20/rocknroller-iii)
 (the renderer, physics, tiled venues and camera), with the tracks, cast,
-props, machinery, score and voice all redone. Rock himself, the boulder,
-turns up at the end. He was here first, and has opinions about the spikes.
+props, machinery, score and voice all redone. Rock himself, the boulder from
+the first game, turns up at the end as the last boss. He was here first, and
+has opinions about the spikes.
 
 ![The title screen](docs/screenshots/title.jpg)
 
@@ -121,7 +122,7 @@ music.
 | 9 | **Berlin, 1995** · Industrial | A power station nobody has switched off: an assembly line with the presses coming down and the welders not looking up, a conveyor, a flatcar over the cooling pond, a tunnel full of drones, a queue that has been there since Thursday outside a door with a policy (the policy is no), and the club, a concrete room with a strobe in it. Four on the floor. |
 | 10 | **Woodstock '99** · Nu metal | A decommissioned air base in a heat wave: the tent village, the runway with the trusses coming down and the bins on fire, the mud, a hay wagon across the trench, and the main stage field with ten thousand people breaking stuff, and a sign by the trench that says KEEP ROLLIN', which is the job description. Water is four dollars. A syncopated stutter, the bass up front. |
 | 11 | **Warped Tour, 2005** · Screamo | A car park in July: the vendor midway where everybody is giving away a sticker, the energy drinks coming down, a skate park, a van across the storm drain, and a field full of kids in black, crying, having the best day of their lives. A sing-along over fast power chords, with a breakdown in it. |
-| 12 | **Wacken, 2008** · Everything | The whole history of the record, in a field, in the rain, in horned helmets: the camp road with the kegs coming down, the mud, a mud trailer across the trench, the medieval village (knights, wizards, a very tall man in a horned helmet), the gate, and the main stage, where somebody has been waiting in the middle of the floor, in sunglasses. **Rock.** |
+| 12 | **Wacken, 2008** · Everything | The whole history of the record, in a field, in the rain, in horned helmets: the camp road with the kegs coming down, the mud, a mud trailer across the trench, the medieval village (knights, wizards, a very tall man in a horned helmet), the gate, and the main stage, where somebody has been waiting in the middle of the floor since 1971. **Rock.** |
 
 | | |
 |---|---|
@@ -182,31 +183,23 @@ and a screamer; a viking, a wizard, a knight, a beer guy and a purist. And
 the ones who work every show: doormen, bouncers, gatekeepers, security,
 sound guys, cops.
 
-![The cast, 1970 to 1986](docs/screenshots/cast-1.jpg)
-
-![The cast, 1986 to 1991](docs/screenshots/cast-2.jpg)
-
-![The cast, 1991 to 1996](docs/screenshots/cast-3.jpg)
-
-![The cast, 1999 to 2008](docs/screenshots/cast-4.jpg)
-
 The animals share a skeleton (`quadruped.js`): a Tampa gator, a wolf out of
 the Norwegian spruce, a black cat who crosses the path on purpose and a subway
 rat with a slice of pizza bigger than itself; and on their own, bats, crows,
 pigeons, the camera drones and the line robots.
 
-![The animals](docs/screenshots/animals.jpg)
-
 And three bosses, each fought differently: **the Count**, who lunges and then
 has to get his breath back; **the Doomlord**, who stops and stamps so the floor
-throws Metroll back; and **Rock**, who moves only on the beat, and who is the
-original: the granite boulder from the first game, with the pale feldspar and
-the dark mica in it, now in wraparound shades and a red headband, sitting in
-the middle of the last stage as if it had been there since 1971, which it has.
+throws Metroll back; and **Rock**, who moves only on the beat. Rock is the
+original: the granite boulder from the first game, not drawn again but the
+very same file (`src/boulder.js`, untouched), at the size of a boss, rolling
+when he goes, hopping when somebody is in reach, and sitting in the middle of
+the last stage as if he had been there since 1971. He has opinions about the
+spikes.
 
-![The Count, the Doomlord and Rock](docs/screenshots/bosses.jpg)
+![The Doomlord, in New Orleans](docs/screenshots/boss-doomlord.jpg)
 
-![Rock, at Wacken](docs/screenshots/boss-rock.jpg)
+![Rock, at Wacken: the boulder from the first game, as it was](docs/screenshots/boss-rock.jpg)
 
 The furniture of the places is built from plain shapes in `src/sights.js`
 and `src/furniture.js`: anvils and furnaces, limousines and hot tubs, a band's
@@ -246,7 +239,7 @@ node scripts/drive.js 9          # put the autopilot through a track and say how
 node scripts/bake.js             # bake every model and say what came out
 ```
 
-`models.html` is a turntable for the cast (`?m=count,doomlord,rock`, and
+`models.html` is a turntable for the cast (`?m=count,doomlord`, and
 `&clip=attack&time=0&t=0.4` for a still of a moment in a clip), and in the
 browser console `metroll.debug.venue(i)` jumps to a track and
 `teleport(x, z)` puts Metroll somewhere on it.

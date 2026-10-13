@@ -51,7 +51,6 @@ import rat from './rat.js';
 import raver from './raver.js';
 import roadie from './roadie.js';
 import robot from './robot.js';
-import rock from './rock.js';
 import scenekid from './scenekid.js';
 import screamer from './screamer.js';
 import security from './security.js';
@@ -77,7 +76,7 @@ export const CAST = {
   corpsepaint, count, critic, crow, crowdsurfer, cultist, diver, dj, doomlord, dracfan, drone,
   drunk, emo, engineer, floridaman, folkie, foreman, frontman, gatekeeper, gator, goth, headbanger,
   hippie, hxckid, knight, limodriver, medic, merchguy, mosher, mourner, nuguy, pallbearer, pigeon,
-  poet, poser, promoter, punk, purist, rat, raver, roadie, robot, rock, scenekid, screamer,
+  poet, poser, promoter, punk, purist, rat, raver, roadie, robot, scenekid, screamer,
   security, shredder, skater, skier, soundguy, stoner, streetteam, tapetrader, toughguy, troll,
   viking, welder, wizard, wolf, zinekid, zombie,
 };
