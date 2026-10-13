@@ -1,0 +1,395 @@
+/*
+ * Rock 'n' Roller III: World Tour. A game dressed as a stack of old travel
+ * posters and luggage labels: the night-blue of the sky over the stops,
+ * the cream of the paper, the orange of a sunset, the red of a postmark
+ * and the blue of the sea; Alfa Slab One (a poster's slab face) for the
+ * title, the labels and the cards, Anton for the numbers, Barlow Condensed
+ * for the rest. All ship with the game (no network), imported from
+ * main.js. Every stop has its own light, graded on the picture alone.
+ */
+
+:root {
+  --ink: #101826;
+  --ink-2: #172236;
+  --panel: rgba(16, 24, 38, 0.78);
+  --line: rgba(255, 255, 255, 0.16);
+  --text: #f6efe0;
+  --dim: #a8b0c4;
+  --sun: #f0782a;
+  --sun-hi: #ffb468;
+  --sun-lo: #a8401a;
+  --stamp: #c8302a;
+  --sea: #1e4a9a;
+  --paper: #f4ead2;
+  --paper-2: #e8dcbc;
+  --print: #1a2232;
+  --print-dim: #5a5446;
+  --yellow: #ffd23a;
+  --green: #3ae88a;
+  --red: #ff4a3a;
+  --display: "Anton", Impact, "Arial Narrow Bold", "Arial Narrow", sans-serif;
+  --poster: "Alfa Slab One", "Rockwell", "Roboto Slab", Georgia, serif;
+  --body: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--body);
+  font-weight: 500;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#view { position: fixed; inset: 0; }
+#view canvas { display: block; width: 100%; height: 100%; }
+#ui { position: fixed; inset: 0; pointer-events: none; }
+#ui > * { pointer-events: none; }
+#ui button, #ui .card, #ui label, #ui input { pointer-events: auto; }
+[hidden] { display: none !important; }
+
+/* The strobes' bloom: a white wash over the whole page, brought up by the flash. */
+#strobe { position: fixed; inset: 0; background: #fff; opacity: 0; pointer-events: none; mix-blend-mode: screen; }
+
+#error {
+  position: fixed; inset: 0; margin: 0; padding: 32px; color: #ffb3b3; background: #1a0707;
+  font: 14px/1.5 ui-monospace, Menlo, monospace; white-space: pre-wrap; z-index: 50;
+}
+
+/* ———————————————————————————————————— type */
+
+.display { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.04em; }
+.label {
+  font-family: var(--body); font-weight: 600; font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--dim);
+}
+/* A sign lit up at night: the paper's cream, glowing the colour it is given. */
+.neon {
+  color: var(--paper);
+  text-shadow: 0 0 2px #fff, 0 0 10px var(--glow, var(--sun)), 0 0 26px var(--glow, var(--sun)), 0 3px 0 rgba(0, 0, 0, 0.5);
+}
+
+kbd {
+  display: inline-block; min-width: 1.6em; padding: 0 6px; margin: 0 2px; text-align: center;
+  font: 600 0.9em/1.5 var(--body); color: var(--text); background: rgba(255,255,255,0.08);
+  border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px;
+}
+
+/* ———————————————————————————————————— the HUD */
+
+#hud { position: fixed; inset: 0; }
+
+/* Where we are: a luggage label, tied on by its string through the hole. */
+.plate {
+  position: absolute; top: calc(14px + var(--safe-t)); left: calc(18px + var(--safe-l));
+  display: grid; gap: 0; padding: 7px 30px 7px 14px; color: var(--print);
+  background: var(--paper); border: 3px solid var(--sea); border-radius: 4px 28px 28px 4px;
+  box-shadow: inset 0 0 0 2px var(--paper), inset 0 0 0 3px rgba(30,74,154,0.5), 0 4px 14px rgba(0,0,0,0.45);
+  transform: rotate(-1.5deg);
+}
+.plate::after {
+  content: ""; position: absolute; right: 10px; top: 50%; width: 10px; height: 10px; margin-top: -5px; border-radius: 50%;
+  background: var(--ink); box-shadow: 0 0 0 3px var(--sun);
+}
+.plate .act { font-weight: 700; font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--stamp); }
+.plate .name { font-family: var(--poster); font-size: 24px; letter-spacing: 0.03em; line-height: 1.05; text-transform: uppercase; color: var(--sea); }
+
+.hype {
+  position: absolute; top: calc(10px + var(--safe-t)); left: 50%; transform: translateX(-50%);
+  display: grid; justify-items: center; gap: 0; text-align: center;
+}
+.hype .num {
+  font-family: var(--display); font-size: clamp(40px, 6.2vw, 68px); line-height: 1; color: var(--paper);
+  text-shadow: 0 0 3px #fff, 0 0 14px var(--sun), 0 0 30px rgba(240,120,42,0.7), 0 3px 0 rgba(0,0,0,0.5); letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.hype .num.bump { animation: bump 0.22s ease-out; }
+.combo { height: 26px; display: flex; align-items: center; gap: 8px; opacity: 0; transition: opacity 0.2s; }
+.combo.on { opacity: 1; }
+.combo b {
+  font-family: var(--display); font-weight: 400; font-size: 24px; color: var(--yellow);
+  text-shadow: 0 0 10px rgba(255,210,58,0.9), 0 0 24px rgba(255,210,58,0.6);
+}
+.combo .bar { width: 96px; height: 6px; background: rgba(255,255,255,0.14); border-radius: 3px; overflow: hidden; }
+.combo .bar i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--sun-hi), var(--stamp)); transform-origin: left; }
+
+.carried {
+  position: absolute; top: calc(14px + var(--safe-t)); right: calc(214px + var(--safe-r));
+  display: flex; gap: 14px; align-items: center;
+}
+.carried .chip { display: none; align-items: baseline; gap: 6px; font-family: var(--display); font-size: 20px; letter-spacing: 0.04em; }
+.carried .chip.show { display: flex; }
+.carried .chip small { font-family: var(--body); font-weight: 600; font-size: 11px; letter-spacing: 0.22em; color: var(--dim); text-transform: uppercase; }
+.carried .chip.globes { color: var(--sun-hi); text-shadow: 0 0 12px rgba(240,120,42,0.6); }
+.carried .chip.passes { color: var(--paper); text-shadow: 0 0 12px rgba(244,234,210,0.5); }
+.carried .chip.encores { color: #ff8a6a; text-shadow: 0 0 12px rgba(255,110,80,0.55); }
+.carried .chip.pop { animation: bump 0.3s ease-out; }
+
+#map {
+  position: absolute; top: calc(12px + var(--safe-t)); right: calc(14px + var(--safe-r));
+  width: 180px; height: 180px; object-fit: contain; background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  backdrop-filter: blur(4px);
+}
+
+.meters {
+  position: absolute; left: calc(18px + var(--safe-l)); bottom: calc(18px + var(--safe-b));
+  display: grid; gap: 10px; width: min(340px, 42vw);
+}
+.meter .row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+.meter .value { font-family: var(--display); font-size: 18px; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+/* The integrity meter is a VU meter: a row of lit segments. */
+.vu { display: grid; grid-template-columns: repeat(24, 1fr); gap: 2px; height: 20px; padding: 3px; background: rgba(0,0,0,0.55); border: 1px solid var(--line); border-radius: 4px; }
+.vu i { background: rgba(255,255,255,0.07); border-radius: 1px; transition: background 0.12s, box-shadow 0.12s; }
+.vu i.on { background: var(--seg, var(--green)); box-shadow: 0 0 6px var(--seg, var(--green)); }
+.vu.low { animation: warn 0.6s steps(2) infinite; }
+.vu.hit { animation: shake 0.3s; }
+.rev { height: 9px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; border: 1px solid var(--line); }
+.rev i { display: block; height: 100%; width: 100%; transform-origin: left; background: linear-gradient(90deg, var(--sun-lo), var(--sun), var(--sun-hi)); }
+.rev.empty i { background: var(--red); }
+.rev.active { box-shadow: 0 0 14px var(--sun); }
+
+#say {
+  position: absolute; left: 50%; bottom: calc(26px + var(--safe-b)); transform: translateX(-50%);
+  max-width: min(560px, 62vw); text-align: center; font-family: var(--body); font-weight: 500; font-style: italic;
+  font-size: clamp(18px, 2.2vw, 24px); color: #fff; padding: 6px 18px; background: rgba(16,24,38,0.66); border-radius: 18px;
+  opacity: 0; transition: opacity 0.35s; text-shadow: 0 1px 8px #000;
+}
+#say.show { opacity: 1; }
+#say b { font-style: normal; font-weight: 700; letter-spacing: 0.2em; font-size: 0.6em; color: var(--sun-hi); text-transform: uppercase; margin-right: 8px; }
+
+#banner {
+  position: absolute; left: 50%; top: 36%; transform: translate(-50%, -50%); text-align: center; white-space: pre-line;
+  font-family: var(--poster); font-size: clamp(32px, 6vw, 70px); line-height: 1.04; letter-spacing: 0.03em; text-transform: uppercase;
+  color: var(--paper); text-shadow: 0 0 4px #fff, 0 0 18px var(--sun), 0 0 42px rgba(240,120,42,0.7), 0 4px 0 #2a1406; width: min(92vw, 900px);
+}
+#banner.normal { font-size: clamp(24px, 4.2vw, 48px); text-shadow: 0 0 3px #fff, 0 0 14px rgba(244,234,210,0.8), 0 0 30px rgba(240,120,42,0.5), 0 3px 0 #2a1406; }
+#banner.hurt { color: #ffd7d2; text-shadow: 0 0 3px #fff, 0 0 14px var(--red), 0 0 32px var(--red); }
+#banner small { display: block; margin-top: 10px; font-family: var(--body); font-weight: 500; font-size: 0.32em; letter-spacing: 0.12em; text-shadow: 0 1px 6px #000; text-transform: none; color: #fff; }
+#banner.pop { animation: pop 0.45s cubic-bezier(0.2, 1.4, 0.4, 1); }
+
+#pops { position: fixed; inset: 0; overflow: hidden; }
+.pop-text {
+  position: absolute; transform: translate(-50%, -50%); font-family: var(--display); font-size: 28px; color: #fff; white-space: nowrap;
+  text-shadow: 0 0 3px #fff, 0 0 12px var(--sun), 0 2px 0 #000; animation: rise 1.1s ease-out forwards;
+}
+.pop-text.big { font-size: 40px; color: var(--yellow); text-shadow: 0 0 3px #fff, 0 0 14px #ffb000, 0 2px 0 #000; }
+.pop-text.hurt { color: #ffb3a8; text-shadow: 0 0 3px #fff, 0 0 12px var(--red), 0 2px 0 #000; }
+.pop-text.pick { font-size: 20px; color: var(--yellow); text-shadow: 0 0 10px rgba(255,210,58,0.8), 0 2px 0 #000; }
+
+/* ———————————————————————————————————— screens */
+
+.screen { position: fixed; inset: 0; display: grid; place-items: center; text-align: center; padding: 20px; }
+.scrim { background: radial-gradient(ellipse at center, rgba(16,24,38,0.4), rgba(10,14,24,0.86)); }
+
+/* The title: down the left on a wide screen, so Rock is in the middle of the picture, not behind the logo; stacked top and bottom, with Rock between, on a tall one. */
+.screen.title { place-items: center start; text-align: left; padding-left: clamp(24px, 6vw, 110px); }
+.screen.title .logo, .screen.title .menu, .screen.title .help { justify-items: start; }
+.screen.title .logo .top { font-size: clamp(46px, 8vw, 120px); }
+.screen.title .logo .bottom { font-size: clamp(40px, 7vw, 104px); }
+.screen.title .logo .tag { letter-spacing: 0.34em; }
+.screen.title .help { max-width: 44ch; color: #ece4d4; text-shadow: 0 1px 3px #000, 0 0 10px rgba(0,0,0,0.8); }
+@media (max-aspect-ratio: 1/1) {
+  .screen.title { place-items: stretch; text-align: center; padding: 5vh 16px; }
+  .screen.title > div { display: grid; grid-template-rows: auto 1fr auto auto; height: 100%; justify-items: center; }
+  .screen.title .logo, .screen.title .menu, .screen.title .help { justify-items: center; }
+  .screen.title .logo .top { font-size: clamp(44px, 15vw, 110px); }
+  .screen.title .logo .bottom { font-size: clamp(38px, 13vw, 96px); }
+  .screen.title .menu { align-self: end; }
+}
+
+/* The logo: the name in cream, lit; WORLD TOUR in the poster's slab, a sunset down through the letters; the III a postmark. */
+.logo { display: grid; gap: 0; justify-items: center; margin-bottom: 20px; }
+.logo .top, .logo .bottom { line-height: 0.95; text-transform: uppercase; margin: 0; color: var(--paper); }
+.logo .top {
+  font-family: var(--display); letter-spacing: 0.04em; font-size: clamp(52px, 11vw, 150px);
+  text-shadow: 0 0 4px #fff, 0 0 18px rgba(240,120,42,0.85), 0 0 46px rgba(240,120,42,0.55), 0 5px 0 #2a1406;
+}
+.logo .bottom {
+  font-family: var(--poster); font-weight: 400; letter-spacing: 0.02em; font-size: clamp(46px, 9vw, 130px);
+  background: linear-gradient(180deg, #ffe08a 0%, var(--sun-hi) 30%, var(--sun) 55%, var(--stamp) 85%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 5px 0 #2a1406) drop-shadow(0 0 18px rgba(240,120,42,0.5));
+}
+.logo .two {
+  display: inline-grid; place-items: center; width: 1.9em; height: 1.9em; margin-left: 0.2em; vertical-align: 0.5em;
+  font-family: var(--poster); font-size: 0.3em; line-height: 1; letter-spacing: -0.02em; color: var(--stamp); text-shadow: none;
+  border: 0.09em solid var(--stamp); border-radius: 50%; box-shadow: 0 0 0 0.05em var(--paper), inset 0 0 0 0.05em var(--paper);
+  background: var(--paper); transform: rotate(-14deg);
+}
+.logo .presents { margin: 0 0 6px; font-weight: 600; font-size: clamp(12px, 1.3vw, 16px); letter-spacing: 0.5em; text-transform: uppercase; color: var(--sun-hi); }
+.logo .presents::before, .logo .presents::after { content: ""; display: inline-block; width: 2.4em; height: 1px; margin: 0 0.8em; vertical-align: 0.3em; background: linear-gradient(90deg, transparent, var(--sun-hi), transparent); }
+.logo .amp { font-size: 0.5em; color: var(--sun-hi); text-shadow: 0 0 10px var(--sun); display: inline-block; transform: translateY(-0.28em); margin: 0 0.12em; }
+.logo .tag { margin-top: 12px; font-weight: 600; font-size: clamp(13px, 1.5vw, 18px); letter-spacing: 0.5em; text-transform: uppercase; color: var(--paper); }
+
+.menu { display: grid; gap: 12px; justify-items: center; }
+/* A button: a printed label, cream on sunset orange, a cream line round the inside of its edge. */
+.btn {
+  position: relative; min-width: 260px; padding: 12px 34px 11px; cursor: pointer; border: 0; color: var(--paper);
+  font-family: var(--poster); font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.1;
+  background: linear-gradient(180deg, var(--sun-hi), var(--sun) 50%, #d85a1a); border-radius: 6px;
+  text-shadow: 0 2px 0 rgba(90,30,8,0.6);
+  box-shadow: inset 0 0 0 3px var(--sun), inset 0 0 0 5px var(--paper), 0 0 24px rgba(240,120,42,0.35), 0 6px 0 #6a2808;
+  transition: transform 0.08s, box-shadow 0.08s, filter 0.12s;
+}
+.btn > span { display: inline-block; }
+.btn:hover, .btn:focus-visible { filter: brightness(1.1); outline: none; box-shadow: inset 0 0 0 3px var(--sun), inset 0 0 0 5px #fff, 0 0 38px rgba(240,120,42,0.7), 0 6px 0 #6a2808; }
+.btn:active { transform: translateY(4px); box-shadow: inset 0 0 0 3px var(--sun), inset 0 0 0 5px #fff, 0 0 24px rgba(240,120,42,0.5), 0 2px 0 #6a2808; }
+.btn.alt {
+  background: linear-gradient(180deg, #24345a, var(--ink-2)); color: var(--paper); font-size: 19px; min-width: 200px; text-shadow: none;
+  box-shadow: inset 0 0 0 3px var(--ink-2), inset 0 0 0 5px rgba(244,234,210,0.75), 0 0 18px rgba(30,74,154,0.35), 0 6px 0 #080c14;
+}
+.btn.alt:hover, .btn.alt:focus-visible { box-shadow: inset 0 0 0 3px var(--ink-2), inset 0 0 0 5px var(--sun-hi), 0 0 30px rgba(240,120,42,0.45), 0 6px 0 #080c14; }
+.btn.small { font-size: 16px; min-width: 0; padding: 8px 22px 7px; }
+
+.help { margin-top: 18px; display: grid; gap: 4px; font-size: clamp(14px, 1.5vw, 17px); color: var(--dim); letter-spacing: 0.04em; }
+.help .touch { display: none; }
+@media (pointer: coarse) { .help .keys { display: none; } .help .touch { display: block; } }
+.best { margin-top: 6px; color: var(--sun-hi); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; font-size: 14px; }
+
+/* The itinerary: a luggage label for every stop, the country's colour down its edge, the stop's number a postmark. */
+.tour { align-content: start; overflow: auto; padding-top: calc(28px + var(--safe-t)); }
+.tour h2 { margin: 0 0 4px; font-family: var(--poster); font-weight: 400; font-size: clamp(34px, 6vw, 64px); text-transform: uppercase; letter-spacing: 0.04em; }
+.tour .sub { color: var(--dim); letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600; font-size: 13px; margin-bottom: 18px; }
+.venues { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; width: min(1100px, 100%); margin: 0 auto; }
+.venue {
+  position: relative; display: grid; gap: 3px; text-align: left; padding: 11px 14px 11px 22px; color: var(--print); cursor: pointer; font: inherit;
+  background: linear-gradient(180deg, var(--paper), var(--paper-2)); border: 0; border-left: 10px solid var(--tint, var(--sea)); border-radius: 4px 14px 14px 4px;
+  box-shadow: inset 0 0 0 1px rgba(26,34,50,0.12), inset 6px 0 0 -3px rgba(255,255,255,0.5), 0 6px 16px rgba(0,0,0,0.45);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.venue:nth-child(odd) { transform: rotate(-0.6deg); }
+.venue:nth-child(even) { transform: rotate(0.5deg); }
+.venue:hover:not(:disabled), .venue:focus-visible { transform: translateY(-3px) rotate(-1deg); box-shadow: inset 0 0 0 1px rgba(26,34,50,0.12), 0 0 0 3px var(--sun), 0 10px 22px rgba(0,0,0,0.5); outline: none; }
+.venue:disabled { opacity: 0.45; cursor: not-allowed; filter: grayscale(0.8); }
+.venue .num {
+  position: absolute; right: 10px; top: 8px; display: grid; place-items: center; width: 40px; height: 40px;
+  font-family: var(--display); font-size: 20px; line-height: 1; color: var(--stamp); opacity: 0.8;
+  border: 2px solid var(--stamp); border-radius: 50%; box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--stamp); transform: rotate(-16deg);
+}
+.venue .country { font-weight: 700; font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--tint, var(--sea)); filter: brightness(0.8); }
+.venue .name { font-family: var(--poster); font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1.05; padding-right: 44px; color: var(--print); }
+.venue .line { font-size: 14px; color: var(--print-dim); min-height: 2.5em; }
+.venue .foot { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 13px; color: var(--print-dim); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; border-top: 1px dashed rgba(26,34,50,0.3); padding-top: 6px; }
+.stars { letter-spacing: 0.12em; font-size: 20px; color: rgba(26,34,50,0.18); }
+.stars b { font-weight: 400; color: var(--sun); }
+.back { margin-top: 20px; }
+
+/* The review, and the other cards: a postcard home, the airmail stripes round its edge, a stamp in the corner. */
+.card {
+  position: relative; width: min(520px, 94vw); padding: 26px 30px 26px; text-align: center; color: var(--print);
+  background: linear-gradient(180deg, var(--paper), var(--paper-2)); border-radius: 6px;
+  border: 8px solid transparent;
+  background-image: linear-gradient(180deg, var(--paper), var(--paper-2)), repeating-linear-gradient(135deg, var(--stamp) 0 14px, var(--paper) 14px 22px, var(--sea) 22px 36px, var(--paper) 36px 44px);
+  background-origin: border-box; background-clip: padding-box, border-box;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+.card::after {
+  content: ""; position: absolute; top: 10px; right: 12px; width: 42px; height: 50px; transform: rotate(4deg);
+  background: radial-gradient(circle at 50% 40%, var(--sun-hi), var(--sun) 40%, var(--stamp) 75%); border: 3px dashed var(--paper);
+  box-shadow: 0 0 0 1px rgba(26,34,50,0.2);
+}
+.card h2 { margin: 0; font-family: var(--poster); font-weight: 400; font-size: clamp(28px, 5vw, 42px); letter-spacing: 0.04em; text-transform: uppercase; }
+.card h2.neon { color: var(--sea); text-shadow: 0 2px 0 rgba(30,74,154,0.18); }
+.card.over h2.neon { color: var(--stamp); text-shadow: 0 2px 0 rgba(200,48,42,0.18); }
+.card .venue-name { font-weight: 700; letter-spacing: 0.3em; font-size: 13px; text-transform: uppercase; color: var(--print-dim); margin-bottom: 6px; }
+.big-stars { font-size: 52px; letter-spacing: 0.1em; margin: 6px 0 8px; color: rgba(26,34,50,0.14); }
+.big-stars b { font-weight: 400; color: var(--sun); text-shadow: 0 2px 0 rgba(168,64,26,0.35); display: inline-block; animation: starin 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) both; }
+.big-stars b:nth-child(2) { animation-delay: 0.25s; }
+.big-stars b:nth-child(3) { animation-delay: 0.5s; }
+.goals { list-style: none; margin: 10px 0 14px; padding: 0; display: grid; gap: 6px; text-align: left; }
+.goals li { display: grid; grid-template-columns: 26px 1fr auto; gap: 8px; align-items: baseline; padding: 6px 10px; background: rgba(26,34,50,0.06); border-radius: 4px; font-size: 18px; }
+.goals li .mark { font-family: var(--display); font-size: 22px; color: rgba(26,34,50,0.22); }
+.goals li.met .mark { color: var(--sun); }
+.goals li small { color: var(--print-dim); font-size: 14px; letter-spacing: 0.06em; }
+.goals li .t { font-weight: 600; letter-spacing: 0.04em; }
+.tally { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 8px 0 16px; }
+.tally div { background: rgba(26,34,50,0.06); border-radius: 4px; padding: 8px 4px; }
+.tally b { display: block; font-family: var(--display); font-weight: 400; font-size: 28px; letter-spacing: 0.04em; color: var(--sea); }
+.tally .label { font-size: 11px; color: var(--print-dim); }
+.card .row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 4px; }
+.card.over::after { background: radial-gradient(circle at 50% 40%, #8a8a90, #5a5a62 60%, #3a3a42); }
+.card .quip { font-style: italic; color: var(--print-dim); margin: 8px 0 14px; font-size: 19px; }
+.newbest { color: var(--stamp); font-family: var(--poster); letter-spacing: 0.1em; font-size: 16px; margin-bottom: 4px; text-transform: uppercase; display: inline-block; padding: 2px 10px; border: 2px solid var(--stamp); border-radius: 4px; transform: rotate(-3deg); }
+
+/* Pause and settings. */
+.setting { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 8px 0; border-bottom: 1px dashed rgba(26,34,50,0.25); font-size: 19px; text-align: left; }
+.setting small { display: block; color: var(--print-dim); font-size: 13px; letter-spacing: 0.04em; }
+.setting input[type=range] { width: 150px; accent-color: var(--sun); }
+.toggle { position: relative; width: 52px; height: 28px; flex: none; }
+.toggle input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.toggle i { position: absolute; inset: 0; border-radius: 14px; background: rgba(26,34,50,0.2); transition: background 0.15s; pointer-events: none; }
+.toggle i::after { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: transform 0.15s; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+.toggle input:checked + i { background: var(--sun); }
+.toggle input:checked + i::after { transform: translateX(24px); }
+.toggle input:focus-visible + i { outline: 2px solid var(--sea); outline-offset: 2px; }
+
+.corner { position: fixed; right: calc(14px + var(--safe-r)); bottom: calc(14px + var(--safe-b)); display: flex; gap: 8px; z-index: 5; }
+.corner button {
+  font: 600 13px var(--body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--text); background: var(--panel);
+  border: 1px solid var(--line); border-radius: 4px; padding: 7px 12px; cursor: pointer; backdrop-filter: blur(4px);
+}
+.corner button:hover { border-color: var(--sun); }
+
+/* The rev button, for fingers. */
+#rev-button {
+  position: fixed; right: calc(22px + var(--safe-r)); bottom: calc(70px + var(--safe-b)); width: 96px; height: 96px; border-radius: 50%;
+  display: none; place-items: center; font-family: var(--poster); font-size: 22px; letter-spacing: 0.06em;
+  color: var(--paper); background: radial-gradient(circle at 35% 30%, var(--sun-hi), var(--sun-lo)); border: 3px solid var(--paper); box-shadow: 0 0 30px rgba(240,120,42,0.7);
+  text-shadow: 0 2px 0 rgba(90,30,8,0.6); touch-action: none; z-index: 6;
+}
+#rev-button:active, #rev-button.held { transform: scale(0.94); filter: brightness(1.25); }
+@media (pointer: coarse) { #rev-button.available { display: grid; } }
+
+/* ———————————————————————————————————— motion */
+
+@keyframes pop { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); } }
+@keyframes bump { 0% { transform: scale(1); } 40% { transform: scale(1.18); } 100% { transform: scale(1); } }
+@keyframes rise { 0% { opacity: 0; transform: translate(-50%, -30%) scale(0.7); } 12% { opacity: 1; transform: translate(-50%, -60%) scale(1.1); } 100% { opacity: 0; transform: translate(-50%, -190%) scale(1); } }
+@keyframes warn { 0% { opacity: 1; } 50% { opacity: 0.45; } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-5px); } 40% { transform: translateX(5px); } 60% { transform: translateX(-3px); } 80% { transform: translateX(3px); } }
+@keyframes starin { 0% { transform: scale(0) rotate(-90deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+
+@media (max-width: 760px) {
+  .plate .name { font-size: 18px; }
+  #map { width: 118px; height: 118px; }
+  .carried { right: calc(138px + var(--safe-r)); top: calc(66px + var(--safe-t)); }
+  .meters { width: 46vw; }
+  .btn { min-width: 220px; font-size: 20px; }
+  .hype .num { font-size: 40px; }
+}
+/* On a phone the score drops below the label rather than sit on it. */
+@media (max-width: 520px) {
+  .plate { padding: 5px 26px 5px 10px; }
+  .plate .act { font-size: 10px; letter-spacing: 0.18em; }
+  .plate .name { font-size: 16px; }
+  .hype { top: calc(58px + var(--safe-t)); }
+}
+
+/* ———————————————————————————————————— the light of each stop */
+
+/*
+ * Every stop has its own light: the picture (and only the picture) is
+ * graded by the stop's `look.grade`. London's fog, the dusk in Paris and
+ * Venice, the glare off the Alps, the heat of Spain and Egypt, Tokyo's
+ * neon, the colour of Rio and Sydney; and a haze of sand over everything
+ * in a sandstorm.
+ */
+#view[data-grade="fog"] canvas { filter: saturate(0.72) contrast(0.9) brightness(1.06); }
+#view[data-grade="dusk"] canvas { filter: sepia(0.16) saturate(1.2) contrast(1.04); }
+#view[data-grade="alpine"] canvas { filter: saturate(1.15) brightness(0.96) contrast(1.14) hue-rotate(-4deg); }
+#view[data-grade="warm"] canvas { filter: sepia(0.24) saturate(1.25) contrast(1.05) brightness(1.03); }
+#view[data-grade="neon"] canvas { filter: saturate(1.4) contrast(1.1); }
+#view[data-grade="tropical"] canvas { filter: saturate(1.3) contrast(1.04) brightness(1.03); }
+
+#vignette { position: fixed; inset: 0; pointer-events: none; background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.5) 100%); }
+body.sandstorm #vignette { background: radial-gradient(ellipse at center, rgba(214,170,100,0.22) 30%, rgba(150,100,40,0.55) 100%); }
