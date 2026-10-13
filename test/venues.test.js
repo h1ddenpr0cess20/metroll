@@ -11,26 +11,25 @@ import { drive, graph, plan } from './helpers/autopilot.js';
 /** The boss of each set that has one. */
 const bossOf = (venue) => venue.foes.filter((f) => FOES[f.kind].boss).map((f) => f.kind);
 
-test('every stop can be played through to the stage door in one piece, with all its snow demos', () => {
+test('every track can be played through to the stage door in one piece, with all its demo tapes', () => {
   for (let i = 0; i < VENUES.length; i++) {
     const r = drive(i);
     const name = r.gig.venue.name;
     assert.ok(r.finished, `${name}: the autopilot got stuck (${JSON.stringify(r.stuck)})`);
     const demos = r.gig.actors.pickups.filter((p) => p.kind === 'demo');
-    assert.equal(demos.length, DEMOS, `${name} hides ${DEMOS} snow demos`);
+    assert.equal(demos.length, DEMOS, `${name} hides ${DEMOS} demo tapes`);
     assert.ok(demos.every((p) => p.taken), `${name}: every snow globe can be got`);
-    assert.ok(r.gig.troll.hp > 0, `${name}: Rock got there whole`);
+    assert.ok(r.gig.troll.hp > 0, `${name}: Metroll got there whole`);
   }
 });
 
-test('no two stops have the same boss, and the one mirror ball on the tour hangs in Tokyo\'s karaoke box', () => {
+test('no two tracks have the same boss, nor the same theme, and each says where and when it is', () => {
   const bosses = VENUES.map((_, i) => bossOf(loadVenue(i))).flat();
   assert.equal(new Set(bosses).size, bosses.length, `bosses: ${bosses.join(', ')}`);
-  for (let i = 0; i < VENUES.length; i++) {
-    const v = loadVenue(i);
-    const balls = v.fixtures.filter((f) => f.kind === 'ball').length;
-    assert.equal(balls, v.look.country === 'Japan' ? 1 : 0, `${v.name} has ${balls} mirror balls`);
-  }
+  const themes = VENUES.map((_, i) => loadVenue(i).look.theme);
+  assert.equal(new Set(themes).size, themes.length, `themes: ${themes.join(', ')}`);
+  const places = VENUES.map((_, i) => `${loadVenue(i).look.place} ${loadVenue(i).look.year}`);
+  assert.equal(new Set(places).size, places.length, `places: ${places.join(', ')}`);
 });
 
 test('everything lying about can be got to, from where Rock starts, and leaves him a way on to his mark', () => {
@@ -83,7 +82,7 @@ function along(gig, net) {
   return (x, z) => step.get(key(Math.floor(x), Math.floor(z)));
 }
 
-test('tape lies after something that can hurt Rock and before something that still can, and a lighter before something that could finish him', () => {
+test('a whetstone lies after something that can hurt Metroll and before something that still can, and a lighter before something that could finish it', () => {
   for (let i = 0; i < VENUES.length; i++) {
     const gig = createGig(GFX, i);
     const v = gig.venue, at = along(gig, graph(v));
@@ -91,7 +90,7 @@ test('tape lies after something that can hurt Rock and before something that sti
     const harm = [
       ...v.crushers.map((c) => at(c.x + c.w / 2, c.z + c.d / 2)),
       ...v.spikes.map((s) => at(s.x + s.w / 2, s.z + s.d / 2)),
-      ...v.foes.filter((f) => FOES[f.kind].power > FOES.tourist.power).map((f) => at(f.x, f.z)),
+      ...v.foes.filter((f) => FOES[f.kind].power > FOES.poser.power).map((f) => at(f.x, f.z)),
     ];
     for (let z = 0; z < v.rows; z++) for (let x = 0; x < v.cols; x++) if (v.cell(x, z)?.kind === 'zap') harm.push(at(x, z));
     for (const p of gig.actors.pickups) {

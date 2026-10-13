@@ -99,7 +99,7 @@ export function createAudio() {
     cg.gain.value = crowd.base;
 
     band = createBand(ctx, music, noise);
-    if (wantTitle) band.start(THEMES.worldtour, TITLE_TEMPO);
+    if (wantTitle) band.start(THEMES.metroll, TITLE_TEMPO);
   }
 
   const now = () => ctx.currentTime;
@@ -376,9 +376,9 @@ export function createAudio() {
     startMusic(venue, { gig = null } = {}) {
       wantTitle = false;
       if (!ctx || !band) return;
-      const name = venue.look?.theme ?? 'worldtour';
+      const name = venue.look?.theme ?? 'metroll';
       const beat0 = gig ? (gig.time * venue.tempo) / 60 : 0;
-      band.start(THEMES[name] ?? THEMES.worldtour, venue.tempo, beat0);
+      band.start(THEMES[name] ?? THEMES.metroll, venue.tempo, beat0);
     },
 
     stopMusic() {
@@ -389,7 +389,7 @@ export function createAudio() {
     /** The main title, over the title screen: now, or as soon as the page has had a click and there is sound. */
     title() {
       wantTitle = true;
-      if (band && band.theme !== THEMES.worldtour) band.start(THEMES.worldtour, TITLE_TEMPO);
+      if (band && band.theme !== THEMES.metroll) band.start(THEMES.metroll, TITLE_TEMPO);
     },
 
     /** Where the band is, in beats from the downbeat; null if it isn't playing. */

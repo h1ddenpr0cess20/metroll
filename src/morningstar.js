@@ -77,9 +77,9 @@ export function createMorningStar(GFX, { spikes = SPIKES, detail = 1 } = {}) {
   const geometry = new GFX.SphereGeometry(CORE, Math.round(56 * detail), Math.round(36 * detail));
   const p = geometry.attributes.position.array;
   const colors = new Float32Array(p.length);
-  const steel = new GFX.Color('#7b8190');
-  const bright = new GFX.Color('#e4e9f2');
-  const soot = new GFX.Color('#3a3d45');
+  const steel = new GFX.Color('#aab2c2');
+  const bright = new GFX.Color('#f6f8fc');
+  const soot = new GFX.Color('#6c727e');
   const c = new GFX.Color();
   for (let i = 0; i < p.length; i += 3) {
     const x = p[i] / CORE, y = p[i + 1] / CORE, z = p[i + 2] / CORE;
@@ -91,7 +91,9 @@ export function createMorningStar(GFX, { spikes = SPIKES, detail = 1 } = {}) {
     colors[i] = c.r; colors[i + 1] = c.g; colors[i + 2] = c.b;
   }
   geometry.setAttribute('color', new GFX.BufferAttribute(colors, 3));
-  const material = new GFX.MeshStandardMaterial({ name: 'forged-steel', vertexColors: true, metalness: 0.78, roughness: 0.26 });
+  const material = new GFX.MeshStandardMaterial({ name: 'forged-steel', vertexColors: true, metalness: 0.62, roughness: 0.3 });
+  material.emissive.set('#1c2028');
+  material.emissiveIntensity = 0.8;
   const core = new GFX.Mesh(geometry, material);
   core.name = 'ball';
 
@@ -112,8 +114,8 @@ export function createMorningStar(GFX, { spikes = SPIKES, detail = 1 } = {}) {
   const TRIS = [[0, 1, 5], [0, 5, 4], [1, 2, 6], [1, 6, 5], [2, 3, 7], [2, 7, 6], [3, 0, 4], [3, 4, 7], [4, 5, 6], [4, 6, 7]];
   const position = new Float32Array(spikes * TRIS.length * 9);
   const color = new Float32Array(position.length);
-  const root = new GFX.Color('#5a5e68');
-  const tipColour = new GFX.Color('#f4f6fb');
+  const root = new GFX.Color('#8a909c');
+  const tipColour = new GFX.Color('#ffffff');
   const corner = (f, k, kept) => {
     // 0 to 3 round the foot, 4 to 7 round the top.
     const top = k >= 4;
@@ -146,7 +148,9 @@ export function createMorningStar(GFX, { spikes = SPIKES, detail = 1 } = {}) {
   spikeGeometry.setAttribute('position', new GFX.BufferAttribute(position, 3));
   spikeGeometry.setAttribute('color', new GFX.BufferAttribute(color, 3));
   spikeGeometry.computeVertexNormals();
-  const spikeMaterial = new GFX.MeshStandardMaterial({ name: 'spikes', vertexColors: true, metalness: 0.85, roughness: 0.2, flatShading: true });
+  const spikeMaterial = new GFX.MeshStandardMaterial({ name: 'spikes', vertexColors: true, metalness: 0.72, roughness: 0.22, flatShading: true });
+  spikeMaterial.emissive.set('#1c2028');
+  spikeMaterial.emissiveIntensity = 0.8;
   const mesh = new GFX.Mesh(spikeGeometry, spikeMaterial);
   mesh.name = 'spikes';
 

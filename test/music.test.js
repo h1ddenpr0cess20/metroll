@@ -46,7 +46,7 @@ test('the score never goes quiet while it plays, a stall of the page notwithstan
   t.mock.timers.enable({ apis: ['setInterval'] });
   const ctx = fakeContext();
   const band = createBand(ctx, ctx.destination, ctx.createBuffer(1, 1000));
-  band.start(THEMES.worldtour, 136, 0);
+  band.start(THEMES.metroll, 136, 0);
   const notesIn = (a, b) => ctx.starts.filter((w) => w >= a && w < b).length;
   assert.ok(notesIn(0, 1) > 0, 'it starts at once');
   assert.ok(ctx.starts.some((w) => w > LOOKAHEAD - 1), 'and is scheduled well ahead');
@@ -82,16 +82,19 @@ test('every theme plays a whole song through without a number Web Audio would th
   }
 });
 
-test('chords keep their thirds in the key, and the minor keys take a dominant on their five where they want one', () => {
-  assert.deepEqual(chordOf(THEMES.worldtour, 0), [0, 4, 7]);
-  assert.deepEqual(chordOf(THEMES.sydney, 0), [0, 3, 7]);
-  assert.deepEqual(chordOf(THEMES.paris, 0), [0, 3, 7, 10]);
-  assert.deepEqual(chordOf(THEMES.paris, 7), [0, 4, 7, 10]);
-  assert.deepEqual(chordOf(THEMES.spain, 7), [0, 4, 7]);
-  assert.deepEqual(chordOf(THEMES.tokyo, 5), [0, 4, 7, 11]);
-  // The hijaz mode: a major third over the key, and the flat two a major chord.
-  assert.deepEqual(chordOf(THEMES.egypt, 0), [0, 4, 7]);
-  assert.deepEqual(chordOf(THEMES.egypt, 1), [0, 4, 7]);
+test('chords keep their thirds in the key, and the minor keys take the chords their modes want', () => {
+  assert.deepEqual(chordOf(THEMES.metroll, 0), [0, 3, 7]);
+  assert.deepEqual(chordOf(THEMES.brum, 0), [0, 3, 7]);
+  assert.deepEqual(chordOf(THEMES.strip, 0), [0, 4, 7]);
+  assert.deepEqual(chordOf(THEMES.strip, 5), [0, 4, 7]);
+  // The relative minor in a major key.
+  assert.deepEqual(chordOf(THEMES.fairground, 9), [0, 3, 7]);
+  // The harmonic minor's five is a major chord, and its one is minor.
+  assert.deepEqual(chordOf(THEMES.abbey, 0), [0, 3, 7]);
+  assert.deepEqual(chordOf(THEMES.abbey, 7), [0, 4, 7]);
+  // Phrygian: the flat two is a major chord, and the one a minor.
+  assert.deepEqual(chordOf(THEMES.swamp, 1), [0, 4, 7]);
+  assert.deepEqual(chordOf(THEMES.swamp, 0), [0, 3, 7]);
 });
 
 test('no theme asks more of the audio thread than it can play: at most 140 sounds started a bar, and the chords and drums share their filters', () => {

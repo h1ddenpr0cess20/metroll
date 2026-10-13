@@ -1,7 +1,7 @@
 import { isBaked, ready } from './models/library.js';
 import { createStatic } from './models/model.js';
 import { PROPS } from './models/props/index.js';
-import { BUMPERS, BURSTS, DROPS, RIDES } from './travel.js';
+import { BUMPERS, BURSTS, DROPS, RIDES } from './travel/index.js';
 import { canvas, floorTexture, gaffTexture, glowTexture, grilleTexture, panelTexture, shutterTexture, texture, tiled } from './textures.js';
 
 /**

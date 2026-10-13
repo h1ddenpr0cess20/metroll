@@ -480,8 +480,8 @@ export const FLOORS = { concrete, planks, checker, carpet, plate, grass, panels,
 
 // ———————————————————————————————————————————————————————————— walls
 
-/** Names, for the gig posters on the walls: the tour, and the bands on the bill with it. */
-const BILLS = ['WORLD TOUR', 'BOULDER DASH', 'THE PEBBLES', 'LANDSLIDE', 'BEDROCK', 'THE SEDIMENTS', 'MAGMA', 'SCREE', 'GRANITE', 'SLAB', 'TECTONIC', 'HARD PLACE'];
+/** Names, for the gig posters on the walls: the bands on the bill. */
+const BILLS = ['IRON GOSPEL', 'BLACK COUNTRY', 'NIGHT MARE', 'DIRGE', 'SLAUGHTER BAY', 'CORPSE GRINDER', 'WALL OF DEATH', 'FROSTBITE', 'GRAVEYARD', 'LAST STAND', 'HELL YEAH', 'LOUDER'];
 
 /** Bricks, a tile wide and a tile high: four courses, each set half a brick over from the last. With `posters`, papered with gig posters. */
 function brick(GFX, { posters = false } = {}) {
@@ -542,9 +542,9 @@ function brick(GFX, { posters = false } = {}) {
       ctx.fillRect(w / 2 - 13, -h / 2 - 3, 18, 8);
       ctx.restore();
     };
-    flyer(10, 18, 104, 138, pick(['#c8302a', '#2a4a8a', '#e8a020']), '#ffffff', 'ROCK · LIVE', 'sun', -0.05);
+    flyer(10, 18, 104, 138, pick(['#c8302a', '#2a4a8a', '#e8a020']), '#ffffff', 'LIVE · LOUD', 'sun', -0.05);
     flyer(134, 96, 112, 142, pick(['#1a1a20', '#3a5a3a', '#6a2a6a']), '#f0d070', pick(BILLS), 'bolt', 0.04);
-    flyer(150, 8, 80, 78, '#f5f0e6', '#d9232f', 'SOON', 'rings', 0.06);
+    flyer(150, 8, 80, 78, '#f5f0e6', '#d9232f', 'SOLD OUT', 'rings', 0.06);
   };
   return {
     map: texture(GFX, paint(posters ? '#b8a89a' : '#e2ddd4', '#3a342e', true, posters ? poster : null)),

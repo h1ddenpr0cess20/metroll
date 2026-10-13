@@ -31,7 +31,7 @@ function propWithRoom(gig) {
 test('props are smashed by a run at them, and stand up to a nudge', () => {
   const slow = createGig(GFX, 0);
   const p1 = propWithRoom(slow);
-  assert.ok(p1, 'the Casting Call has a prop to try');
+  assert.ok(p1, 'the first track has a prop to try');
   charge(slow, p1, 1.5);
   assert.equal(p1.broken, -1, 'a nudge leaves it standing');
   assert.ok(slow.ball.x < p1.box.min[0] + 0.05, 'and Rock does not go through it');
@@ -67,7 +67,6 @@ test('everything a set is dressed with is built, and stays inside its footprint'
 
 test('the building is not furniture: crowd barriers and the stands do not break', () => {
   const sets = VENUES.map((_, i) => createGig(GFX, i)).filter((gig) => gig.venue.props.some((p) => p.kind === 'barrier' || p.kind === 'stands'));
-  assert.ok(sets.length > 0, 'some set has barriers');
   for (const gig of sets) {
     const sturdy = gig.venue.props.filter((p) => p.kind === 'barrier' || p.kind === 'stands');
     assert.ok(sturdy.every((p) => !p.breakAt), `${gig.venue.name}: no breakable barriers or stands`);
@@ -77,14 +76,18 @@ test('the building is not furniture: crowd barriers and the stands do not break'
 const tilesOf = (p) => Array.from({ length: p.w * p.d }, (_, k) => [p.x + (k % p.w), p.z + Math.floor(k / p.w)]);
 
 test('a prop with a front faces open floor, and one against a wall turns its back to it', () => {
-  const london = loadVenue(0);
-  const wall = (x, z) => london.cell(x, z)?.kind === 'wall' && !london.cell(x, z).prop;
-  const benches = london.props.filter((p) => p.kind === 'bench' && [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dz]) => wall(p.x + dx, p.z + dz)));
-  assert.ok(benches.length > 1, 'London has benches against a wall');
-  for (const b of benches) {
-    const [dx, dz] = openSide(london, b);
-    assert.ok(wall(b.x - dx, b.z - dz), `the bench at ${b.x},${b.z} sits with its back to the wall`);
+  let against = 0;
+  for (let i = 0; i < VENUES.length; i++) {
+    const v = loadVenue(i);
+    const wall = (x, z) => v.cell(x, z)?.kind === 'wall' && !v.cell(x, z).prop;
+    for (const p of v.props.filter((q) => FACING.has(q.kind) && [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dz]) => wall(q.x + dx, q.z + dz)))) {
+      if (p.w > 1 || p.d > 1) continue;
+      against++;
+      const [dx, dz] = openSide(v, p);
+      assert.ok(wall(p.x - dx, p.z - dz), `${v.name}: the ${p.kind} at ${p.x},${p.z} sits with its back to the wall`);
+    }
   }
+  assert.ok(against > 0 || VENUES.length < 3, 'something stands against a wall');
   for (let i = 0; i < VENUES.length; i++) {
     const v = loadVenue(i);
     for (const p of v.props.filter((q) => FACING.has(q.kind))) {

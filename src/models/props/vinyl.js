@@ -1,4 +1,4 @@
-import { coat, grainy } from '../skins.js';
+import { coat } from '../skins.js';
 
 /**
  * A crate of vinyl: a wooden record crate stencilled in black, packed with

@@ -27,6 +27,8 @@ export const MATERIALS = {
   screen: { roughness: 0.4, emissive: '#ffffff', emissiveIntensity: 1.4 },
   glass: { roughness: 0.04, clearcoat: 1, metalness: 0.2 },
   paper: { roughness: 0.9 },
+  bone: { roughness: 0.55 },
+  fur: { roughness: 0.85, sheen: 0.4, sheenColor: '#aaa' },
 };
 
 /** Cloth: a colour that is lighter on top and darker beneath, with a little mottling. */
