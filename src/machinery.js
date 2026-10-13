@@ -2,10 +2,10 @@ import { isBaked, ready } from './models/library.js';
 import { createStatic } from './models/model.js';
 import { PROPS } from './models/props/index.js';
 import { BUMPERS, BURSTS, DROPS, RIDES } from './travel/index.js';
-import { canvas, floorTexture, gaffTexture, glowTexture, grilleTexture, panelTexture, shutterTexture, texture, tiled } from './textures.js';
+import { canvas, gaffTexture, glowTexture, grilleTexture, panelTexture, shutterTexture, texture, tiled } from './textures.js';
 
 /**
- * What moves, and what lies about, as it is drawn: sandbags and rigs that
+ * What moves, and what lies about, as it is drawn: rigs and presses that
  * drop on the beat, pyro and steam in the floor, dollies and trams and the
  * rest of the lifts, closed sets' shutters, breakaways, bumpers and the
  * pickups. Each `create…` gives { group, update(...) }; the logic is in
@@ -15,21 +15,17 @@ import { canvas, floorTexture, gaffTexture, glowTexture, grilleTexture, panelTex
 const dark = (GFX, hex, o = {}) => new GFX.MeshStandardMaterial({ color: new GFX.Color(hex), roughness: 0.6, ...o });
 
 /**
- * What comes down on the beat, as the set says (`look.crusher`): by default
- * a row of sandbags off a batten; or a lighting rig (`rig`), a crystal
- * chandelier, a crate off a crane, a stack of speakers, or the props
- * department's papier-mâché boulder (`boulder`), or a spaceship's
- * hydraulic press (`piston`). It sways as it waits at the top.
+ * What comes down on the beat, as the track says (`look.crusher`): the
+ * styles of travel/drops.js (anvils, coffins, kegs, bells ...), or here a
+ * lighting rig (`rig`), a hydraulic press (`piston`), and by default a row
+ * of sandbags off a batten. It sways as it waits at the top.
  */
 export function createDropMesh(GFX, { w, d, height, venue }) {
   const style = venue?.look?.crusher ?? 'sandbag';
   if (DROPS[style]) return DROPS[style](GFX, { w, d, height });
   if (style === 'sandbag') return createSandbags(GFX, { w, d, height });
   if (style === 'rig') return createRig(GFX, { w, d, height });
-  if (style === 'boulder') return createBoulder(GFX, { w, d, height });
   if (style === 'piston') return createPiston(GFX, { w, d, height });
-  if (style === 'chandelier') return createChandelier(GFX, { w, d, height });
-  if (style === 'crate') return createCrate(GFX, { w, d, height });
   const group = new GFX.Group();
   const grille = grilleTexture(GFX);
   const tolex = dark(GFX, '#17171a', { roughness: 0.75 });
@@ -182,28 +178,7 @@ function createRig(GFX, { w, d, height }) {
   return { group, update(up, time) { lensMat.color.setRGB(1, 0.9 + 0.05 * Math.sin(time * 20), 0.75); } };
 }
 
-/** The props department's boulder: papier-mâché painted grey, lumpy, on a cable. Rock has opinions about it. */
-function createBoulder(GFX, { w, d, height }) {
-  const group = new GFX.Group();
-  const geometry = new GFX.IcosahedronGeometry(0.5, 1).toNonIndexed();
-  const p = geometry.attributes.position;
-  for (let i = 0; i < p.count; i++) {
-    const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
-    const k = 1 + 0.12 * Math.sin(x * 9.1 + y * 3.7) * Math.cos(z * 7.3 - y * 2.1);
-    p.setXYZ(i, x * k, y * k, z * k);
-  }
-  geometry.computeVertexNormals();
-  const rock = new GFX.Mesh(geometry, dark(GFX, '#8a8478', { roughness: 0.9, flatShading: true }));
-  rock.scale.set(Math.min(w, 2.4) * 0.95, height * 1.05, Math.min(d, 2.4) * 0.95);
-  rock.castShadow = rock.receiveShadow = true;
-  group.add(rock);
-  const cable = new GFX.Mesh(new GFX.CylinderGeometry(0.02, 0.02, 8, 5), dark(GFX, '#2a2a30', { metalness: 0.8 }));
-  cable.position.y = height / 2 + 4;
-  group.add(cable);
-  return { group, update(up, time) { rock.rotation.y = up > 0.99 ? Math.sin(time * 1.3) * 0.2 : rock.rotation.y; } };
-}
-
-/** A hydraulic press, as the spaceship set has them: a steel block in hazard stripes on a ram out of the ceiling, lights round its foot. */
+/** A hydraulic press, as a factory has them: a steel block in hazard stripes on a ram out of the ceiling, lights round its foot. */
 function createPiston(GFX, { w, d, height }) {
   const group = new GFX.Group();
   const steel = dark(GFX, '#9aa2b0', { metalness: 0.85, roughness: 0.3 });
@@ -231,66 +206,6 @@ function createPiston(GFX, { w, d, height }) {
   ram.position.y = height / 2 + 4;
   group.add(ram);
   return { group, update(up, time) { const k = up < 0.99 && up > 0.01 ? 1 : 0.4 + 0.3 * Math.sin(time * 6); glowMat.color.setRGB(k, 0.2 * k, 0.15 * k); } };
-}
-
-/** A wooden crate on a crane hook: slats, steel bands, stencilled. */
-function createCrate(GFX, { w, d, height }) {
-  const group = new GFX.Group();
-  const plank = floorTexture(GFX, 'planks');
-  const wood = new GFX.MeshStandardMaterial({ color: new GFX.Color('#c8a070'), map: tiled(GFX, plank.map, Math.max(1, Math.round(w)), 1), bumpMap: tiled(GFX, plank.bump, Math.max(1, Math.round(w)), 1), bumpScale: 1.4, roughness: 0.85 });
-  const steel = dark(GFX, '#4a4e58', { metalness: 0.8, roughness: 0.4 });
-  const body = new GFX.Mesh(new GFX.BoxGeometry(w, height, d), wood);
-  body.castShadow = body.receiveShadow = true;
-  group.add(body);
-  // Steel straps round it, and corner plates.
-  for (const y of [-height * 0.32, height * 0.32]) {
-    const strap = new GFX.Mesh(new GFX.BoxGeometry(w + 0.03, 0.07, d + 0.03), steel);
-    strap.position.y = y;
-    group.add(strap);
-  }
-  const hook = new GFX.Mesh(new GFX.TorusGeometry(0.16, 0.035, 8, 16, Math.PI * 1.5), steel);
-  hook.position.y = height / 2 + 0.16;
-  group.add(hook);
-  const chain = new GFX.Mesh(new GFX.CylinderGeometry(0.035, 0.035, 8, 8), steel);
-  chain.position.y = height / 2 + 4.2;
-  group.add(chain);
-  return { group, update() {} };
-}
-
-/** A crystal chandelier: a brass hoop of candles and a spray of crystal drops under it, hung from a chain. */
-function createChandelier(GFX, { w, d, height }) {
-  const group = new GFX.Group();
-  const brass = dark(GFX, '#e0b44a', { metalness: 1, roughness: 0.25, emissive: new GFX.Color('#3a2400'), emissiveIntensity: 0.4 });
-  const crystal = new GFX.MeshPhysicalMaterial({ color: new GFX.Color('#e8f4ff'), roughness: 0.04, metalness: 0.2, clearcoat: 1, emissive: new GFX.Color('#8ab0e0'), emissiveIntensity: 0.55 });
-  const flame = new GFX.MeshBasicMaterial({ color: new GFX.Color('#ffd890'), toneMapped: false });
-  const r = Math.min(w, d) / 2 * 0.95;
-  const hoop = new GFX.Mesh(new GFX.TorusGeometry(r * 0.88, 0.06, 8, 28), brass);
-  hoop.rotation.x = Math.PI / 2;
-  hoop.position.y = height * 0.2;
-  const rim = new GFX.Mesh(new GFX.CylinderGeometry(r, r * 0.8, height * 0.34, 24), brass);
-  rim.position.y = 0.02;
-  group.add(hoop, rim);
-  for (let i = 0; i < 12; i++) {
-    const a = (i / 12) * Math.PI * 2;
-    const candle = new GFX.Mesh(new GFX.CylinderGeometry(0.03, 0.03, 0.14, 6), dark(GFX, '#f2ecd8'));
-    candle.position.set(Math.cos(a) * r * 0.88, height * 0.34, Math.sin(a) * r * 0.88);
-    const fl = new GFX.Mesh(new GFX.SphereGeometry(0.035, 8, 6), flame);
-    fl.position.set(candle.position.x, height * 0.34 + 0.11, candle.position.z);
-    group.add(candle, fl);
-    const drop = new GFX.Mesh(new GFX.ConeGeometry(0.05, 0.22 + (i % 3) * 0.05, 6), crystal);
-    drop.rotation.x = Math.PI;
-    drop.position.set(Math.cos(a) * r * 0.78, -height * 0.34 - 0.04, Math.sin(a) * r * 0.78);
-    group.add(drop);
-  }
-  const centre = new GFX.Mesh(new GFX.ConeGeometry(0.1, 0.34, 8), crystal);
-  centre.rotation.x = Math.PI;
-  centre.position.y = -height * 0.4;
-  group.add(centre);
-  const chain = new GFX.Mesh(new GFX.CylinderGeometry(0.03, 0.03, 8, 8), brass);
-  chain.position.y = height / 2 + 4;
-  group.add(chain);
-  group.traverse((o) => { if (o.isMesh) o.castShadow = true; });
-  return { group, update() {} };
 }
 
 /**
@@ -370,7 +285,7 @@ export function createPyroMesh(GFX, { x, z, w, d, venue }) {
  * a camera on an arm off one side), a studio tour tram (`tram`: a flatbed
  * under a striped canopy), a log raft (`raft`), a mine cart (`cart`), a
  * flying saucer (`saucer`), a black stage riser with gaffer tape round its
- * edge (`riser`), a raft of upraised arms (`crowd`: the fans carry Rock
+ * edge (`riser`), a raft of upraised arms (`crowd`: the fans carry Metroll
  * across), or a forklift pallet on a pair of forks; and the rides of the
  * tour, from travel.js: gondolas, cable cars, feluccas, floats and the rest.
  */
@@ -401,7 +316,7 @@ export function createLiftMesh(GFX, { w, d, thickness, style, lift = null }) {
     slab.castShadow = slab.receiveShadow = true;
     group.add(slab);
     wheels(0.16, '#1a1a1e');
-    // A push bar at the back, and the camera out on an arm off the side, looking at Rock.
+    // A push bar at the back, and the camera out on an arm off the side, looking at Metroll.
     const bar = new GFX.Mesh(new GFX.CylinderGeometry(0.03, 0.03, w * 0.8, 8), metal);
     bar.rotation.z = Math.PI / 2;
     bar.position.set(0, top + 0.5, -d / 2 - 0.1);
@@ -504,7 +419,7 @@ export function createLiftMesh(GFX, { w, d, thickness, style, lift = null }) {
     group.add(disc, belly, ring);
     live = (time) => { const k = 0.6 + 0.4 * Math.sin(time * 6); ringMat.color.setRGB(0.35 * k, 0.94 * k, 1 * k); };
   } else if (style === 'crowd') {
-    // Crowd-surfing: the people stand down in the pit, packed in, arms straight up, and Rock rides on their hands.
+    // Crowd-surfing: the people stand down in the pit, packed in, arms straight up, and Metroll rides on their hands.
     // There is nothing to see of the platform itself: the top of it is where their palms are.
     const shirts = ['#ff2d95', '#2de2ff', '#ffd23a', '#8a4be8', '#3ae88a', '#f2f0ec', '#ff7a1a', '#16161c'].map((c) => dark(GFX, c, { roughness: 0.8 }));
     const skins = ['#e8b48f', '#c08060', '#8a5a3a', '#f0c8a8', '#5a3a28'].map((c) => dark(GFX, c, { roughness: 0.6 }));
@@ -703,13 +618,13 @@ export function createPanelMesh(GFX, { span, height, thickness, across, look }) 
   return { group, update() {} };
 }
 
-/** A bumper: a squat chrome post with a glowing ring, which flashes when Rock bounces off it. */
+/** A bumper: a squat chrome post with a glowing ring, which flashes when Metroll bounces off it. */
 /**
  * A bumper, by its `look`: 'post' (a chrome post with a lit ring), 'rope' (a
  * brass stanchion of a velvet rope, the rope looped round it), 'podium' (a
  * dancer's lit cube), 'drum' (a kick drum on its side, the head up),
  * 'barrel' (a banded barrel), 'cactus' (a saguaro, foam, painted) or
- * 'hydrant' (a fire hydrant). Each flashes and swells when it throws Rock.
+ * 'hydrant' (a fire hydrant). Each flashes and swells when it throws Metroll.
  */
 export function createBumperMesh(GFX, { radius, look = 'post' }) {
   const group = new GFX.Group();

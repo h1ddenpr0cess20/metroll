@@ -3,12 +3,12 @@ import { createBumperMesh, createDropMesh, createGateMesh, createLiftMesh, creat
 import { collideBalls, createBall, PUSH, stepBall } from './physics.js';
 
 /**
- * Everything on a set that moves or can be taken, and isn't Rock: the
+ * Everything on a set that moves or can be taken, and isn't Metroll: the
  * annoying people, sandbags and rigs that drop on the beat, effects that
  * fire from the floor, lifts (dollies and trams over the dark, platforms
  * down shafts), closed sets (a pass lifts their shutters), breakaways
- * (speed breaks them), bumpers, and what lies about — picks, suitcases of
- * them, gaffer tape, lighters, passports and snow globes.
+ * (speed breaks them), bumpers, and what lies about — picks, records,
+ * whetstones, lighters, backstage passes and demo tapes.
  */
 
 const CRUSHER_HEIGHT = 0.9;
@@ -16,7 +16,7 @@ const LIFT_THICKNESS = 0.5;
 const DOOR_HEIGHT = 1.5;
 const DOOR_THICKNESS = 0.18;
 
-/** Further than this from Rock, a foe with nothing to do stops being simulated. */
+/** Further than this from Metroll, a foe with nothing to do stops being simulated. */
 const SLEEP = 26;
 
 /** How far each turning pickup's model is let down to touch the floor (its lowest point, as sculpted, is above it). */
@@ -196,7 +196,7 @@ export function createActors(GFX, venue, world, { killY }) {
     return { ...b, y: ground, look, hit: -10 };
   });
 
-  // Props that can be smashed: a box over each, solid until Rock comes at it hard enough.
+  // Props that can be smashed: a box over each, solid until Metroll comes at it hard enough.
   const props = venue.props.filter((p) => p.breakAt).map((p) => ({
     spec: p, breakAt: p.breakAt, broken: -1, centre: [p.x + p.w / 2, p.base, p.z + p.d / 2],
     box: {
@@ -214,7 +214,7 @@ export function createActors(GFX, venue, world, { killY }) {
     mesh.add(spin);
     const look = createPickupMesh(GFX, p.kind, { amount: p.amount });
     spin.add(look.group);
-    // Picks and suitcases sit where they were left, at whatever angle; the rest float and turn.
+    // Picks and records sit where they were left, at whatever angle; the rest float and turn.
     if (STILL.has(p.kind)) spin.rotation.y = (i * 2.399963) % (Math.PI * 2);
     const ground = venue.heightAt(p.x, p.z) ?? 0;
     mesh.position.set(p.x, ground, p.z);
@@ -267,7 +267,7 @@ export function createActors(GFX, venue, world, { killY }) {
 
   /**
    * What a boss's tactic does to how it moves this step: a multiple of its
-   * push and its top speed (0 holds it still). A stomp lands here too: Rock
+   * push and its top speed (0 holds it still). A stomp lands here too: Metroll
    * is thrown back from it, and the game hears of it.
    */
   function tactic(m, b, troll, toTroll, time) {
@@ -276,7 +276,7 @@ export function createActors(GFX, venue, world, { killY }) {
     if (how === 'lunge') {
       if (time - (m.lungeAt ?? -99) > LUNGE.every && toTroll < LUNGE.reach) m.lungeAt = time;
       const t = time - m.lungeAt;
-      // A crouch, the rush for the close-up, and then he has to get his breath back: that is the time to hit him.
+      // A crouch, the rush for the close-up, and then it has to get its breath back: that is the time to hit it.
       if (t < LUNGE.crouch) return { push: 1, top: 0 };
       if (t < LUNGE.crouch + LUNGE.rush) return { push: 4, top: 2.8 };
       if (t < LUNGE.crouch + LUNGE.rush + LUNGE.winded) return { push: 1, top: 0.25 };
@@ -338,8 +338,8 @@ export function createActors(GFX, venue, world, { killY }) {
     drain() { return events.splice(0); },
 
     /**
-     * One physics step for every foe. `troll` is Rock's ball, or null while
-     * there isn't one to chase. Returns the foe Rock has run into, if any.
+     * One physics step for every foe. `troll` is Metroll's ball, or null while
+     * there isn't one to chase. Returns the foe Metroll has run into, if any.
      */
     step(dt, time, troll) {
       let touched = null;
@@ -496,7 +496,7 @@ export function createActors(GFX, venue, world, { killY }) {
 
     /**
      * Meshes to match the state, once a frame. Only the foes within `reach`
-     * of `focus` (where Rock is) move their limbs: the rest keep their last
+     * of `focus` (where Metroll is) move their limbs: the rest keep their last
      * pose, out of sight or nearly.
      */
     sync(dt, time, { focus = null, reach = 15 } = {}) {

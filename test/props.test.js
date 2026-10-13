@@ -6,7 +6,7 @@ import { FACING, openSide, PROPS } from '../src/decor.js';
 import { createGig, STEP, stepGig } from '../src/gig.js';
 import { VENUES, loadVenue } from '../src/venues/index.js';
 
-/** Rock rolled at the middle of `prop`'s near side from `back` tiles off, going `speed`. */
+/** Metroll rolled at the middle of `prop`'s near side from `back` tiles off, going `speed`. */
 function charge(gig, prop, speed, back = 0.9) {
   const b = gig.ball;
   const [cx, , cz] = prop.centre;
@@ -34,7 +34,7 @@ test('props are smashed by a run at them, and stand up to a nudge', () => {
   assert.ok(p1, 'the first track has a prop to try');
   charge(slow, p1, 1.5);
   assert.equal(p1.broken, -1, 'a nudge leaves it standing');
-  assert.ok(slow.ball.x < p1.box.min[0] + 0.05, 'and Rock does not go through it');
+  assert.ok(slow.ball.x < p1.box.min[0] + 0.05, 'and Metroll does not go through it');
 
   const fast = createGig(GFX, 0);
   const p2 = fast.actors.props.find((p) => p.spec.x === p1.spec.x && p.spec.z === p1.spec.z);

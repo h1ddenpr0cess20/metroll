@@ -2,7 +2,7 @@ import { grainy } from '../skins.js';
 
 /**
  * The Drone: somebody's camera drone, hired to get the crowd shot and now
- * very interested in a boulder. A white shell, four arms out to four
+ * very interested in a spiked ball. A white shell, four arms out to four
  * rotors in guards, landing legs, a camera on a gimbal underneath and a red
  * light that means it is recording. It hovers over the crowd, tilting into
  * the way it goes. About 0.6 tiles across; a flyer, so its origin is its

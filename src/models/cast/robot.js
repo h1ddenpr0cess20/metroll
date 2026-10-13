@@ -2,13 +2,13 @@ import { grainy } from '../skins.js';
 import { bones, joints, moveHumanoid, side } from './humanoid.js';
 
 /**
- * The Robot Waiter: from the robot restaurant in Shinjuku, which is a man
- * in a costume made out of a boiler. A box of a body with dials and a
- * grille, a tin-can head with two glowing eyes and an aerial, arms and
- * legs of dryer hose, pincers for hands, boots like toasters, and a tray
- * held out on one pincer with a pot of tea on it. Walks as if the joints
- * were rusted, because they are. Beep. Boop. Your table is ready. You are
- * not. About 1 tile tall.
+ * The Line Robot: left over from a factory in Berlin that nobody switched
+ * off. A box of a body with dials and a grille, a tin-can head with two
+ * glowing eyes and an aerial, arms and legs of dryer hose, pincers for
+ * hands, boots like toasters, and a tray held out on one pincer that has
+ * not had anything on it since 1974. Walks as if the joints were rusted,
+ * because they are. Beep. Boop. It has one job. You are the job. About 1
+ * tile tall.
  */
 
 const B = 1.12;

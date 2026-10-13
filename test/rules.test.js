@@ -19,7 +19,7 @@ test('a hit is graded by how fast it was: tap, bonk, smash, crit', () => {
   assert.equal(resolveImpact({ speed: Math.max(bouncer.toughness * CRIT.times, CRIT.least) + 1, foe: bouncer }).grade, 'crit');
 });
 
-test('a smash costs Rock nothing, a tap costs him the foe\'s whole power, and a bonk less the closer it was to a smash', () => {
+test('a smash costs Metroll nothing, a tap costs it the foe\'s whole power, and a bonk less the closer it was to a smash', () => {
   const bobby = foe('bobby');
   assert.equal(resolveImpact({ speed: bobby.toughness, foe: bobby }).damage, 0);
   assert.equal(resolveImpact({ speed: 0, foe: bobby }).damage, bobby.power);

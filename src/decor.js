@@ -5,9 +5,9 @@ import { canvas, cached, grilleTexture, random, texture, tiled } from './texture
 
 /**
  * What the venues are furnished with. Each prop stands over the tiles of a
- * wall block (`Venue.pillar`/`block` with a `prop`), which is what Rock
+ * wall block (`Venue.pillar`/`block` with a `prop`), which is what Metroll
  * bumps into; the prop is drawn over it, so it should fill its footprint.
- * Heights are kept low, so a prop in front of Rock never hides him.
+ * Heights are kept low, so a prop in front of Metroll never hides it.
  *
  * A prop is a function `(GFX, spec) => { group, update?(time, beat) }`,
  * with `spec` = { w, d, rise, rot, base, venue, ...whatever the venue gave }.

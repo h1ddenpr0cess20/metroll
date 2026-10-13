@@ -1,20 +1,20 @@
 /**
- * What happens when Rock runs into someone. There is no roll of the dice:
- * it is how fast he was going. `speed` is how fast the two were coming
- * together, in tiles a second — Rock's roll plus theirs, and a drop onto
+ * What happens when Metroll runs into someone. There is no roll of the dice:
+ * it is how fast it was going. `speed` is how fast the two were coming
+ * together, in tiles a second — Metroll's roll plus theirs, and a drop onto
  * them from above counts for something too.
  *
  *   crit    twice what it takes: flattened. Nothing back, double the hype.
  *   smash   fast enough: gone, with nothing back.
- *   bonk    over half what it takes: the two bounce apart, and it costs Rock
- *           some of the foe's `power` — less the closer he was to a smash.
+ *   bonk    over half what it takes: the two bounce apart, and it costs Metroll
+ *           some of the foe's `power` — less the closer it was to a smash.
  *   tap     barely a touch: it hurts, and doesn't move them.
  *
  * Whatever isn't a smash still wears them down: a foe has as much `hp` as it
  * has `toughness`, and a bonk takes off as much as the speed it came at. So
  * a bouncer who can't be hit hard enough can be hit twice. A boss has a
  * good deal more than that, and never goes down for nothing: a smash on
- * one still costs Rock a quarter of its power.
+ * one still costs Metroll a quarter of its power.
  */
 
 /** Past this many times the toughness (and this fast at the least), it is a crit. */
@@ -33,13 +33,13 @@ export function resolveImpact({ speed, foe }) {
   return { grade: 'tap', damage: boss ? Math.ceil(power * 1.2) : power, hits: s * 0.4, hype: 0.25 };
 }
 
-/** How fast Rock and a foe are coming together: along the line between them, plus the weight of a fall onto them. */
+/** How fast Metroll and a foe are coming together: along the line between them, plus the weight of a fall onto them. */
 export function closingSpeed(troll, foe, foeVelocity = [0, 0, 0]) {
   const dx = foe.x - troll.x, dz = foe.z - troll.z;
   const d = Math.hypot(dx, dz) || 1;
   const nx = dx / d, nz = dz / d;
   const along = (troll.vx - foeVelocity[0]) * nx + (troll.vz - foeVelocity[2]) * nz;
-  // Coming down on top of them, harder than he is rolling.
+  // Coming down on top of them, harder than it is rolling.
   const drop = Math.max(0, -troll.vy) * (foe.y + (foe.height ?? 0.5) < troll.y - troll.r * 0.4 ? 0.7 : 0);
   return Math.max(0, along) + drop;
 }

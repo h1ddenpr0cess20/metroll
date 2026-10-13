@@ -7,7 +7,7 @@ import { chestPrint } from './metalwear.js';
  * green rubber wellies caked in mud to the knee, a plastic horn on a
  * string and a stein in each hand, one of which is in the air and slopping.
  * Has been awake for two days. Has had thirty beers. Is the happiest man
- * in Germany and will explain exactly why, at length, to a boulder.
+ * in Germany and will explain exactly why, at length, to a spiked ball.
  * About 1.0 tiles tall, and round.
  */
 

@@ -2,11 +2,11 @@
  * An autopilot for the stops. It plans its own way through — tile by tile,
  * over floor it can roll onto, down drops it can survive, across on the
  * dollies and trams, never onto live floor — fetches the passes before the
- * border gates and the snow demos behind the breakaways, running at a
- * breakaway fast enough to go through it, then rolls Rock along the plan
+ * border gates and the demo tapes behind the breakaways, running at a
+ * breakaway fast enough to go through it, then rolls Metroll along the plan
  * with the same push the controls give. It waits for sandbags to go up,
  * effects to die down and lifts to come, and whoever it runs into, it runs
- * into, as a player does. If it can get Rock to his mark in one piece, a
+ * into, as a player does. If it can get Metroll to its mark in one piece, a
  * person can: the tests hold every stop to that.
  */
 
@@ -240,8 +240,8 @@ function waypoints(gig, moves, from) {
 }
 
 /**
- * Drive stop `index` to the stage door (picking up the passports and snow demos on the way, or with `everything`, every last thing). Returns whether it got there, how
- * long it took, every way Rock was lost or hurt, the people he ran into, and
+ * Drive stop `index` to the stage door (picking up the passes and demo tapes on the way, or with `everything`, every last thing). Returns whether it got there, how
+ * long it took, every way Metroll was lost or hurt, the people it ran into, and
  * the gig as it came out.
  */
 export function drive(index, { limit = 1200, sample = null, demos = true, duel = true, from = null, everything = false } = {}) {
@@ -276,7 +276,7 @@ export function drive(index, { limit = 1200, sample = null, demos = true, duel =
     if (!reaches.has(k)) reaches.set(k, plan(gig, net, tileOf(a), tileOf(c), 99) !== null);
     return reaches.get(k);
   };
-  /** Where to go next: the most upstream passport or snow globe not yet picked up, nearest first, then Rock's mark. */
+  /** Where to go next: the most upstream pass or demo tape not yet picked up, nearest first, then Metroll's mark. */
   const goal = () => {
     const left = goals.filter((p) => !p.taken);
     const upstream = left.filter((p) => !left.some((q) => q !== p && canReach(q, p)));

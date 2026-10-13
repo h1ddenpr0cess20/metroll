@@ -32,7 +32,7 @@ test('no two tracks have the same boss, nor the same theme, and each says where 
   assert.equal(new Set(places).size, places.length, `places: ${places.join(', ')}`);
 });
 
-test('everything lying about can be got to, from where Rock starts, and leaves him a way on to his mark', () => {
+test('everything lying about can be got to, from where Metroll starts, and leaves it a way on to its mark', () => {
   for (let i = 0; i < VENUES.length; i++) {
     const gig = createGig(GFX, i);
     const v = gig.venue, net = graph(v);

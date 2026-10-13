@@ -52,7 +52,7 @@ class Piece {
   /**
    * Which way across the piece the back wall is, as the sign to give `across`:
    * tall things (film lamps, a camera crane) go on that side, where they can
-   * stand high without hiding Rock; low ones go on the other.
+   * stand high without hiding Metroll; low ones go on the other.
    */
   get back() {
     return this.heading === '+x' || this.heading === '-z' ? -1 : 1;
@@ -148,7 +148,7 @@ export function digger(venue, { x, z, h, heading = '+x' }) {
       return p;
     },
 
-    /** A banked channel down, like a gutter or a loading chute; no walls, the banks keep Rock in. */
+    /** A banked channel down, like a gutter or a loading chute; no walls, the banks keep Metroll in. */
     chute(length, drop, { width = 3, color = 1, bank = 0.9, floor } = {}) {
       const p = piece(length, width);
       const axis = p.dir[0] ? 'x' : 'z';
@@ -221,7 +221,7 @@ export function digger(venue, { x, z, h, heading = '+x' }) {
       return p;
     },
 
-    /** Rock's mark, with walls round. */
+    /** Metroll's mark, with walls round. */
     exit(length, width = 3) {
       const p = piece(length, width);
       venue.exit(p.x, p.z, p.w, p.d, cur.h);

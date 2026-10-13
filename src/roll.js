@@ -1,15 +1,15 @@
 import { rollSpin, turn } from './physics.js';
 
 /**
- * How Rock is turned as he rolls: a ball, rolling without slipping, so the
- * spin follows from how fast he goes and which way. Everything is plain
- * arrays at the physics rate, so the tests turn him the same as the screen.
+ * How Metroll is turned as it rolls: a ball, rolling without slipping, so the
+ * spin follows from how fast it goes and which way. Everything is plain
+ * arrays at the physics rate, so the tests turn it the same as the screen.
  */
 
 /** The ball the physics pushes about, in tiles. */
 export const BALL_RADIUS = 0.45;
 
-/** The turn: which way up he is, and how fast he spins. */
+/** The turn: which way up it is, and how fast it spins. */
 export function createRoll() {
   return { q: [0, 0, 0, 1], spin: [0, 0, 0] };
 }

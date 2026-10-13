@@ -13,9 +13,9 @@ export const PROP_HYPE = 15;
 
 /**
  * One stop as it is played, without anything drawn or heard: the stop, what
- * moves and lies about on it, Rock, and the rules — what costs him
- * integrity, what he smashes and what bounces him back, what he can pick up,
- * what the floor does to him, and where he goes back to after a fall. The
+ * moves and lies about on it, Metroll, and the rules — what costs it
+ * integrity, what it smashes and what bounces it back, what it can pick up,
+ * what the floor does to it, and where it goes back to after a fall. The
  * game draws it and keeps the screens; the tests drive it with an autopilot.
  * (The engine still calls a stop a venue, and playing one a gig: it came from
  * Rock 'n' Roller, where they were.)
@@ -24,22 +24,22 @@ export const PROP_HYPE = 15;
 /** The physics runs at a fixed rate, whatever the frame rate. */
 export const STEP = 1 / 120;
 
-/** How hard Rock grips level ground when nothing pushes him: below `below` tiles a second, `rate` of his speed a second goes. */
+/** How hard Metroll grips level ground when nothing pushes it: below `below` tiles a second, `rate` of its speed a second goes. */
 export const GRIP = Object.freeze({ below: 1.4, rate: 6 });
 
-/** Rev: hold it and he pushes harder and goes faster, as long as the meter lasts. */
+/** Rev: hold it and it pushes harder and goes faster, as long as the meter lasts. */
 export const REV = Object.freeze({ push: 1.5, topSpeed: 13, drain: 55, regen: 26, least: 15, max: 100 });
 
-/** Sticky floor (mud, fake blood, wet paint): he pushes less well, tops out slow, and slows by itself. */
+/** Sticky floor (mud, fake blood, wet paint): it pushes less well, tops out slow, and slows by itself. */
 export const STICKY = Object.freeze({ push: 0.5, topSpeed: 4.2, drag: 1.8 });
 
-/** Ice: how much of his push grips (very little), and how much of the rolling drag it takes away (most of it). */
+/** Ice: how much of its push grips (very little), and how much of the rolling drag it takes away (most of it). */
 export const ICE = Object.freeze({ push: 0.3, glide: 0.85 });
 
 /** A belt carries whatever is on it up to this speed, as hard as this. */
 export const BELT = Object.freeze({ speed: 3.4, accel: 16 });
 
-/** A bumper throws him back at least this fast. */
+/** A bumper throws it back at least this fast. */
 export const BUMPER_SPEED = 7;
 
 /** A push on the screen (x right, y up) as a push along the ground, for a camera turned to `yaw`. */
@@ -67,13 +67,13 @@ export function createGig(GFX, index, { ball = createBall({ r: BALL_RADIUS, mass
   return gig;
 }
 
-/** Rock back on the last safe ground he rolled over. */
+/** Metroll back on the last safe ground it rolled over. */
 export function putBack(gig) {
   placeBall(gig.ball, ...gig.safe);
   gig.ball.vx = gig.ball.vy = gig.ball.vz = 0;
 }
 
-/** Marks the tiles round Rock as seen, for the map. */
+/** Marks the tiles round Metroll as seen, for the map. */
 function explore(gig) {
   const { venue, ball, explored } = gig;
   const cx = Math.floor(ball.x), cz = Math.floor(ball.z), r = 6;
@@ -91,7 +91,7 @@ const unit = (ax, az, bx, bz, fallback = [0, 1]) => {
   return d < 1e-6 ? fallback : [dx / d, dz / d];
 };
 
-/** Takes `how` off Rock's integrity, and notes it. Returns what it took. */
+/** Takes `how` off Metroll's integrity, and notes it. Returns what it took. */
 function harm(gig, amount) {
   const took = hurt(gig.troll, amount);
   gig.stats.damage += took;
@@ -100,24 +100,24 @@ function harm(gig, amount) {
 
 /**
  * One step of everything. `push` is along the ground ([x, z]). While `live`,
- * the rules apply and the foes give chase; while `moving` is false, Rock
- * stays where he is (zapped, or smashed). `rev` is whether the rev button
+ * the rules apply and the foes give chase; while `moving` is false, Metroll
+ * stays where it is (zapped, or smashed). `rev` is whether the rev button
  * is held.
  *
  * Returns what happened:
- *   `impact`   how hard he hit anything.
- *   `outcome`  null, 'exit', how he was lost ('fell', 'zapped', 'crushed'),
- *              or 'shattered' (no integrity, and no encore to save him).
- *   `hurt`     { how, amount } for harm that doesn't lose him (pyro, a
- *              hard landing), and for losing him too.
- *   `hits`     every person he ran into: { foe, grade, speed, damage, gain,
+ *   `impact`   how hard it hit anything.
+ *   `outcome`  null, 'exit', how it was lost ('fell', 'zapped', 'crushed'),
+ *              or 'shattered' (no integrity, and no encore to save it).
+ *   `hurt`     { how, amount } for harm that doesn't lose it (pyro, a
+ *              hard landing), and for losing it too.
+ *   `hits`     every person it ran into: { foe, grade, speed, damage, gain,
  *              multiplier, combo, down, dir } — `down` if they went.
- *   `picked`   whatever he picked up.
+ *   `picked`   whatever it picked up.
  *   `door`     'opened', 'locked' or 'sturdy' (a breakaway too strong for the speed).
- *   `broke`    the breakaways he broke.
- *   `smashed`  the props he smashed.
- *   `bumped`   the bumpers he bounced off.
- *   `encore`   true if a lighter brought him back.
+ *   `broke`    the breakaways it broke.
+ *   `smashed`  the props it smashed.
+ *   `bumped`   the bumpers it bounced off.
+ *   `encore`   true if a lighter brought it back.
  *   `events`   something dropped, or an effect fired: { type, x, y, z }.
  */
 export function stepGig(gig, push, dt = STEP, { live = true, moving = true, rev = false } = {}) {
@@ -146,7 +146,7 @@ export function stepGig(gig, push, dt = STEP, { live = true, moving = true, rev 
     ball.vx *= k; ball.vz *= k;
   } else if (onFloor0 && under.fx === 'ice') {
     options.push = (options.push ?? PUSH) * ICE.push;
-    // The rolling drag the physics will take off, nearly all of it given back: he slides.
+    // The rolling drag the physics will take off, nearly all of it given back: it slides.
     const k = 1 + ROLL_DRAG * ICE.glide * dt;
     ball.vx *= k; ball.vz *= k;
   } else if (onFloor0 && under.fx === 'belt') {
@@ -157,9 +157,9 @@ export function stepGig(gig, push, dt = STEP, { live = true, moving = true, rev 
     }
   }
 
-  // Breakaways: fast enough and they are gone before he reaches them; not fast enough and they hold.
+  // Breakaways: fast enough and they are gone before it reaches them; not fast enough and they hold.
   const speed0 = Math.hypot(ball.vx, ball.vz);
-  // Props, the same: a camera, a table, a row of seats, gone if he comes at it fast enough.
+  // Props, the same: a camera, a table, a row of seats, gone if it comes at it fast enough.
   for (const p of gig.actors.props) {
     if (p.broken >= 0) continue;
     const reach = ball.r + 0.1 + speed0 * dt * 2;
@@ -198,7 +198,7 @@ export function stepGig(gig, push, dt = STEP, { live = true, moving = true, rev 
   }
 
   const result = stepBall(ball, gig.world, push[0], push[1], dt, options);
-  // A boulder doesn't coast like a marble. Let go of him on level ground and he soon stops.
+  // A boulder doesn't coast like a marble. Let go of it on level ground and it soon stops.
   if (ball.grounded && !ball.on && Math.hypot(push[0], push[1]) < 0.05 && ball.ny > 0.97 && !(under?.fx === 'belt')) {
     const speed = Math.hypot(ball.vx, ball.vz);
     if (speed < GRIP.below) {
@@ -292,7 +292,7 @@ export function stepGig(gig, push, dt = STEP, { live = true, moving = true, rev 
   return finish(gig, out);
 }
 
-/** If he has no integrity left: an encore if he has a lighter, or he is shattered. */
+/** If it has no integrity left: an encore if it has a lighter, or it is shattered. */
 function finish(gig, out) {
   if (shattered(gig.troll)) {
     if (encore(gig.troll)) out.encore = true;
@@ -301,7 +301,7 @@ function finish(gig, out) {
   return out;
 }
 
-/** Rock runs into `foe`: it is how fast he was going. */
+/** Metroll runs into `foe`: it is how fast it was going. */
 function hit(gig, foe, out) {
   const ball = gig.ball;
   const velocity = gig.actors.velocityOf(foe);
@@ -320,7 +320,7 @@ function hit(gig, foe, out) {
     // Through them, a little slower.
     ball.vx *= 0.86; ball.vz *= 0.86;
   } else {
-    // Bounced off: back the way he came, as hard as he came, less a little.
+    // Bounced off: back the way it came, as hard as it came, less a little.
     const away = Math.min(7, Math.max(2.5, speed * 0.6));
     ball.vx = -dir[0] * away; ball.vz = -dir[1] * away;
     if (ball.grounded) ball.vy = Math.max(ball.vy, 1.5);

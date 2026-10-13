@@ -4,20 +4,20 @@ import { World } from './physics.js';
  * A venue is a grid of tiles, as a Madness course is: each tile has its own
  * four corner heights, so one structure gives level floors, ramps, steps and
  * channels, with a wall down to whatever is next to it. Where there is no
- * tile there is the dark, and Rock falls into it.
+ * tile there is the dark, and Metroll falls into it.
  *
  * On top of that a venue (here, a stop on the tour) has walls — tiles raised well
  * above the floor beside them, which nothing rolls over — electrified floor
- * (`zap`), Rock's mark (the exit), and everything that lives or lies about
+ * (`zap`), Metroll's mark (the exit), and everything that lives or lies about
  * in it: the annoying people, sandbags and lighting rigs that drop and
  * effects that fire on the beat, dollies and trams, closed sets and their
- * passports, picks and gaffer tape, the lamps and the light rig, and the props
+ * passes, picks and whetstones, the lamps and the light rig, and the props
  * that dress it.
  *
  * x runs down-right across the screen and z down-left; the camera looks from
  * high x and z, so a venue starts at the back, high up, and winds its way
  * down toward the front. Walls on the back sides of a room (low x, low z) can
- * stand tall without hiding Rock; walls on the front sides are kept low.
+ * stand tall without hiding Metroll; walls on the front sides are kept low.
  */
 
 /** How far the sides of the venue reach down into the dark below a tile. */
@@ -149,7 +149,7 @@ export class Venue {
 
   /**
    * Electrified floor, level at `h`: live cables and spilled drinks. Roll onto
-   * it and Rock is zapped. With `fill`, only into tiles nothing has been dug
+   * it and Metroll is zapped. With `fill`, only into tiles nothing has been dug
    * in yet — round a bridge, under a lift — and never over floor or wall.
    */
   zap(x, z, w, d, h, { fill = false } = {}) {
@@ -163,7 +163,7 @@ export class Venue {
     return this;
   }
 
-  /** Rock's mark: where the scene ends, and the way on to the next set. */
+  /** Metroll's mark: where the scene ends, and the way on to the next set. */
   exit(x, z, w, d, h) {
     return this.flat(x, z, w, d, h, { kind: 'exit', color: 0 });
   }
@@ -171,7 +171,7 @@ export class Venue {
   /**
    * Wall over the rectangle, its top at `top`. A wall never goes over floor,
    * and where two walls meet the lower one stands, so a wall that is one
-   * room's back wall and another's front never hides Rock in either.
+   * room's back wall and another's front never hides Metroll in either.
    */
   wall(x, z, w, d, top, { color = CAP, tex = null } = {}) {
     for (let j = z; j < z + d; j++) {
@@ -248,8 +248,8 @@ export class Venue {
   /**
    * Like `pillar`, but `w` × `d` tiles of it, drawn as one `prop` (a drum
    * kit, a bar, a stack of cases). A prop can be smashed: its tiles stay
-   * floor, and the prop is a box over them that Rock can roll into, or
-   * through, if he comes at it fast enough (see `breakAt`). One that is
+   * floor, and the prop is a box over them that Metroll can roll into, or
+   * through, if it comes at it fast enough (see `breakAt`). One that is
    * `sturdy` — a crowd barrier, the stands — is wall, as a block with no
    * prop is.
    */
@@ -381,7 +381,7 @@ export class Venue {
     return this;
   }
 
-  /** Ice — a frozen pond, a glacier, a rink — where Rock slides: little grip, and he barely slows. */
+  /** Ice — a frozen pond, a glacier, a rink — where Metroll slides: little grip, and it barely slows. */
   ice(x, z, w, d) {
     this._fx(x, z, w, d, 'ice');
     return this;
@@ -402,7 +402,7 @@ export class Venue {
     }
   }
 
-  /** A bumper — a brass post of a velvet rope, a barrel, a cactus — that throws Rock back, at tile (x, z). */
+  /** A bumper — a brass post of a velvet rope, a barrel, a cactus — that throws Metroll back, at tile (x, z). */
   bumper(x, z, { radius = 0.55, look = 'post' } = {}) {
     this.bumpers.push({ x: x + 0.5, z: z + 0.5, radius, look });
     return this;
@@ -486,7 +486,7 @@ export class Venue {
   }
 
   /**
-   * Somewhere to put Rock back after a fall: a plain level floor, with
+   * Somewhere to put Metroll back after a fall: a plain level floor, with
    * nothing round it that drops away — level floor at the same height or
    * wall standing over it on every side — and nothing that moves it.
    */
@@ -547,7 +547,7 @@ export const HEADING = Object.freeze({ '+x': [1, 0], '-x': [-1, 0], '+z': [0, 1]
 /**
  * The light baked into the floor and walls: a dim wash everywhere, and a
  * glow round every lamp, every fixture of the light rig, every electrified
- * tile and Rock's mark. The fixtures nearest Rock also get real lights
+ * tile and Metroll's mark. The fixtures nearest Metroll also get real lights
  * when it is drawn (`stage.js`, `lightshow.js`); this is what keeps the rest
  * of the venue from being black, and what gives each one its colour.
  */

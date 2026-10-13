@@ -6,7 +6,7 @@ import { createZapMaterial } from './zap.js';
  * The stop as it is drawn: floors (a layer for each sort — concrete, stage
  * planks, lino, carpet, wet asphalt, dirt, grating, cobbles), walls falling
  * away into the dark, belts with their chevrons running, the electrified
- * floor (zap.js), and Rock's mark at the end — a frame with a lit sign over
+ * floor (zap.js), and Metroll's mark at the end — a frame with a lit sign over
  * it, CUT (or THE END, at the last), and a ring on the floor to hit. Every texture is painted on a canvas
  * at startup (textures.js); under node (the tests) there is no canvas and the
  * meshes go without.
@@ -191,7 +191,7 @@ function doorSign(GFX, width, word, colour) {
 }
 
 /**
- * Rock's mark: a ring on the floor to roll onto, and a frame over the way in
+ * Metroll's mark: a ring on the floor to roll onto, and a frame over the way in
  * with a lit sign — CUT, or THE END at the last — and a lamp on each post.
  * Returns null if the set has no exit.
  */

@@ -1,12 +1,12 @@
 /**
- * Rock's integrity: how much of him is still in one piece. Every knock
- * takes some, gaffer tape puts some back, and at nothing he is shattered —
- * unless he picked up a lighter, and the crowd calls him back for an encore.
+ * Metroll's integrity: how much of it is still in one piece. Every knock
+ * takes some, gaffer tape puts some back, and at nothing it is shattered —
+ * unless it picked up a lighter, and the crowd calls it back for an encore.
  */
 
 export const MAX_INTEGRITY = 100;
 
-/** What each way of coming to grief costs him. */
+/** What each way of coming to grief costs it. */
 export const HARM = Object.freeze({
   fell: 8,
   zapped: 14,
@@ -36,7 +36,7 @@ export function heal(troll, amount) {
   return gain;
 }
 
-/** An encore, if he has a lighter and he is done for: back up on half his integrity. Returns whether it was used. */
+/** An encore, if it has a lighter and it is done for: back up on half its integrity. Returns whether it was used. */
 export function encore(troll) {
   if (troll.hp > 0 || troll.encores < 1) return false;
   troll.encores -= 1;
@@ -44,5 +44,5 @@ export function encore(troll) {
   return true;
 }
 
-/** How cracked he looks, 0 (whole) to 1 (about to go). */
+/** How cracked it looks, 0 (whole) to 1 (about to go). */
 export const cracked = (troll) => Math.max(0, Math.min(1, 1 - troll.hp / troll.max));

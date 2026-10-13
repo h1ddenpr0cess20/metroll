@@ -2,12 +2,12 @@
  * The screen, on Alan's engine (`vendor/gfx`), as Madness has it: WebGPU where
  * the browser has it and WebGL 2 where it does not, physically based shading
  * and shadows, and a perspective camera that starts at the isometric corner
- * and can be turned, tilted and zoomed round Rock (`view.js`).
+ * and can be turned, tilted and zoomed round Metroll (`view.js`).
  *
  * The lighting is for a night out: a dim wash that takes its colour from
  * the stop; a weak key light from high up for the shadows; a lantern over
- * Rock; and the real, coloured, flashing lights of the rig's fixtures
- * nearest him (`lightshow.js` drives those; they are lights this
+ * Metroll; and the real, coloured, flashing lights of the rig's fixtures
+ * nearest it (`lightshow.js` drives those; they are lights this
  * stage owns, a fixed number, so no shader ever has to change). Every other
  * fixture is baked into the floor (`venue.js`). What the chrome and clearcoat
  * reflect is a room painted at startup in the venue's colours.
@@ -125,10 +125,10 @@ export async function createStage(host) {
   shadowSpan(1);
   scene.add(key, key.target);
 
-  // Rock's own light, high over him and faint: enough to find him in the dark, not so much it lights up his own shadow.
+  // Metroll's own light, high over it and faint: enough to find it in the dark, not so much it lights up its own shadow.
   const lantern = new GFX.PointLight(0xffe2b8, 1.4, 12, 1.2);
   scene.add(lantern);
-  // The fixtures nearest him: the light show sets where they are, what colour and how bright.
+  // The fixtures nearest it: the light show sets where they are, what colour and how bright.
   const fixtureLights = Array.from({ length: FIXTURE_LIGHTS }, () => {
     const light = new GFX.PointLight(0xffffff, 0, 7, 1.7);
     scene.add(light);
@@ -151,7 +151,7 @@ export async function createStage(host) {
     GFX, renderer, scene, camera, key, hemi, lantern, fixtureLights,
     view: createView(),
     target: new GFX.Vector3(),
-    /** Where Rock is, for the lantern; set every frame. */
+    /** Where Metroll is, for the lantern; set every frame. */
     troll: new GFX.Vector3(),
     time: 0,
     /** How much extra light the strobes are throwing right now, 0 to 1: the page can flash with it. */

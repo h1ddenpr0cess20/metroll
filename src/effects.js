@@ -1,10 +1,10 @@
 /**
  * Bits that fly: puffs and stars where somebody was smashed, guitar picks, stone
- * chips off Rock, sparks off pyro, steam, confetti, dust when he lands hard,
- * a glitter for a passport or a lighter, and a ring that goes out from a
+ * chips off Metroll, sparks off pyro, steam, confetti, dust when it lands hard,
+ * a glitter for a pass or a lighter, and a ring that goes out from a
  * big hit. Each bit is ballistic, bounces off the floor or settles on it,
  * and shrinks away. And the weather, at a stop that has it (`look.weather`):
- * rain, falling round Rock in streaks and splashing where it lands; a
+ * rain, falling round Metroll in streaks and splashing where it lands; a
  * sandstorm, blowing across in streaks; snow, drifting down in flakes; or
  * cherry blossom, its petals turning over as they fall.
  */
@@ -14,7 +14,7 @@ const GRAVITY = 18;
 const CONFETTI = ['#ffd23a', '#f5f0e6', '#d81c2a', '#ffb02a', '#ffffff', '#c8a050', '#2de2ff'];
 const PICKS = ['#ff3a8a', '#2ad0ff', '#ffd23a', '#8a4be8', '#3ae88a', '#ff7a1a', '#f5f0e6'];
 
-/** The rain: how many streaks, how far round Rock they fall, how long each is and how fast it falls. */
+/** The rain: how many streaks, how far round Metroll they fall, how long each is and how fast it falls. */
 const RAIN = Object.freeze({ drops: 900, reach: 11, height: 9, length: 0.5, speed: 16 });
 
 /**
@@ -119,7 +119,7 @@ export function createEffects(GFX, scene) {
     d.y = y + height * RAIN.height;
   };
 
-  /** Snow or petals round (x, y, z), once a frame: each drifts down, wanders and turns over, and comes round again past Rock. */
+  /** Snow or petals round (x, y, z), once a frame: each drifts down, wanders and turns over, and comes round again past Metroll. */
   function drift(dt, x, y, z) {
     const { list, positions, kind, n } = flakes;
     flakes.time += dt;
@@ -184,7 +184,7 @@ export function createEffects(GFX, scene) {
     },
 
     /**
-     * The rain, once a frame, round (x, y, z) — Rock — falling past him to
+     * The rain, once a frame, round (x, y, z) — Metroll — falling past it to
      * the floor and splashing there, or on down into the dark.
      */
     weather(dt, x, y, z) {
@@ -216,7 +216,7 @@ export function createEffects(GFX, scene) {
           }
           reseed(d, x, y - 2, z, 1);
         }
-        // Too far behind as Rock goes on: round in front of him again.
+        // Too far behind as Metroll goes on: round in front of it again.
         if (Math.abs(d.x - x) > RAIN.reach || Math.abs(d.z - z) > RAIN.reach) reseed(d, x, y - 2, z);
         const k = i * 6;
         positions[k] = d.x; positions[k + 1] = d.y; positions[k + 2] = d.z;
@@ -258,7 +258,7 @@ export function createEffects(GFX, scene) {
       rings.push({ mesh, age: 0, life: 0.5, reach });
     },
 
-    /** Picks, flung up: what a pile or a suitcase of them gives. */
+    /** Picks, flung up: what a pile or a record of them gives. */
     picks(x, y, z, n = 8) {
       for (let i = 0; i < n; i++) {
         const m = new GFX.Mesh(pickGeometry, celluloid[Math.floor(Math.random() * celluloid.length)]);
@@ -268,7 +268,7 @@ export function createEffects(GFX, scene) {
       }
     },
 
-    /** Steam, up off a vent or off Rock. */
+    /** Steam, up off a vent or off Metroll. */
     steam(x, y, z) {
       for (let i = 0; i < 16; i++) {
         const m = new GFX.Mesh(puff, steamMat);
@@ -303,7 +303,7 @@ export function createEffects(GFX, scene) {
       }
     },
 
-    /** Pyro on Rock, or a zap: embers and sparks up off him. */
+    /** Pyro on Metroll, or a zap: embers and sparks up off it. */
     embers(x, y, z, colour = '#ff7a1a') {
       for (let i = 0; i < 30; i++) {
         const m = new GFX.Mesh(mote, glow(i % 3 ? colour : '#ffd23a'));
@@ -327,7 +327,7 @@ export function createEffects(GFX, scene) {
       }
     },
 
-    /** Chips of stone knocked off Rock. */
+    /** Chips of stone knocked off Metroll. */
     chips(x, y, z, n = 10) {
       for (let i = 0; i < n; i++) {
         const m = new GFX.Mesh(chip, granite);

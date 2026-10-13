@@ -1,6 +1,6 @@
 /**
  * What the game remembers between visits: how far into the tour you have
- * got, the stars, best hype, best time and snow demos of each stop, and
+ * got, the stars, best cred, best time and demo tapes of each track, and
  * the settings. Browser storage can be missing or refuse, so every touch of
  * it is guarded and the game plays the same without it.
  */

@@ -1,7 +1,7 @@
 import { createBand, THEMES } from './music.js';
 
 /**
- * Every sound, made on the spot with Web Audio — no samples. Rock rolling is
+ * Every sound, made on the spot with Web Audio — no samples. Metroll rolling is
  * a low grind of filtered noise that rises with speed; every landing a stone
  * knocking on the floor; a smash is a kick drum and a crash cymbal; picks
  * plink, a whetstone shings, a lighter flicks, shutters rattle, breakaways
@@ -184,7 +184,7 @@ export function createAudio() {
       if (node) node.gain.setTargetAtTime(v, now(), 0.05);
     },
 
-    /** The grind of rolling, every frame: speed in tiles a second, and whether he is on anything. */
+    /** The grind of rolling, every frame: speed in tiles a second, and whether it is on anything. */
     rolling(speed, grounded) {
       if (!rollSrc) return;
       speed = Math.max(0, finite(speed));
@@ -329,7 +329,7 @@ export function createAudio() {
       tone({ at: 0.02, freq: 560, to: 1500, length: 0.1, type: 'triangle', gain: 0.15 });
     },
 
-    /** An encore: the crowd roaring him back, the lighters up, the band coming back in. */
+    /** An encore: the crowd roaring it back, the lighters up, the band coming back in. */
     encore() {
       cheer(1.4, 2.6);
       burst({ length: 2.2, type: 'bandpass', freq: 1400, q: 0.4, gain: 0.35 });
@@ -361,7 +361,7 @@ export function createAudio() {
       tone({ at: 0.2, freq: 55, to: 28, length: 1.2, gain: 0.6 });
     },
 
-    /** A camera flash going off in Rock's face: the whine of it charging, and the pop. */
+    /** A camera flash going off in Metroll's face: the whine of it charging, and the pop. */
     flash() {
       tone({ freq: 900, to: 1700, length: 0.22, type: 'sine', gain: 0.03 });
       burst({ at: 0.22, length: 0.05, type: 'bandpass', freq: 2000, q: 1, gain: 0.25 });

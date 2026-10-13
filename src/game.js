@@ -488,7 +488,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
         break;
     }
 
-    // Rock, turned as he rolls.
+    // Metroll, turned as it rolls.
     const speed = Math.hypot(b.vx, b.vz);
     mace.update(dt, { q: gig.roll.q, position: [b.x, b.y, b.z] });
     mace.hurtTo(gig.troll.hp / gig.troll.max);
@@ -520,7 +520,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
       lastCombo = c;
     }
 
-    // The camera: after Rock, but not down into the dark after him.
+    // The camera: after Metroll, but not down into the dark after it.
     const target = stage.target;
     if (debug.look) {
       target.set(...debug.look.at);
@@ -534,7 +534,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
     target.z += (b.z - target.z) * k;
   }
 
-  /** For tests and the console: the venue, Rock, and a camera override (`look`). */
+  /** For tests and the console: the venue, Metroll, and a camera override (`look`). */
   const debug = {
     stage, look: null,
     get gig() { return gig; },
@@ -544,7 +544,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
     get show() { return show; },
     /** Straight to venue `index`, for looking round. */
     venue(index) { startVenue(index); },
-    /** Rock to tile (x, z), standing still. */
+    /** Metroll to tile (x, z), standing still. */
     teleport(x, z) {
       const b = gig.ball;
       b.x = x + 0.5; b.z = z + 0.5; b.y = (gig.venue.heightAt(b.x, b.z) ?? 0) + b.r + 0.02;
@@ -566,7 +566,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
     quit() { showTitle(); hud.tour(saved); },
     get state() { return state; },
     get paused() { return paused; },
-    /** Where Rock is on the screen, in CSS pixels, for the pointer controls. */
+    /** Where Metroll is on the screen, in CSS pixels, for the pointer controls. */
     rockOnScreen(rect) {
       const b = gig.ball;
       const v = new GFX.Vector3(b.x, b.y, b.z).project(stage.camera);

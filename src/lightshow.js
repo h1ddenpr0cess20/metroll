@@ -34,12 +34,12 @@ import { canvas, cached, copyOf, glowTexture, random, texture } from './textures
  * and then, a double flash, never more than three times a second.
  *
  * Each draws its own meshes (additive, so they glow), and gives lights: the
- * few nearest Rock get real ones (the stage owns a fixed number), and the
+ * few nearest Metroll get real ones (the stage owns a fixed number), and the
  * rest are baked into the floor (`venue.js`).
  *
  * `createLightshow(GFX, venue)` gives { group, update(frame), flash }; call
  * `update({ time, beat, troll, lights, flashing })` each frame with the beat
- * (a number of beats from the downbeat), where Rock is, and the stage's
+ * (a number of beats from the downbeat), where Metroll is, and the stage's
  * fixture lights to set.
  */
 
@@ -1047,14 +1047,14 @@ export function createLightshow(GFX, venue) {
     count: fixtures.length,
 
     /**
-     * Once a frame. `troll` is where he is ([x, y, z]); `lights` the stage's
+     * Once a frame. `troll` is where it is ([x, y, z]); `lights` the stage's
      * fixture lights; `flashing` false stops the strobes flashing.
      */
     update({ time, beat, troll, lights, flashing = true }) {
       ctx.flashing = flashing;
       offers = [];
       for (const f of fixtures) f.update(time, beat, ctx);
-      // The nearest, by how much they would light him.
+      // The nearest, by how much they would light it.
       const scored = offers.map((o) => {
         const d = Math.hypot(o.pos[0] - troll[0], o.pos[1] - troll[1], o.pos[2] - troll[2]);
         return { o, d };

@@ -28,7 +28,7 @@ import { createModel } from './models/model.js';
 
 export const FOES = Object.freeze({
   // Everywhere: the people who come with the scene, and the people who work the shows.
-  poser: { name: 'Poser', blurb: 'Wears the T-shirt of a band he has never heard. Knows one riff. It is the wrong one.', move: 'walk', toughness: 4, power: 3, hype: 40, radius: 0.37, speed: 3.0 },
+  poser: { name: 'Poser', blurb: 'Wears the T-shirt of a band they have never heard. Knows one riff. It is the wrong one.', move: 'walk', toughness: 4, power: 3, hype: 40, radius: 0.37, speed: 3.0 },
   gatekeeper: { name: 'Gatekeeper', blurb: 'Has been to every gig since 1983. Will explain why this is not real metal. Has patches. So many patches.', move: 'walk', toughness: 7, power: 7, hype: 110, radius: 0.43, speed: 2.4, shout: 'THAT\'S NOT REAL METAL!' },
   merchguy: { name: 'Merch Guy', blurb: 'Fifty quid for a T-shirt. Seventy for the hoodie. The band gets four.', move: 'walk', toughness: 4, power: 4, hype: 50, radius: 0.38, speed: 3.2, shout: 'T-SHIRTS!' },
   soundguy: { name: 'Sound Engineer', blurb: 'Check one. Check two. Check you.', move: 'walk', toughness: 5, power: 5, hype: 60, radius: 0.37, speed: 3.0, shout: 'CHECK ONE!' },
@@ -43,7 +43,7 @@ export const FOES = Object.freeze({
   drunk: { name: 'The Regular', blurb: 'Fourth pint. Will explain the riff to you. Wrongly.', move: 'walk', toughness: 5, power: 5, hype: 60, radius: 0.4, speed: 2.4 },
   bobby: { name: 'Bobby', blurb: 'Evening all. Mind how you roll. And the noise.', move: 'walk', toughness: 6, power: 6, hype: 80, radius: 0.38, speed: 3.2, shout: 'OI!' },
   // The Strip.
-  frontman: { name: 'The Frontman', blurb: 'Has used a whole can of hairspray. Is on his second.', move: 'walk', toughness: 6, power: 6, hype: 90, radius: 0.41, speed: 3.0, shout: 'WE ARE ONE!' },
+  frontman: { name: 'The Frontman', blurb: 'Has used a whole can of hairspray. Is on their second.', move: 'walk', toughness: 6, power: 6, hype: 90, radius: 0.41, speed: 3.0, shout: 'WE ARE ONE!' },
   shredder: { name: 'Shredder', blurb: 'Plays a hundred notes a second. Not one of them for you.', move: 'walk', toughness: 5, power: 5, hype: 70, radius: 0.38, speed: 3.4 },
   promoter: { name: 'A&R Man', blurb: 'Will sign you. Will not pay you. Has a car phone the size of a brick.', move: 'walk', toughness: 5, power: 4, hype: 60, radius: 0.37, speed: 3.6, shout: 'LUNCH!' },
   blader: { name: 'Rollerblader', blurb: 'Neon, a Walkman, eight wheels. Has right of way. Thinks.', move: 'walk', toughness: 5, power: 5, hype: 70, radius: 0.4, speed: 5.2 },
@@ -62,13 +62,13 @@ export const FOES = Object.freeze({
   blackcat: { name: 'Black Cat', blurb: 'Crosses your path on purpose. Is bad luck, and knows it.', move: 'crawl', toughness: 3, power: 3, hype: 50, radius: 0.28, speed: 3.8 },
   count: { name: 'The Count', blurb: 'Has not been seen in the mirror for some time. Arrives whenever he likes. Hungry.', move: 'walk', toughness: 9, power: 9, hype: 600, radius: 0.9, speed: 1.6, boss: true, hp: 50, tactic: 'lunge' },
   // New York.
-  punk: { name: 'Punk', blurb: 'Safety pins, a mohawk and an opinion about your band. Hardcore thinks he sold out.', move: 'walk', toughness: 5, power: 6, hype: 70, radius: 0.37, speed: 4.2 },
+  punk: { name: 'Punk', blurb: 'Safety pins, a mohawk and an opinion about your band. Hardcore thinks they sold out.', move: 'walk', toughness: 5, power: 6, hype: 70, radius: 0.37, speed: 4.2 },
   cop: { name: 'Beat Cop', blurb: 'Has a nightstick, a hunch and a coffee. Hates the noise. Hates the kids more.', move: 'walk', toughness: 6, power: 6, hype: 80, radius: 0.37, speed: 3.4, shout: 'FREEZE!' },
   rat: { name: 'Subway Rat', blurb: 'Carrying a slice of pizza bigger than itself. Wants your demo.', move: 'crawl', toughness: 2, power: 2, hype: 40, radius: 0.28, speed: 3.6 },
   hxckid: { name: 'Straight Edge Kid', blurb: 'X on each hand. Does not drink. Does not shut up about it.', move: 'walk', toughness: 4, power: 4, hype: 50, radius: 0.35, speed: 4.6, shout: 'STRAIGHT EDGE!' },
   toughguy: { name: 'Tough Guy', blurb: 'Windmills. Karate kicks. Hits nobody. Hits you.', move: 'walk', toughness: 7, power: 8, hype: 110, radius: 0.46, speed: 3.6, shout: 'HARDCORE!' },
   diver: { name: 'Stage Diver', blurb: 'Dives off the stage into a crowd that has stepped aside.', move: 'fly', toughness: 3, power: 3, hype: 60, radius: 0.35, speed: 3.0 },
-  zinekid: { name: 'Zine Kid', blurb: 'Has photocopied his opinion of you. Has copies.', move: 'walk', toughness: 4, power: 3, hype: 50, radius: 0.34, speed: 3.6, shout: 'ISSUE #4!' },
+  zinekid: { name: 'Zine Kid', blurb: 'Has photocopied their opinion of you. Has copies.', move: 'walk', toughness: 4, power: 3, hype: 50, radius: 0.34, speed: 3.6, shout: 'ISSUE #4!' },
   // Tampa.
   headbanger: { name: 'Headbanger', blurb: 'Headbangs at a speed that violates several laws.', move: 'walk', toughness: 5, power: 6, hype: 70, radius: 0.38, speed: 4.0 },
   zombie: { name: 'Zombie', blurb: 'Up out of the swamp for the vocals. A bit underdressed.', move: 'walk', toughness: 6, power: 6, hype: 80, radius: 0.39, speed: 1.8 },
@@ -96,14 +96,14 @@ export const FOES = Object.freeze({
   drone: { name: 'Camera Drone', blurb: 'Hired for the crowd shot. Now very interested in you. The red light means recording.', move: 'fly', toughness: 2, power: 3, hype: 50, radius: 0.32, speed: 3.4 },
   // Woodstock '99.
   nuguy: { name: 'Nu Guy', blurb: 'Wants to break stuff. Would like to be asked what. Has a lot of feelings, mostly about you.', move: 'walk', toughness: 6, power: 7, hype: 90, radius: 0.43, speed: 3.4, shout: 'BREAK STUFF!' },
-  dj: { name: 'DJ', blurb: 'Was booked for a metal show. Is playing what he likes. It is going about as well as you would expect.', move: 'walk', toughness: 3, power: 3, hype: 50, radius: 0.37, speed: 3.0, shout: 'WIKKA WIKKA!' },
+  dj: { name: 'DJ', blurb: 'Was booked for a metal show. Is playing what they like. It is going about as well as you would expect.', move: 'walk', toughness: 3, power: 3, hype: 50, radius: 0.37, speed: 3.0, shout: 'WIKKA WIKKA!' },
   candlekid: { name: 'Candle Kid', blurb: 'A vigil, a candle and a lot of hope. Within the hour: a bonfire.', move: 'walk', toughness: 3, power: 3, hype: 40, radius: 0.34, speed: 2.4 },
   medic: { name: 'Medic', blurb: 'Has seen four hundred cases of the same thing since noon. The thing is water.', move: 'walk', toughness: 5, power: 4, hype: 60, radius: 0.38, speed: 4.4, shout: 'MAKE A HOLE!' },
   // Warped Tour.
   scenekid: { name: 'Scene Kid', blurb: 'Four thousand friends. Knows none of them. The phone is at the MySpace angle.', move: 'walk', toughness: 3, power: 3, hype: 50, radius: 0.34, speed: 3.8, shout: 'RAWR!' },
   emo: { name: 'Emo', blurb: 'Fine. Totally fine. Has a journal. Would like to read you a page.', move: 'walk', toughness: 3, power: 3, hype: 50, radius: 0.35, speed: 2.2 },
   streetteam: { name: 'Street Team', blurb: 'Free stickers. Free flyers. A free energy drink, if you listen to the whole sentence.', move: 'walk', toughness: 4, power: 3, hype: 50, radius: 0.37, speed: 4.0, shout: 'FREE STICKERS!' },
-  screamer: { name: 'Screamer', blurb: 'Whisper to the end of the world in one bar. Has lost his voice every week since 2003.', move: 'walk', toughness: 6, power: 6, hype: 90, radius: 0.38, speed: 3.6, shout: 'AAAAARGH!' },
+  screamer: { name: 'Screamer', blurb: 'Whisper to the end of the world in one bar. Has lost their voice every week since 2003.', move: 'walk', toughness: 6, power: 6, hype: 90, radius: 0.38, speed: 3.6, shout: 'AAAAARGH!' },
   // Wacken.
   viking: { name: 'Viking', blurb: 'Came a long way by boat for a festival that turns out to be a field. Will take the field.', move: 'walk', toughness: 6, power: 7, hype: 90, radius: 0.43, speed: 3.0, shout: 'VALHALLA!' },
   wizard: { name: 'Wizard', blurb: 'Seven hundred years in a tower, writing a concept album about a dragon. Here to read it to you.', move: 'walk', toughness: 5, power: 6, hype: 80, radius: 0.38, speed: 2.0 },
@@ -129,7 +129,7 @@ export const KNOCKED_OUT = 1.35;
  * is its middle). `animate(t, moving, how)` makes it live; `body` is the part
  * that turns to face the way it goes.
  *
- * `how`: `chasing` (it hurries), `striking` (Rock is in its reach: it
+ * `how`: `chasing` (it hurries), `striking` (Metroll is in its reach: it
  * attacks, an attack at a time) and `down` (it is beaten).
  *
  * Each is sculpted (`models/cast/`, baked in the background as the page
@@ -164,12 +164,12 @@ export function createFoeMesh(GFX, kind) {
   };
 }
 
-/** Which clip it plays, and how far in: down once beaten, an attack when Rock is in reach, else walking or idle. */
+/** Which clip it plays, and how far in: down once beaten, an attack when Metroll is in reach, else walking or idle. */
 function clips() {
   let clip = 'idle', since = 0;
   return (t, moving, { striking = false, down = false } = {}) => {
     let next = down ? 'ko' : striking ? 'attack' : moving ? 'walk' : 'idle';
-    // An attack plays through before it does anything else, and then another, if Rock is still there.
+    // An attack plays through before it does anything else, and then another, if Metroll is still there.
     if (clip === 'attack' && !down && t - since < STRIKE) next = 'attack';
     else if (clip === 'attack' && next === 'attack') since = t;
     if (next !== clip) { clip = next; since = t; }

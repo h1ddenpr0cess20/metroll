@@ -38,7 +38,7 @@ export function smashed(hype, base, time, scale = 1) {
   return { gain, multiplier, combo: hype.combo };
 }
 
-/** Points that don't count toward the combo: picks, suitcases, snow globes, the end-of-stop bonus. */
+/** Points that don't count toward the combo: picks, records, demo tapes, the end-of-track bonus. */
 export function earn(hype, amount) {
   hype.score += amount;
   return amount;
