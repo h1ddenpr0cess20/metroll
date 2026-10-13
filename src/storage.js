@@ -1,13 +1,13 @@
 /**
  * What the game remembers between visits: how far into the tour you have
- * got, the stars, best hype, best time and snow globes of each stop, and
+ * got, the stars, best hype, best time and snow demos of each stop, and
  * the settings. Browser storage can be missing or refuse, so every touch of
  * it is guarded and the game plays the same without it.
  */
 
 const KEY = 'metroll.v1';
 
-const blankVenue = () => ({ stars: 0, best: 0, time: null, globes: 0, smashed: 0 });
+const blankVenue = () => ({ stars: 0, best: 0, time: null, demos: 0, smashed: 0 });
 const DEFAULTS = { music: 0.8, sfx: 0.9, flashing: true, touchHints: true };
 
 export function createStorage(store = globalThis.localStorage) {
@@ -38,7 +38,7 @@ export function createStorage(store = globalThis.localStorage) {
       return save();
     },
     /**
-     * Stop `index` was played through with `result`: { hype, time, globes,
+     * Stop `index` was played through with `result`: { hype, time, demos,
      * smashed, stars }. Keeps the best of each, and opens the next scene.
      */
     cleared(index, result) {
@@ -47,7 +47,7 @@ export function createStorage(store = globalThis.localStorage) {
         stars: Math.max(old.stars, result.stars),
         best: Math.max(old.best, result.hype),
         time: old.time === null ? result.time : Math.min(old.time, result.time),
-        globes: Math.max(old.globes, result.globes),
+        demos: Math.max(old.demos, result.demos),
         smashed: Math.max(old.smashed, result.smashed),
       };
       saved.reached = Math.max(saved.reached, index + 1);
@@ -66,7 +66,7 @@ export function createStorage(store = globalThis.localStorage) {
 
 function pickNumbers(v) {
   const out = {};
-  for (const k of ['stars', 'best', 'globes', 'smashed']) if (Number.isFinite(v[k])) out[k] = v[k];
+  for (const k of ['stars', 'best', 'demos', 'smashed']) if (Number.isFinite(v[k])) out[k] = v[k];
   if (Number.isFinite(v.time)) out.time = v.time;
   return out;
 }

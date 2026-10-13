@@ -1,4 +1,4 @@
-import { GLOBES, goals } from './rating.js';
+import { DEMOS, goals } from './rating.js';
 import { MAX_INTEGRITY } from './integrity.js';
 import { VENUES } from './venues/index.js';
 
@@ -44,7 +44,7 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
     <div class="hype"><span class="label">Hype</span><span class="num">0</span>
       <div class="combo"><b>×1</b><div class="bar"><i></i></div></div></div>
     <div class="carried">
-      <div class="chip globes"><span class="n">0/3</span><small>snow globes</small></div>
+      <div class="chip demos"><span class="n">0/3</span><small>snow demos</small></div>
       <div class="chip passes"><span class="n">0</span><small>passport</small></div>
       <div class="chip encores"><span class="n">0</span><small>encore</small></div>
     </div>
@@ -62,7 +62,7 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
   const comboX = combo.querySelector('b');
   const comboBar = combo.querySelector('.bar i');
   const chips = {
-    globes: hud.querySelector('.chip.globes'),
+    demos: hud.querySelector('.chip.demos'),
     passes: hud.querySelector('.chip.passes'),
     encores: hud.querySelector('.chip.encores'),
   };
@@ -268,7 +268,7 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
     }
     for (const p of gig.actors.pickups) {
       if (p.taken || !explored[Math.floor(p.z) * venue.cols + Math.floor(p.x)]) continue;
-      mapCtx.fillStyle = p.kind === 'pass' ? '#2de2ff' : p.kind === 'tape' ? '#c8ccd4' : p.kind === 'lighter' ? '#ffb84a' : p.kind === 'globe' ? '#e8f4ff' : '#fff0c8';
+      mapCtx.fillStyle = p.kind === 'pass' ? '#2de2ff' : p.kind === 'whetstone' ? '#c8ccd4' : p.kind === 'lighter' ? '#ffb84a' : p.kind === 'demo' ? '#e8f4ff' : '#fff0c8';
       mapCtx.fillRect(p.x * s - s / 2, p.z * s - s / 2, s, s);
     }
     mapCtx.fillStyle = '#ffffff';
@@ -306,7 +306,7 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       hideScreens();
       tour.hidden = false;
       venuesEl.replaceChildren(...INFO.map((v, i) => {
-        const s = saved.venues[i] ?? { stars: 0, best: 0, globes: 0 };
+        const s = saved.venues[i] ?? { stars: 0, best: 0, demos: 0 };
         const b = el('button', `venue ${v.grade}`);
         b.type = 'button';
         b.style.setProperty('--tint', v.tint);
@@ -350,8 +350,8 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
     },
 
     /** Rock's integrity as a light meter, lit green through yellow to red. */
-    integrity(rock) {
-      const frac = Math.max(0, rock.hp) / rock.max;
+    integrity(troll) {
+      const frac = Math.max(0, troll.hp) / troll.max;
       const lit = Math.ceil(frac * SEGMENTS);
       segs.forEach((s, i) => {
         s.classList.toggle('on', i < lit);
@@ -360,8 +360,8 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       });
       integrityValue.textContent = `${Math.max(0, Math.ceil(frac * 100))}%`;
       vu.classList.toggle('low', frac > 0 && frac <= 0.3);
-      if (rock.hp < lastHp - 0.5) { vu.classList.remove('hit'); void vu.offsetWidth; vu.classList.add('hit'); }
-      lastHp = rock.hp;
+      if (troll.hp < lastHp - 0.5) { vu.classList.remove('hit'); void vu.offsetWidth; vu.classList.add('hit'); }
+      lastHp = troll.hp;
     },
 
     /** The rev meter: `frac` full, `active` while it is being spent. */
@@ -371,14 +371,14 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       revEl.classList.toggle('empty', frac < 0.15);
     },
 
-    carried({ globes = 0, passes = 0, encores = 0 }) {
+    carried({ demos = 0, passes = 0, encores = 0 }) {
       const set = (chip, n, text, show) => {
         const was = chip.querySelector('.n').textContent;
         chip.querySelector('.n').textContent = text ?? String(n);
         chip.classList.toggle('show', show);
         if (was !== chip.querySelector('.n').textContent) { chip.classList.remove('pop'); void chip.offsetWidth; chip.classList.add('pop'); }
       };
-      set(chips.globes, globes, `${globes}/${GLOBES}`, globes > 0);
+      set(chips.demos, demos, `${demos}/${DEMOS}`, demos > 0);
       set(chips.passes, passes, null, passes > 0);
       set(chips.encores, encores, null, encores > 0);
     },

@@ -34,20 +34,20 @@ export function resolveImpact({ speed, foe }) {
 }
 
 /** How fast Rock and a foe are coming together: along the line between them, plus the weight of a fall onto them. */
-export function closingSpeed(rock, foe, foeVelocity = [0, 0, 0]) {
-  const dx = foe.x - rock.x, dz = foe.z - rock.z;
+export function closingSpeed(troll, foe, foeVelocity = [0, 0, 0]) {
+  const dx = foe.x - troll.x, dz = foe.z - troll.z;
   const d = Math.hypot(dx, dz) || 1;
   const nx = dx / d, nz = dz / d;
-  const along = (rock.vx - foeVelocity[0]) * nx + (rock.vz - foeVelocity[2]) * nz;
+  const along = (troll.vx - foeVelocity[0]) * nx + (troll.vz - foeVelocity[2]) * nz;
   // Coming down on top of them, harder than he is rolling.
-  const drop = Math.max(0, -rock.vy) * (foe.y + (foe.height ?? 0.5) < rock.y - rock.r * 0.4 ? 0.7 : 0);
+  const drop = Math.max(0, -troll.vy) * (foe.y + (foe.height ?? 0.5) < troll.y - troll.r * 0.4 ? 0.7 : 0);
   return Math.max(0, along) + drop;
 }
 
-/** What Rock says. */
+/** What it is called when it lands. */
 export const GRADES = Object.freeze({
-  crit: { title: 'FLATTENED!', say: ['Rock is flat-out impressed. Briefly.', 'Rock regrets nothing.'] },
-  smash: { title: 'SMASH!', say: ['Rock did not mean to. Rock did anyway.', 'Rock has no notes.', 'Rock rolls on.'] },
-  bonk: { title: 'BONK', say: ['That was a face-full of person.', 'Rock needs a run-up.'] },
-  tap: { title: 'OW', say: ['Rock was going too slow. Rock knows.', 'Speed, Rock. Speed.'] },
+  crit: { title: 'OBLITERATED!' },
+  smash: { title: 'SMASHED!' },
+  bonk: { title: 'BONK' },
+  tap: { title: 'WEAK' },
 });

@@ -414,33 +414,33 @@ export class Venue {
     return this;
   }
 
-  /** A suitcase, sprung open on a heap of picks. */
-  suitcase(x, z, amount = 60) {
-    this.pickups.push({ kind: 'suitcase', x: x + 0.5, z: z + 0.5, amount });
+  /** A crate of vinyl, worth a good many picks. */
+  vinyl(x, z, amount = 60) {
+    this.pickups.push({ kind: 'vinyl', x: x + 0.5, z: z + 0.5, amount });
     return this;
   }
 
-  /** A roll of gaffer tape: holds Rock together. */
-  tape(x, z, amount = 25) {
-    this.pickups.push({ kind: 'tape', x: x + 0.5, z: z + 0.5, amount });
+  /** A whetstone: sharpens the spikes back on. */
+  whetstone(x, z, amount = 25) {
+    this.pickups.push({ kind: 'whetstone', x: x + 0.5, z: z + 0.5, amount });
     return this;
   }
 
-  /** A lighter, held up: when Rock is done for, the crowd calls for an encore and he gets up. */
+  /** A lighter, held up: when Metroll is done for, the crowd calls for an encore and it gets up again. */
   lighter(x, z) {
     this.pickups.push({ kind: 'lighter', x: x + 0.5, z: z + 0.5, amount: 1 });
     return this;
   }
 
-  /** A passport, for the border gates and the stage door. */
+  /** A backstage pass, for the security gates and the stage door. */
   pass(x, z) {
     this.pickups.push({ kind: 'pass', x: x + 0.5, z: z + 0.5, amount: 1 });
     return this;
   }
 
-  /** A snow globe, a souvenir: three are hidden at every stop. */
-  globe(x, z) {
-    this.pickups.push({ kind: 'globe', x: x + 0.5, z: z + 0.5, amount: 100 });
+  /** A demo tape, the only copy: three are hidden on every track. */
+  demo(x, z) {
+    this.pickups.push({ kind: 'demo', x: x + 0.5, z: z + 0.5, amount: 100 });
     return this;
   }
 

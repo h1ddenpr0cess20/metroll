@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import { FOES } from '../src/foes.js';
-import { GLOBES } from '../src/rating.js';
+import { DEMOS } from '../src/rating.js';
 import { VENUES, loadVenue } from '../src/venues/index.js';
 import * as GFX from '../src/vendor/gfx/index.js';
 import { createGig } from '../src/gig.js';
@@ -11,15 +11,15 @@ import { drive, graph, plan } from './helpers/autopilot.js';
 /** The boss of each set that has one. */
 const bossOf = (venue) => venue.foes.filter((f) => FOES[f.kind].boss).map((f) => f.kind);
 
-test('every stop can be played through to the stage door in one piece, with all its snow globes', () => {
+test('every stop can be played through to the stage door in one piece, with all its snow demos', () => {
   for (let i = 0; i < VENUES.length; i++) {
     const r = drive(i);
     const name = r.gig.venue.name;
     assert.ok(r.finished, `${name}: the autopilot got stuck (${JSON.stringify(r.stuck)})`);
-    const globes = r.gig.actors.pickups.filter((p) => p.kind === 'globe');
-    assert.equal(globes.length, GLOBES, `${name} hides ${GLOBES} snow globes`);
-    assert.ok(globes.every((p) => p.taken), `${name}: every snow globe can be got`);
-    assert.ok(r.gig.rock.hp > 0, `${name}: Rock got there whole`);
+    const demos = r.gig.actors.pickups.filter((p) => p.kind === 'demo');
+    assert.equal(demos.length, DEMOS, `${name} hides ${DEMOS} snow demos`);
+    assert.ok(demos.every((p) => p.taken), `${name}: every snow globe can be got`);
+    assert.ok(r.gig.troll.hp > 0, `${name}: Rock got there whole`);
   }
 });
 
@@ -95,10 +95,10 @@ test('tape lies after something that can hurt Rock and before something that sti
     ];
     for (let z = 0; z < v.rows; z++) for (let x = 0; x < v.cols; x++) if (v.cell(x, z)?.kind === 'zap') harm.push(at(x, z));
     for (const p of gig.actors.pickups) {
-      if (p.kind !== 'tape' && p.kind !== 'lighter') continue;
+      if (p.kind !== 'whetstone' && p.kind !== 'lighter') continue;
       const here = at(p.x, p.z);
       const where = `${v.name}: the ${p.kind} at ${[Math.floor(p.x), Math.floor(p.z)]}`;
-      if (p.kind === 'tape') assert.ok(harm.some((h) => h < here), `${where} is picked up before anything can have hurt him`);
+      if (p.kind === 'whetstone') assert.ok(harm.some((h) => h < here), `${where} is picked up before anything can have hurt him`);
       assert.ok(harm.some((h) => h > here), `${where} is picked up after the last thing that can`);
     }
   }

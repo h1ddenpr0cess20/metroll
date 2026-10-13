@@ -7,7 +7,7 @@ import { rollSpin, turn } from './physics.js';
  */
 
 /** The ball the physics pushes about, in tiles. */
-export const ROCK_RADIUS = 0.45;
+export const BALL_RADIUS = 0.45;
 
 /** The turn: which way up he is, and how fast he spins. */
 export function createRoll() {

@@ -52,7 +52,7 @@ for (let z = 0; z < venue.rows; z++) {
 if (!heights) {
   for (const l of venue.lifts) grid[l.z][l.x] = 'L';
   for (const b of venue.bumpers) grid[Math.floor(b.z)][Math.floor(b.x)] = 'O';
-  const mark = { pass: 'k', tape: '+', lighter: '!', globe: 'G' };
+  const mark = { pass: 'k', whetstone: '+', lighter: '!', demo: 'G' };
   for (const p of venue.pickups) grid[Math.floor(p.z)][Math.floor(p.x)] = mark[p.kind] ?? '$';
   for (const m of venue.foes) grid[Math.floor(m.z)][Math.floor(m.x)] = FOES[m.kind].move === 'walk' ? 'm' : 'o';
 }

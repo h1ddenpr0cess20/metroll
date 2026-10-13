@@ -67,7 +67,7 @@ export function sydney() {
   g.zap(...water1.rect(0, 9, water1.lo - 2, 7), d.h - 1.8, { fill: true });
   d.bridge(6, { width: 1, floor: 'planks' });
   const jetty = d.hall(4, { width: 3, ...QUAY });
-  g.tape(...jetty.tile(2, 1));
+  g.whetstone(...jetty.tile(2, 1));
   const water2 = d.ferry(9, { size: 3, period: 7, phase: 2 });
   g.zap(...water2.rect(0, 9, water2.lo - 2, 7), d.h - 1.8, { fill: true });
   const far = d.hall(4, { width: 5, ...QUAY });
@@ -77,7 +77,7 @@ export function sydney() {
   const glass = foyer.hall(5, { floor: 'marble', wall: 'stucco' });
   flat(g, glass, 3, { look: 'glass', breakAt: 6 });
   const lounge = foyer.room(5, 5, { floor: 'carpet', wall: 'stucco' });
-  g.globe(...lounge.tile(3, 0));
+  g.demo(...lounge.tile(3, 0));
   g.block(...lounge.rect(1, 1, 1, 2), 0.8, { prop: 'desk' });
   d.turn('+z', QUAY);
   d.ramp(8, 4, { floor: 'cobble', wall: 'brick' });
@@ -90,7 +90,7 @@ export function sydney() {
   g.pyro(...across(garden, 15, { beats: 4 }));
   g.foe('surfer', ...garden.tile(3, 2), { range: 3 }).foe('kangaroo', ...garden.tile(8, -1), { range: 2 }).foe('lifeguard', ...garden.tile(13, 2), { range: 2 });
   g.pick(...garden.tile(1, 0), 10).pick(...garden.tile(7, 3), 10).pick(...garden.tile(12, -2), 10).pick(...garden.tile(18, 0), 10);
-  g.tape(...garden.tile(17, 4));
+  g.whetstone(...garden.tile(17, 4));
   for (const k of [4, 14]) beacon(garden, k, k === 4 ? HARBOUR[3] : HARBOUR[0]);
   sign(garden, 9.5, 'THE ROCKS', HARBOUR[0], 0.5);
   d.hall(2, { floor: 'cobble', wall: 'brick' });
@@ -119,21 +119,21 @@ export function sydney() {
   g.pass(...club.tile(5, 3));
   g.foe('lifeguard', ...club.tile(12, -2), { range: 3 }).foe('surfer', ...club.tile(14, 2), { range: 4 }).foe('kangaroo', ...club.tile(5, -2), { range: 4 });
   g.pick(...club.tile(1, 0), 10).pick(...club.tile(11, -3), 10).pick(...club.tile(16, 3), 10);
-  g.suitcase(...club.tile(16, -5), 70);
+  g.vinyl(...club.tile(16, -5), 70);
   wash(g, club, [HARBOUR[1], HARBOUR[2]], { cans: 3, program: 'static' });
   sign(club, 4, 'SURF CLUB', HARBOUR[3], 0.45);
   const wall = branch(d, club, 11, 'front', 7);
   const back = wall.hall(5, { floor: 'planks', wall: 'stucco' });
   flat(g, back, 3, { look: 'drywall', breakAt: 6.5 });
   const shed = wall.room(5, 5, { floor: 'planks', wall: 'stucco' });
-  g.globe(...shed.tile(3, 0));
+  g.demo(...shed.tile(3, 0));
   // Out of the back of the club, along the rocks to the rock pool, a croc on the way: the last globe.
   const pool = branch(d, club, 3, 'front', 7);
   const rocks = pool.bridge(6, { floor: 'scree' });
   g.zap(...rocks.rect(0, 6, rocks.lo - 2, 5), pool.h - 1.8, { fill: true });
   g.foe('croc', ...rocks.tile(3, 0), { path: [rocks.tile(1, 0), rocks.tile(4, 0)] });
   const rockpool = pool.room(5, 5, { floor: 'scree', wall: 'cliff' });
-  g.globe(...rockpool.tile(2, 0));
+  g.demo(...rockpool.tile(2, 0));
   const door = d.hall(4, QUAY);
   barred(g, door, 2);
   d.hall(2, QUAY);

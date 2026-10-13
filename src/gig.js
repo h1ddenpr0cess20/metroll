@@ -2,7 +2,7 @@ import { createActors } from './actors.js';
 import { createHype, earn, smashed } from './hype.js';
 import { encore, heal, hurt, createIntegrity, HARM, shattered } from './integrity.js';
 import { BREAK_SPEED, createBall, placeBall, PUSH, ROLL_DRAG, stepBall, TOP_SPEED } from './physics.js';
-import { createRoll, ROCK_RADIUS, stepRoll } from './roll.js';
+import { createRoll, BALL_RADIUS, stepRoll } from './roll.js';
 import { closingSpeed, resolveImpact } from './smash.js';
 import { buildVenue, DEPTH, HEADING } from './venue.js';
 import { loadVenue } from './venues/index.js';
@@ -48,7 +48,7 @@ export function toGround({ x, y }, yaw) {
   return [x * right[0] + y * up[0], x * right[1] + y * up[1]];
 }
 
-export function createGig(GFX, index, { ball = createBall({ r: ROCK_RADIUS, mass: 6 }), roll = createRoll() } = {}) {
+export function createGig(GFX, index, { ball = createBall({ r: BALL_RADIUS, mass: 6 }), roll = createRoll() } = {}) {
   const venue = loadVenue(index);
   const built = buildVenue(venue);
   const killY = venue.lowest - DEPTH - 2;
@@ -58,8 +58,8 @@ export function createGig(GFX, index, { ball = createBall({ r: ROCK_RADIUS, mass
   const gig = {
     index, venue, built, world: built.world, actors, killY, ball, roll,
     time: 0, safe, passes: 0, explored: new Uint8Array(venue.cols * venue.rows), lockedAt: -Infinity,
-    rock: createIntegrity(), hype: createHype(), rev: REV.max, revving: false,
-    stats: { foes: venue.foes.length, smashed: 0, picks: 0, globes: 0, damage: 0, falls: 0 },
+    troll: createIntegrity(), hype: createHype(), rev: REV.max, revving: false,
+    stats: { foes: venue.foes.length, smashed: 0, picks: 0, demos: 0, damage: 0, falls: 0 },
   };
   actors.place(0);
   placeBall(ball, ...safe);
@@ -93,7 +93,7 @@ const unit = (ax, az, bx, bz, fallback = [0, 1]) => {
 
 /** Takes `how` off Rock's integrity, and notes it. Returns what it took. */
 function harm(gig, amount) {
-  const took = hurt(gig.rock, amount);
+  const took = hurt(gig.troll, amount);
   gig.stats.damage += took;
   return took;
 }
@@ -294,8 +294,8 @@ export function stepGig(gig, push, dt = STEP, { live = true, moving = true, rev 
 
 /** If he has no integrity left: an encore if he has a lighter, or he is shattered. */
 function finish(gig, out) {
-  if (shattered(gig.rock)) {
-    if (encore(gig.rock)) out.encore = true;
+  if (shattered(gig.troll)) {
+    if (encore(gig.troll)) out.encore = true;
     else out.outcome = 'shattered';
   }
   return out;
@@ -331,18 +331,18 @@ function hit(gig, foe, out) {
 }
 
 function collect(gig, p) {
-  if (p.kind === 'pick' || p.kind === 'suitcase') {
+  if (p.kind === 'pick' || p.kind === 'vinyl') {
     earn(gig.hype, p.amount);
-    gig.hype.picks += p.kind === 'suitcase' ? 5 : 1;
-    gig.stats.picks += p.kind === 'suitcase' ? 5 : 1;
-  } else if (p.kind === 'tape') heal(gig.rock, p.amount);
-  else if (p.kind === 'lighter') gig.rock.encores += 1;
+    gig.hype.picks += p.kind === 'vinyl' ? 5 : 1;
+    gig.stats.picks += p.kind === 'vinyl' ? 5 : 1;
+  } else if (p.kind === 'whetstone') heal(gig.troll, p.amount);
+  else if (p.kind === 'lighter') gig.troll.encores += 1;
   else if (p.kind === 'pass') gig.passes += 1;
-  else if (p.kind === 'globe') {
-    gig.stats.globes += 1;
+  else if (p.kind === 'demo') {
+    gig.stats.demos += 1;
     earn(gig.hype, p.amount);
   }
 }
 
 /** The rating inputs for this stop as it stands. */
-export const resultOf = (gig) => ({ smashed: gig.stats.smashed, foes: gig.stats.foes, globes: gig.stats.globes });
+export const resultOf = (gig) => ({ smashed: gig.stats.smashed, foes: gig.stats.foes, demos: gig.stats.demos });

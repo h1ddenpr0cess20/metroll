@@ -74,11 +74,11 @@ export function newyork() {
   // The arena's concourse: the hot dog stand down the back, security everywhere, the box office with the passport.
   const concourse = d.room(15, 13, { floor: 'checker', wall: 'block' });
   g.block(...concourse.rect(3, 9, concourse.back * 6, 1), 0.9, { prop: 'bar' });
-  g.suitcase(...concourse.tile(5, concourse.back * 5), 60).suitcase(...concourse.tile(10, concourse.back * 5), 60);
+  g.vinyl(...concourse.tile(5, concourse.back * 5), 60).vinyl(...concourse.tile(10, concourse.back * 5), 60);
   g.foe('hotdog', ...concourse.tile(6, 3), { range: 5 }).foe('security', ...concourse.tile(10, -1), { range: 5 }).foe('bouncer', ...concourse.tile(13, 3), { range: 3 });
   g.pass(...concourse.tile(4, 4));
   g.pick(...concourse.tile(2, 0), 10).pick(...concourse.tile(8, 2), 10);
-  g.tape(...concourse.tile(14, -3));
+  g.whetstone(...concourse.tile(14, -3));
   wash(g, concourse, [BROADWAY[0], BROADWAY[1]], { cans: 2, program: 'static' });
   neon(concourse, 7.5, 'HOT DOGS', BROADWAY[2], 0.5, 2.0);
   // The coat check, behind its curtain: the first snow globe, in somebody's coat.
@@ -86,7 +86,7 @@ export function newyork() {
   const curtain = coats.hall(5, { floor: 'carpet', wall: 'damask' });
   flat(g, curtain, 3, { look: 'curtain', breakAt: 6 });
   const check = coats.room(5, 5, { floor: 'carpet', wall: 'damask' });
-  g.globe(...check.tile(3, 0));
+  g.demo(...check.tile(3, 0));
   g.pillar(...check.tile(3, 2), 1.1, { prop: 'rail' });
   const doors = d.hall(4, { floor: 'carpet', wall: 'block' });
   barred(g, doors, 2);
@@ -127,7 +127,7 @@ export function newyork() {
   for (const [a, b] of [[1, -6], [17, -6]]) g.pillar(...stage.tile(a, b), 1.2, { prop: 'lamp' });
   g.foe('superfan', ...stage.tile(11, 0), { range: 6 });
   g.pick(...stage.tile(2, 0), 10).pick(...stage.tile(6, -3), 10).pick(...stage.tile(7, 5), 10).pick(...stage.tile(12, -5), 10);
-  g.tape(...stage.tile(2, -5)).tape(...stage.tile(2, 5));
+  g.whetstone(...stage.tile(2, -5)).whetstone(...stage.tile(2, 5));
   g.light('spot', ...wallTile(stage, 5), { colors: ['#fff4e0'], radius: 3, aim: toBack(stage).map((v) => -5 * v), height: 2.6 });
   g.light('spot', ...wallTile(stage, 14), { colors: ['#fff4e0'], radius: 3, aim: toBack(stage).map((v) => -5 * v), height: 2.6, shift: 2 });
   billboard(stage, 9.5, 'WORLD TOUR', BROADWAY[0], 0.6, 2.0);
@@ -136,14 +136,14 @@ export function newyork() {
   const under = trap.hall(5, { floor: 'planks', wall: 'block' });
   flat(g, under, 3, { look: 'wood', breakAt: 6.5 });
   const cellar = trap.room(5, 5, { floor: 'planks', wall: 'block' });
-  g.globe(...cellar.tile(3, 0));
-  g.suitcase(...cellar.tile(1, 1), 60);
+  g.demo(...cellar.tile(3, 0));
+  g.vinyl(...cellar.tile(1, 1), 60);
   // Up along the lighting catwalk to the sound desk: the third.
   const desk = branch(d, stage, 15, 'front', 8);
   const walk = desk.bridge(7, { floor: 'plate' });
   g.foe('drone', ...walk.tile(3, 0), { path: [walk.tile(1, 0), walk.tile(5, 0)] });
   const booth = desk.room(5, 5, { floor: 'concrete', wall: 'block' });
-  g.globe(...booth.tile(2, 0));
+  g.demo(...booth.tile(2, 0));
   g.block(...booth.rect(3, 1, -1, 1), 0.85, { prop: 'console' });
   d.hall(3, { floor: 'planks', wall: 'curtain' });
   d.exit(3);

@@ -70,7 +70,9 @@ export function paintRoom({ colors = ['#ff9a3a'], ceiling = '#2a2a38', width = 1
     ctx.fillRect(x - r, y - r, r * 2, r * 2);
   };
   glow(width * 0.25, height * 0.12, height * 0.2, 'rgba(210, 220, 255, 0.55)');
-  for (let k = 0; k < 8; k++) glow(width * (0.06 + k * 0.125), height * (0.3 + (k % 2) * 0.1), height * 0.07, withAlpha(colors[k % colors.length], 0.75));
+  // Strip lights overhead and a ring of the stop's colours round the walls: what the chrome catches.
+  for (let k = 0; k < 6; k++) glow(width * (0.08 + k * 0.17), height * (0.2 + (k % 2) * 0.05), height * 0.13, 'rgba(235, 240, 255, 0.5)');
+  for (let k = 0; k < 8; k++) glow(width * (0.06 + k * 0.125), height * (0.3 + (k % 2) * 0.1), height * 0.1, withAlpha(colors[k % colors.length], 0.9));
   ctx.globalCompositeOperation = 'source-over';
   return c;
 }
@@ -263,7 +265,7 @@ export async function createStage(host) {
     view: createView(),
     target: new GFX.Vector3(),
     /** Where Rock is, for the lantern; set every frame. */
-    rock: new GFX.Vector3(),
+    troll: new GFX.Vector3(),
     time: 0,
     /** How much extra light the strobes are throwing right now, 0 to 1: the page can flash with it. */
     flash: 0,
@@ -331,7 +333,7 @@ export async function createStage(host) {
     key.position.copy(stage.target).addScaledVector(KEY, 45 + span);
     key.target.position.copy(stage.target);
     key.target.updateMatrixWorld();
-    lantern.position.set(stage.rock.x, stage.rock.y + 4, stage.rock.z);
+    lantern.position.set(stage.troll.x, stage.troll.y + 4, stage.troll.z);
   };
 
   const fit = () => renderer.setSize(host.clientWidth || 1, host.clientHeight || 1);

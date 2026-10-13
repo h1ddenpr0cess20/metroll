@@ -38,7 +38,7 @@ import { canvas, cached, copyOf, glowTexture, random, texture } from './textures
  * rest are baked into the floor (`venue.js`).
  *
  * `createLightshow(GFX, venue)` gives { group, update(frame), flash }; call
- * `update({ time, beat, rock, lights, flashing })` each frame with the beat
+ * `update({ time, beat, troll, lights, flashing })` each frame with the beat
  * (a number of beats from the downbeat), where Rock is, and the stage's
  * fixture lights to set.
  */
@@ -1047,16 +1047,16 @@ export function createLightshow(GFX, venue) {
     count: fixtures.length,
 
     /**
-     * Once a frame. `rock` is where he is ([x, y, z]); `lights` the stage's
+     * Once a frame. `troll` is where he is ([x, y, z]); `lights` the stage's
      * fixture lights; `flashing` false stops the strobes flashing.
      */
-    update({ time, beat, rock, lights, flashing = true }) {
+    update({ time, beat, troll, lights, flashing = true }) {
       ctx.flashing = flashing;
       offers = [];
       for (const f of fixtures) f.update(time, beat, ctx);
       // The nearest, by how much they would light him.
       const scored = offers.map((o) => {
-        const d = Math.hypot(o.pos[0] - rock[0], o.pos[1] - rock[1], o.pos[2] - rock[2]);
+        const d = Math.hypot(o.pos[0] - troll[0], o.pos[1] - troll[1], o.pos[2] - troll[2]);
         return { o, d };
       }).sort((a, b) => a.d - b.d);
       const n = lights.length;

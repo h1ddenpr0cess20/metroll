@@ -6,8 +6,8 @@ import { createLightshow } from './lightshow.js';
 import { createProps } from './decor.js';
 import { readyAll } from './models/library.js';
 import { stars } from './rating.js';
-import { createRock } from './rock.js';
-import { ROCK_RADIUS } from './roll.js';
+import { createMace } from './mace.js';
+import { BALL_RADIUS } from './roll.js';
 import { createExit, createVenueMeshes } from './scenery.js';
 import { GRADES } from './smash.js';
 import { say } from './quips.js';
@@ -15,29 +15,30 @@ import { BOARD_DETAIL } from './foes.js';
 import { VENUES } from './venues/index.js';
 
 /**
- * The game: the stops of the world tour, one after another. At each, Rock
- * rolls through the town on the way to the show, smashing the people in the
- * way at speed, picking up picks and gaffer tape and his passport, and
- * keeping out from under whatever comes down, out of the effects and off live
- * floor, until he gets to the stage door; the review after it gives stars,
- * and the next stop opens. At no integrity he is shattered, unless he has a
- * lighter and the crowd calls him back for an encore.
+ * The game: the tracks of the compilation, one after another, each a scene
+ * from a different decade of metal. At each, Metroll rolls through the venue
+ * on the way to the stage door, smashing the posers and gatekeepers in the
+ * way at speed, picking up picks and vinyl and whetstones and the backstage
+ * pass, and keeping out from under whatever comes down, out of the effects
+ * and off live floor; the review after it gives stars, and the next track
+ * opens. With no spikes left it is wrecked, unless it picked up a lighter
+ * and the crowd calls it back for an encore.
  *
- * It keeps the screens and the state: `title`, `ready` (the stop's name on
+ * It keeps the screens and the state: `title`, `ready` (the track's name on
  * screen), `play`, `lost` (off an edge or flattened: back in a moment),
- * `clear` (the review) and `over` (shattered). The rules are in gig.js.
+ * `clear` (the review) and `over` (wrecked). The rules are in gig.js.
  */
 
-/** Hype for every stop played, by how far into the tour it was. */
+/** Cred for every track played, by how far into the compilation it was. */
 export const CLEAR_BONUS = 100;
 
 const BANNERS = {
-  fell: 'OFF THE EDGE!',
-  zapped: 'ZAPPED!',
-  crushed: 'FLATTENED!',
-  burnt: 'SINGED!',
-  scalded: 'SCALDED!',
-  thud: 'THUD!',
+  fell: 'DOWN YOU GO',
+  zapped: 'SHOCKING',
+  crushed: 'FLATTENED',
+  burnt: 'TOASTED',
+  scalded: 'STEAMED',
+  thud: 'THUD',
 };
 
 /** How close the camera comes for the title, and how fast it circles. */
@@ -47,9 +48,9 @@ const TITLE_TURN = 0.16;
 export function createGame({ stage, hud, input, audio, storage }) {
   const { GFX, scene, view } = stage;
   const effects = createEffects(GFX, scene);
-  const rock = createRock(GFX, { radius: ROCK_RADIUS });
-  rock.group.traverse((o) => { if (o.isMesh) o.castShadow = true; });
-  scene.add(rock.group);
+  const mace = createMace(GFX, { radius: BALL_RADIUS });
+  mace.group.traverse((o) => { if (o.isMesh) o.castShadow = true; });
+  scene.add(mace.group);
 
   let gig = null;
   let group = null;
@@ -72,7 +73,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
 
   const settings = () => storage.load().settings;
   const flashing = () => settings().flashing;
-  /** How Rock talks at this stop: flatly, as a rule, unless the stop has a voice of its own. */
+  /** How Metroll talks on this track: sarcastically, as a rule, unless the era has a voice of its own. */
   const voice = () => gig?.venue.look.voice ?? null;
 
   function setVenue(index) {
@@ -91,7 +92,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
     stage.setVenue(venue);
     effects.setVenue(venue);
     accumulator = 0;
-    rock.group.visible = true;
+    mace.group.visible = true;
     const b = gig.ball;
     stage.target.set(b.x, b.y, b.z);
     hud.map(gig);
@@ -169,11 +170,11 @@ export function createGame({ stage, hud, input, audio, storage }) {
     enter('ready');
     const venue = gig.venue;
     hud.play(venue);
-    hud.banner(`STOP ${venue.act}\n${venue.name.toUpperCase()}`, 'big', venue.intro);
+    hud.banner(`TRACK ${venue.act}\n${venue.name.toUpperCase()}`, 'big', venue.intro);
     hud.hype(0);
-    hud.integrity(gig.rock);
+    hud.integrity(gig.troll);
     hud.carried({});
-    hud.say(say('ready', voice()), 'Rock', 2.4);
+    hud.say(say('ready', voice()), 'Metroll', 2.4);
     audio.wake();
     audio.descend();
     audio.startMusic(venue, { gig });
@@ -191,26 +192,26 @@ export function createGame({ stage, hud, input, audio, storage }) {
     lostHow = how;
     enter('lost');
     hud.banner(`${BANNERS[how]}\n−${HARM[how]}`, 'hurt');
-    rock.react(how === 'fell' ? 'fall' : 'hurt', 1.2);
+    mace.react(how === 'fell' ? 'fall' : 'hurt', 1.2);
     stage.shake = 0.18;
-    hud.say(say(how, voice()), 'Rock', 2.4);
-    if (how === 'zapped') { effects.embers(b.x, b.y, b.z, '#7ad8ff'); audio.zap(); rock.group.visible = false; }
-    else if (how === 'crushed') { effects.dust(b.x, b.y - b.r, b.z); effects.chips(b.x, b.y, b.z, 12); audio.slam(); rock.group.visible = false; }
+    hud.say(say(how, voice()), 'Metroll', 2.4);
+    if (how === 'zapped') { effects.embers(b.x, b.y, b.z, '#7ad8ff'); audio.zap(); mace.group.visible = false; }
+    else if (how === 'crushed') { effects.dust(b.x, b.y - b.r, b.z); effects.chips(b.x, b.y, b.z, 12); audio.slam(); mace.group.visible = false; }
     else audio.fall();
   }
 
   function shatter() {
     const b = gig.ball;
     enter('over');
-    rock.react('shatter', 99);
+    mace.react('shatter', 99);
     effects.chips(b.x, b.y, b.z, 40);
     effects.dust(b.x, b.y - b.r, b.z);
     stage.shake = 0.3;
     hud.banner(null);
     audio.stopMusic();
     audio.over();
-    rock.group.visible = false;
-    hud.integrity(gig.rock);
+    mace.group.visible = false;
+    hud.integrity(gig.troll);
     const q = say('shattered', voice());
     setTimeout(() => {
       if (state !== 'over') return;
@@ -235,10 +236,10 @@ export function createGame({ stage, hud, input, audio, storage }) {
     effects.confetti(b.x, b.y + 0.4, b.z, 80);
     audio.stopMusic();
     audio.clear();
-    rock.react('proud', 99);
-    hud.banner(last ? `THAT'S THE TOUR!` : `WHAT A SHOW!`, 'big', `+${bonus} hype`);
+    mace.react('proud', 99);
+    hud.banner(last ? `THAT'S THE WHOLE DISCOGRAPHY` : `TRACK COMPLETE`, 'big', `+${bonus} cred`);
     hud.hype(gig.hype.score, { pulse: true });
-    hud.say(say(last ? 'tour' : 'clear', voice()), 'Rock', 3);
+    hud.say(say(last ? 'tour' : 'clear', voice()), 'Metroll', 3);
     setTimeout(() => { if (state === 'clear') hud.review(result); }, 2200);
   }
 
@@ -247,30 +248,30 @@ export function createGame({ stage, hud, input, audio, storage }) {
     const b = gig.ball;
     if (out.impact > 2.5) {
       audio.land(out.impact);
-      rock.knock(Math.min(6, out.impact * 0.5));
+      mace.knock(Math.min(6, out.impact * 0.5));
       if (out.impact > 6) effects.dust(b.x, b.y - b.r, b.z);
     }
     for (const h of out.hits) hit(h);
     for (const e of out.events) happened(e);
     if (out.hurt && out.hurt.how !== 'foe') {
-      hud.integrity(gig.rock);
+      hud.integrity(gig.troll);
       if (out.hurt.how === 'burnt') {
         const steam = gig.venue.look.pyro === 'steam';
         if (steam) effects.steam(b.x, b.y - b.r, b.z);
         else { effects.embers(b.x, b.y, b.z); effects.sparks(b.x, b.y - b.r, b.z); }
         audio.burst(1, steam);
         hud.banner(`${steam ? BANNERS.scalded : BANNERS.burnt}\n−${out.hurt.amount}`, 'hurt');
-        hud.say(say(steam ? 'scalded' : 'burnt', voice()), 'Rock', 2.4);
-        rock.react('hurt', 0.5);
+        hud.say(say(steam ? 'scalded' : 'burnt', voice()), 'Metroll', 2.4);
+        mace.react('hurt', 0.5);
       } else if (out.hurt.how === 'thud') {
         effects.dust(b.x, b.y - b.r, b.z);
         audio.hurt();
-        hud.say(say('thud', voice()), 'Rock', 2);
+        hud.say(say('thud', voice()), 'Metroll', 2);
       }
       stage.shake = Math.max(stage.shake, 0.1);
     }
     for (const p of out.picked) picked(p);
-    for (const bm of out.bumped) { audio.bumper(); rock.react('smash', 0.3); stage.shake = Math.max(stage.shake, 0.05); void bm; }
+    for (const bm of out.bumped) { audio.bumper(); mace.react('smash', 0.3); stage.shake = Math.max(stage.shake, 0.05); void bm; }
     for (const p of out.smashed) {
       const at = [p.centre[0], p.centre[1] + 0.5, p.centre[2]];
       effects.chips(...at, 10 + Math.min(20, p.spec.w * p.spec.d * 4));
@@ -288,19 +289,19 @@ export function createGame({ stage, hud, input, audio, storage }) {
       audio.panel();
       stage.shake = Math.max(stage.shake, 0.2);
       hud.banner('SMASHED THROUGH!', 'normal');
-      hud.say(say('broke', voice()), 'Rock', 2.6);
+      hud.say(say('broke', voice()), 'Metroll', 2.6);
     }
-    if (out.door === 'opened') { audio.gate(); hud.banner('WAVED THROUGH'); hud.carried(carriedNow()); }
-    if (out.door === 'locked') { audio.locked(); hud.banner('PASSPORT, PLEASE\nfind the passport'); hud.say(say('locked', voice()), 'Rock', 2.6); }
-    if (out.door === 'sturdy') { audio.locked(); hud.say(say('sturdy', voice()), 'Rock', 2.6); }
+    if (out.door === 'opened') { audio.gate(); hud.banner('ALL ACCESS'); hud.carried(carriedNow()); }
+    if (out.door === 'locked') { audio.locked(); hud.banner('NO PASS, NO ENTRY\nfind the backstage pass'); hud.say(say('locked', voice()), 'Metroll', 2.6); }
+    if (out.door === 'sturdy') { audio.locked(); hud.say(say('sturdy', voice()), 'Metroll', 2.6); }
     if (out.encore) {
       effects.sparkle(b.x, b.y, b.z, '#ffffff');
       effects.sparkle(b.x, b.y, b.z, '#ffb84a');
       audio.encore();
       hud.banner('ENCORE!\nthe crowd wants more', 'big');
-      hud.say(say('encore', voice()), 'Rock', 3);
-      rock.react('proud', 1.4);
-      hud.integrity(gig.rock);
+      hud.say(say('encore', voice()), 'Metroll', 3);
+      mace.react('proud', 1.4);
+      hud.integrity(gig.troll);
       hud.carried(carriedNow());
     }
     if (out.outcome === 'exit') finish();
@@ -336,7 +337,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
     if (h.down) {
       effects.smash(f.x, f.y + 0.4, f.z, { size: f.stats.boss ? 2.4 : 1, dir: h.dir, crit: h.grade === 'crit' });
       stage.shake = Math.max(stage.shake, h.grade === 'crit' ? 0.3 : 0.14);
-      rock.react('smash', 0.55);
+      mace.react('smash', 0.55);
       hud.pop(at.x, at.y, `+${h.gain}`, h.multiplier > 2 || h.grade === 'crit' ? 'big' : '');
       if (h.multiplier > 1) hud.pop(at.x, at.y - 34, `×${h.multiplier} COMBO`, 'big');
       if (h.grade === 'crit') hud.banner(grade.title, 'normal');
@@ -345,64 +346,65 @@ export function createGame({ stage, hud, input, audio, storage }) {
       if (!seen.has(f.kind)) {
         seen.add(f.kind);
         hud.say(f.stats.blurb, f.stats.name.toUpperCase(), 4.2);
-      } else if (h.multiplier >= 3 && h.multiplier !== lastCombo) hud.say(say('combo', voice()), 'Rock', 2);
-      else hud.say(say(h.grade === 'crit' ? 'crit' : 'smash', voice()), 'Rock', 2);
+      } else if (h.multiplier >= 3 && h.multiplier !== lastCombo) hud.say(say('combo', voice()), 'Metroll', 2);
+      else hud.say(say(h.grade === 'crit' ? 'crit' : 'smash', voice()), 'Metroll', 2);
       lastCombo = h.multiplier;
       hud.hype(gig.hype.score, { combo: h.combo, multiplier: h.multiplier, left: 1, pulse: true });
     } else {
       effects.dust(b.x, b.y - b.r * 0.5, b.z);
       stage.shake = Math.max(stage.shake, 0.1);
-      rock.react('hurt', 0.5);
+      mace.react('hurt', 0.5);
       hud.pop(at.x, at.y, h.damage > 0 ? `−${h.damage}` : grade.title, 'hurt');
-      hud.say(say(h.grade, voice()), 'Rock', 2.2);
+      hud.say(say(h.grade, voice()), 'Metroll', 2.2);
       if (f.stats.flash) { hud.flash(flashing() ? 1 : 0.25); audio.flash(); }
     }
     if (h.damage > 0) {
       effects.chips(b.x, b.y, b.z, Math.min(14, 3 + h.damage));
-      hud.integrity(gig.rock);
+      hud.integrity(gig.troll);
     }
     if (f.stats.boss && !h.down) hud.banner(`${f.stats.name.toUpperCase()}\n${Math.max(0, Math.ceil(f.hp))} to go`, 'normal');
   }
 
   function picked(p) {
     const at = screenOf(p.x, p.y + 0.5, p.z);
-    if (p.kind === 'pick' || p.kind === 'suitcase') {
-      effects.picks(p.x, p.y, p.z, p.kind === 'suitcase' ? 22 : 7);
-      audio.pick(p.kind === 'suitcase');
+    if (p.kind === 'pick' || p.kind === 'vinyl') {
+      effects.picks(p.x, p.y, p.z, p.kind === 'vinyl' ? 22 : 7);
+      audio.pick(p.kind === 'vinyl');
       hud.pop(at.x, at.y, `+${p.amount}`, 'pick');
       hud.hype(gig.hype.score, { combo: comboAt(gig.hype, gig.time), multiplier: Math.min(5, comboAt(gig.hype, gig.time)), left: windowLeft(gig.hype, gig.time) });
-      if (p.kind === 'suitcase') hud.banner(`A SUITCASE OF PICKS\n+${p.amount}`, 'normal');
-    } else if (p.kind === 'tape') {
-      effects.sparkle(p.x, p.y, p.z, '#cfd6e2');
-      audio.tape();
-      hud.integrity(gig.rock);
-      hud.banner(`GAFFER TAPE\n+${p.amount} integrity`, 'normal');
-      hud.say(say('tape', voice()), 'Rock', 2.4);
+      if (p.kind === 'vinyl') hud.banner(`A CRATE OF VINYL\n+${p.amount} cred`, 'normal');
+    } else if (p.kind === 'whetstone') {
+      effects.sparkle(p.x, p.y, p.z, '#dfe6f4');
+      effects.sparks(p.x, p.y - 0.2, p.z);
+      audio.whetstone();
+      hud.integrity(gig.troll);
+      hud.banner(`WHETSTONE\n+${p.amount} spikes`, 'normal');
+      hud.say(say('whetstone', voice()), 'Metroll', 2.4);
     } else if (p.kind === 'lighter') {
       effects.sparkle(p.x, p.y, p.z, '#ffb84a');
       audio.lighter();
       hud.banner('A LIGHTER\nfor an encore', 'normal');
-      hud.say(say('lighter', voice()), 'Rock', 2.8);
+      hud.say(say('lighter', voice()), 'Metroll', 2.8);
     } else if (p.kind === 'pass') {
-      effects.sparkle(p.x, p.y, p.z, '#ffcf4a');
+      effects.sparkle(p.x, p.y, p.z, '#ff4a5a');
       audio.pass();
-      hud.banner('PASSPORT');
-      hud.say(say('pass', voice()), 'Rock', 2.4);
-    } else if (p.kind === 'globe') {
-      effects.sparkle(p.x, p.y, p.z, '#e8f4ff');
+      hud.banner('BACKSTAGE PASS\nALL ACCESS');
+      hud.say(say('pass', voice()), 'Metroll', 2.4);
+    } else if (p.kind === 'demo') {
+      effects.sparkle(p.x, p.y, p.z, '#e8f0ff');
       effects.picks(p.x, p.y, p.z, 14);
       effects.confetti(p.x, p.y, p.z, 30);
-      audio.globe();
-      hud.banner(`SNOW GLOBE\n${gig.stats.globes} of 3`, 'normal');
-      hud.say(say('globe', voice()), 'Rock', 3);
+      audio.demo();
+      hud.banner(`DEMO TAPE\n${gig.stats.demos} of 3`, 'normal');
+      hud.say(say('demo', voice()), 'Metroll', 3);
       hud.hype(gig.hype.score, { pulse: true });
     }
     hud.carried(carriedNow());
   }
 
-  const carriedNow = () => ({ globes: gig.stats.globes, passes: gig.passes, encores: gig.rock.encores });
+  const carriedNow = () => ({ demos: gig.stats.demos, passes: gig.passes, encores: gig.troll.encores });
 
-  /** Sparks off the zap floor near Rock, a few a second. */
+  /** Sparks off the zap floor near Metroll, a few a second. */
   function zapSparks(dt) {
     const b = gig.ball;
     for (let n = 0; n < 3; n++) {
@@ -457,7 +459,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
         accumulator -= STEP;
         const out = stepGig(gig, state === 'play' ? push : [0, 0], STEP, {
           live: state === 'play',
-          moving: rock.group.visible && !(state === 'lost' && lostHow !== 'fell'),
+          moving: mace.group.visible && !(state === 'lost' && lostHow !== 'fell'),
           rev: state === 'play' && revHeld,
         });
         handle(out);
@@ -479,7 +481,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
       case 'lost':
         if (timer > 1.7) {
           putBack(gig);
-          rock.group.visible = true;
+          mace.group.visible = true;
           hud.banner(null);
           enter('play');
         }
@@ -488,10 +490,11 @@ export function createGame({ stage, hud, input, audio, storage }) {
 
     // Rock, turned as he rolls.
     const speed = Math.hypot(b.vx, b.vz);
-    rock.update(dt, { q: gig.roll.q, position: [b.x, b.y, b.z] });
+    mace.update(dt, { q: gig.roll.q, position: [b.x, b.y, b.z] });
+    mace.hurtTo(gig.troll.hp / gig.troll.max);
 
     // The light show keeps the beat; the page flashes with the strobes.
-    show.update({ time: stage.time, beat: beatNow(), rock: [b.x, b.y, b.z], lights: stage.fixtureLights, flashing: flashing() });
+    show.update({ time: stage.time, beat: beatNow(), troll: [b.x, b.y, b.z], lights: stage.fixtureLights, flashing: flashing() });
     stage.flash = show.flash;
     hud.flash(flashing() ? Math.max(show.flash, 0) : 0);
     props.update(stage.time, beatNow());
@@ -505,12 +508,12 @@ export function createGame({ stage, hud, input, audio, storage }) {
     audio.rolling(state === 'play' && b.grounded ? speed : 0, b.grounded);
     audio.rev(gig.revving);
     hud.tick(dt, gig);
-    stage.rock.set(b.x, b.y, b.z);
+    stage.troll.set(b.x, b.y, b.z);
 
     // The HUD, as it changes.
     if (state !== 'title') {
       hud.rev(gig.rev / 100, gig.revving);
-      if (Math.abs(gig.rock.hp - lastHp) > 0.01) { hud.integrity(gig.rock); lastHp = gig.rock.hp; }
+      if (Math.abs(gig.troll.hp - lastHp) > 0.01) { hud.integrity(gig.troll); lastHp = gig.troll.hp; }
       const c = comboAt(gig.hype, gig.time);
       if (c !== lastCombo && c === 0) hud.hype(gig.hype.score, { combo: 0 });
       else if (c > 0) hud.hype(gig.hype.score, { combo: c, multiplier: Math.min(5, c), left: windowLeft(gig.hype, gig.time) });
@@ -537,7 +540,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
     get gig() { return gig; },
     get ball() { return gig.ball; },
     get state() { return state; },
-    get rock() { return rock; },
+    get mace() { return mace; },
     get show() { return show; },
     /** Straight to venue `index`, for looking round. */
     venue(index) { startVenue(index); },

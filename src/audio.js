@@ -4,7 +4,7 @@ import { createBand, THEMES } from './music.js';
  * Every sound, made on the spot with Web Audio — no samples. Rock rolling is
  * a low grind of filtered noise that rises with speed; every landing a stone
  * knocking on the floor; a smash is a kick drum and a crash cymbal; picks
- * plink, tape rips, a lighter flicks, shutters rattle, breakaways
+ * plink, a whetstone shings, a lighter flicks, shutters rattle, breakaways
  * splinter, sandbags thump, pyro whooshes and steam hisses, floor zaps, the
  * cabin chime brings each stop in, and the crowd cheers at the stage door. The score
  * (music.js) plays under it all, and keeps the time.
@@ -236,21 +236,24 @@ export function createAudio() {
       burst({ length: 0.14, type: 'bandpass', freq: 900, q: 1.5, gain: 0.4 });
     },
 
-    /** Picks: a plink, or for a suitcase of them the latches snapping and a strum. */
+    /** Picks: a plink, or for a crate of vinyl the record scratch and a power chord. */
     pick(big = false) {
       const scale = [64, 67, 69, 71, 74, 76];
       const n = scale[Math.floor(Math.random() * scale.length)];
       tone({ freq: NOTE(n), length: 0.24, type: 'triangle', gain: 0.16 });
       tone({ freq: NOTE(n) * 2, length: 0.06, type: 'sine', gain: 0.03 });
       if (big) {
-        for (const at of [0, 0.08]) burst({ at, length: 0.03, type: 'bandpass', freq: 1800, q: 3, gain: 0.35 });
-        [52, 59, 64, 67, 71].forEach((m, i) => tone({ at: 0.12 + 0.04 * i, freq: NOTE(m), length: 0.7, type: 'sawtooth', gain: 0.06 }));
+        // The needle dragged across it, and then the chord.
+        burst({ length: 0.22, type: 'bandpass', freq: 3400, sweep: 500, q: 2.5, gain: 0.3 });
+        [40, 47, 52, 59].forEach((m, i) => tone({ at: 0.2 + 0.03 * i, freq: NOTE(m), length: 0.8, type: 'sawtooth', gain: 0.07 }));
       }
     },
 
-    tape() {
-      burst({ length: 0.45, type: 'bandpass', freq: 900, sweep: 2600, q: 1, gain: 0.25 });
-      tone({ at: 0.35, freq: NOTE(67), length: 0.18, type: 'triangle', gain: 0.12 });
+    /** A whetstone: a blade drawn along it, a ring of steel at the end. */
+    whetstone() {
+      burst({ length: 0.4, type: 'highpass', freq: 3000, sweep: 7000, q: 2, gain: 0.22 });
+      tone({ at: 0.32, freq: NOTE(91), length: 0.5, type: 'sine', gain: 0.1 });
+      tone({ at: 0.36, freq: NOTE(98), length: 0.4, type: 'sine', gain: 0.05 });
     },
 
     /** A lighter: the flint, the flame catching, and the crowd's hopes going up. */
@@ -267,11 +270,13 @@ export function createAudio() {
       tone({ at: 0.16, freq: NOTE(79), length: 0.35, type: 'triangle', gain: 0.13 });
     },
 
-    /** A snow globe: the little music box in its base, playing, and a cheer. */
-    globe() {
-      [72, 76, 79, 76, 81, 79, 84].forEach((n, i) => tone({ at: i * 0.11, freq: NOTE(n), length: 0.45, type: 'triangle', gain: 0.11, attack: 0.002 }));
-      [60, 67].forEach((n) => tone({ freq: NOTE(n), length: 1.1, type: 'triangle', gain: 0.06 }));
-      cheer(0.6, 1.6);
+    /** A demo tape: the play button going down, a lo-fi riff through a blown speaker, and a cheer from somebody. */
+    demo() {
+      burst({ length: 0.05, type: 'bandpass', freq: 300, q: 2, gain: 0.5 });
+      burst({ at: 0.08, length: 0.9, type: 'highpass', freq: 5000, q: 0.5, gain: 0.05 });
+      [40, 40, 43, 40, 45, 43, 40, 38].forEach((n, i) => tone({ at: 0.12 + i * 0.1, freq: NOTE(n), length: 0.14, type: 'sawtooth', gain: 0.09 }));
+      [52, 59].forEach((n) => tone({ at: 0.12, freq: NOTE(n), length: 0.9, type: 'square', gain: 0.03 }));
+      cheer(0.6, 1.2);
     },
 
     gate() {

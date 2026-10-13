@@ -64,7 +64,7 @@ export function egypt() {
   const cloth = jeweller.hall(5, { floor: 'carpet', wall: 'stucco' });
   flat(g, cloth, 3, { look: 'curtain' });
   const vault = jeweller.room(5, 5, { floor: 'carpet', wall: 'stucco' });
-  g.globe(...vault.tile(3, 0));
+  g.demo(...vault.tile(3, 0));
   g.pillar(...vault.tile(3, 2), 0.7, { prop: 'chest' });
   g.pick(...vault.tile(1, -1), 10);
   d.hall(2, { floor: 'cobble', wall: 'stucco' });
@@ -91,7 +91,7 @@ export function egypt() {
   g.block(...quarry.rect(3, 12, quarry.back * 3, 1), 0.8, { prop: 'stones' });
   g.foe('camel', ...quarry.tile(12, -1), { range: 4 });
   g.pick(...quarry.tile(2, 0), 5).pick(...quarry.tile(8, -2), 5).pick(...quarry.tile(13, 2), 10);
-  g.tape(...quarry.tile(17, -2));
+  g.whetstone(...quarry.tile(17, -2));
   for (const k of [3, 8, 13]) torch(quarry, k);
   d.turn('+z', { floor: 'sand', wall: 'canvas' });
   d.hall(2, { floor: 'sand', wall: 'canvas' });
@@ -109,8 +109,8 @@ export function egypt() {
   const crates = dig.hall(5, { floor: 'sand', wall: 'sandstone' });
   flat(g, crates, 3, { look: 'wood' });
   const trench = dig.room(5, 5, { floor: 'sand', wall: 'sandstone' });
-  g.globe(...trench.tile(3, 0));
-  g.suitcase(...trench.tile(1, 1), 60);
+  g.demo(...trench.tile(3, 0));
+  g.vinyl(...trench.tile(1, 1), 60);
   d.hall(2, { floor: 'sand', wall: 'canvas' });
 
   // The dunes: the sand gives way underfoot (it is quicksand), and the Mummy is out for a walk.
@@ -135,7 +135,7 @@ export function egypt() {
   g.foe('mummy', ...chamber.tile(8, -2), { range: 4 });
   g.foe('archaeologist', ...chamber.tile(14, 2), { range: 4 });
   g.pick(...chamber.tile(2, 0), 10).pick(...chamber.tile(8, 0), 10).pick(...chamber.tile(14, -3), 10);
-  g.tape(...chamber.tile(9, 5));
+  g.whetstone(...chamber.tile(9, 5));
   wash(g, chamber, [DESERT[2], DESERT[3]], { cans: 2, program: 'static' });
   // Across the pit on a plank, the treasury: the last globe.
   const pit = branch(d, chamber, 8, 'front', 7);
@@ -143,7 +143,7 @@ export function egypt() {
   g.zap(...plank.rect(0, 7, plank.lo - 2, 5), pit.h - 1.8, { fill: true });
   g.foe('scarab', ...plank.tile(3, 0), { path: [plank.tile(1, 0), plank.tile(5, 0)] });
   const treasury = pit.room(5, 5, TOMB);
-  g.globe(...treasury.tile(2, 0));
+  g.demo(...treasury.tile(2, 0));
   g.light('chandelier', ...centre(treasury), { height: 2.8, radius: 2.5, color: '#ffd890' });
   d.hall(3, TOMB);
   d.exit(3);

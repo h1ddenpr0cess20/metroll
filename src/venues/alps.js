@@ -67,7 +67,7 @@ export function alps() {
   const runout = d.hall(10, { width: 7, ...SNOW });
   for (const [along, offset] of [[3, 0], [7, 0.5]]) g.pyro(...across(runout, along, { beats: 8, offset }));
   g.pick(...runout.tile(1, 0), 10).pick(...runout.tile(5, 2), 5).pick(...runout.tile(9, -2), 10);
-  g.tape(...runout.tile(9, 2));
+  g.whetstone(...runout.tile(9, 2));
   sign(runout, 5, 'PISTE 7', PEAK[2], 0.5);
   d.turn('+x', SNOW);
 
@@ -83,7 +83,7 @@ export function alps() {
   const cornice = corniceRoot.bridge(7, { floor: 'planks', color: 2 });
   g.foe('ibex', ...cornice.tile(3, 0), { path: [cornice.tile(1, 0), cornice.tile(5, 0)] });
   const bivouac = corniceRoot.room(5, 5, { floor: 'snow', wall: 'cliff' });
-  g.globe(...bivouac.tile(2, 0));
+  g.demo(...bivouac.tile(2, 0));
   g.pick(...bivouac.tile(3, -1), 10).pick(...bivouac.tile(3, 1), 10);
   d.hall(3, SNOW);
   d.turn('+z', { floor: 'planks', wall: 'timber' });
@@ -96,7 +96,7 @@ export function alps() {
   g.foe('stbernard', ...hut.tile(5, 2), { range: 5 }).foe('yodeler', ...hut.tile(10, -2), { range: 5 });
   g.pick(...hut.tile(1, -3), 10).pick(...hut.tile(6, -3), 10).pick(...hut.tile(13, 3), 10);
   g.pass(...hut.tile(8, 3));
-  g.suitcase(...hut.tile(3, 3), 50);
+  g.vinyl(...hut.tile(3, 3), 50);
   wash(g, hut, [PEAK[3], '#ff9a5a'], { cans: 2, program: 'static' });
   sign(hut, 4, 'HÜTTE', PEAK[3], 0.5);
   d.hall(3, { floor: 'planks', wall: 'timber' });
@@ -123,7 +123,7 @@ export function alps() {
   lakeRoot.hall(3, { floor: 'snow', wall: 'cliff' });
   const lake = lakeRoot.room(9, 9, { floor: 'snow', wall: 'cliff' });
   g.ice(...lake.rect(1, 7, lake.lo + 1, lake.width - 2));
-  g.globe(...lake.tile(4, 0));
+  g.demo(...lake.tile(4, 0));
   g.foe('snowboarder', ...lake.tile(6, 2), { range: 3 });
   d.hall(3, SNOW);
   d.turn('+x', SNOW);
@@ -136,15 +136,15 @@ export function alps() {
   const shelf = d.hall(8, { width: 7, ...SNOW });
   g.foe('yodeler', ...shelf.tile(5, 2), { range: 4 });
   g.pick(...shelf.tile(2, -2), 10).pick(...shelf.tile(6, 0), 10);
-  g.tape(...shelf.tile(7, -2));
+  g.whetstone(...shelf.tile(7, -2));
   g.lighter(...shelf.tile(7, 2));
   // Behind the avalanche's debris at the side of the glacier: a hut, and the last snow globe.
   const buried = branch(d, shelf, 4, 'back', 4);
   const debris = buried.hall(6, { floor: 'snow', wall: 'cliff' });
   flat(g, debris, 1, { look: 'stone', breakAt: 6.5 });
   const shed = buried.room(5, 5, { floor: 'planks', wall: 'timber' });
-  g.globe(...shed.tile(3, 0));
-  g.suitcase(...shed.tile(1, 1), 70);
+  g.demo(...shed.tile(3, 0));
+  g.vinyl(...shed.tile(1, 1), 70);
   const ladder2 = d.bridge(5, { width: 3, floor: 'planks', color: 2 });
   void ladder2;
   d.hall(3, SNOW);
@@ -167,7 +167,7 @@ export function alps() {
   g.foe('yeti', ...village.tile(11, 0), { range: 6 });
   g.foe('stbernard', ...village.tile(16, 4), { path: loop(village, 2, 14, 19) });
   g.pick(...village.tile(2, 0), 10).pick(...village.tile(7, -4), 10).pick(...village.tile(7, 4), 10).pick(...village.tile(12, -5), 10);
-  g.tape(...village.tile(2, -5)).tape(...village.tile(2, 5));
+  g.whetstone(...village.tile(2, -5)).whetstone(...village.tile(2, 5));
   wash(g, village, [PEAK[3], PEAK[0]], { cans: 3, program: 'static' });
   sign(village, 4, 'DORF', PEAK[3], 0.45, 1.8);
   d.hall(3, { floor: 'snow', wall: 'timber' });

@@ -82,7 +82,7 @@ export function tokyo() {
   for (const k of [1, 2]) g.pillar(...backTile(karaoke, k), 1.4, { prop: 'vending' });
   g.foe('cosplayer', ...karaoke.tile(3, 2), { range: 4 });
   g.pick(...karaoke.tile(7, 3), 10);
-  g.tape(...karaoke.tile(7, -3));
+  g.whetstone(...karaoke.tile(7, -3));
   g.light('ball', ...karaoke.tile(4, 0), { colors: NEON, height: 2.4 });
   sign(karaoke, 7.5, 'KARAOKE', NEON[3], 0.4, 1.6);
   // The private room, behind its frosted glass: the first snow globe.
@@ -90,8 +90,8 @@ export function tokyo() {
   const door = inner.hall(5, ROOMS);
   flat(g, door, 3, { look: 'glass', breakAt: 6 });
   const booth = inner.room(5, 5, ROOMS);
-  g.globe(...booth.tile(3, 0));
-  g.suitcase(...booth.tile(1, 1), 60);
+  g.demo(...booth.tile(3, 0));
+  g.vinyl(...booth.tile(1, 1), 60);
   d.hall(2, STREET);
   d.turn('+x', STREET);
 
@@ -102,7 +102,7 @@ export function tokyo() {
   for (const k of [2, 8, 14]) g.pillar(...backTile(alley, k), 0.9, { prop: 'stall' });
   g.foe('sumo', ...alley.tile(14, 1), { range: 2 });
   g.pick(...alley.tile(3, 0), 5).pick(...alley.tile(8, 1), 5).pick(...alley.tile(15, 0), 10);
-  g.tape(...alley.tile(15, -1));
+  g.whetstone(...alley.tile(15, -1));
   g.light('festoon', ...alley.tile(0, -2), { to: [15 * alley.dir[0] + 4 * alley.across[0], 15 * alley.dir[1] + 4 * alley.across[1]], colors: [NEON[2], '#ffb060'], height: 2.3 });
   d.turn('+z', { floor: 'cobble', wall: 'shoji' });
   d.stairs(4, 2, { wall: 'block' });
@@ -127,7 +127,7 @@ export function tokyo() {
   const bamboo = back.hall(5, { floor: 'planks', wall: 'shoji' });
   flat(g, bamboo, 3, { look: 'wood' });
   const kitchen = back.room(5, 5, ROOMS);
-  g.globe(...kitchen.tile(3, 0));
+  g.demo(...kitchen.tile(3, 0));
   g.pillar(...kitchen.tile(3, 2), 0.62, { prop: 'table' });
   const exit = d.hall(4, { floor: 'planks', wall: 'block' });
   barred(g, exit, 2);
@@ -144,7 +144,7 @@ export function tokyo() {
   const line = branch(d, platform, 13, 'front', 2);
   line.ferry(9, { size: 3, period: 7 });
   const deck = line.room(5, 5, { floor: 'planks', wall: 'fence' });
-  g.globe(...deck.tile(2, 0));
+  g.demo(...deck.tile(2, 0));
   g.pick(...deck.tile(3, -1), 10).pick(...deck.tile(3, 1), 10);
   d.turn('+z', { floor: 'planks', wall: 'shoji' });
   d.hall(3, { floor: 'tatami', wall: 'shoji' });
@@ -157,7 +157,7 @@ export function tokyo() {
   g.block(...stable.rect(9, 3, -7, 1), 1.3, { prop: 'racking' });
   g.foe('yokozuna', ...stable.tile(14, 0), { range: 6 });
   g.pick(...stable.tile(2, 0), 10).pick(...stable.tile(7, -4), 10).pick(...stable.tile(7, 4), 10).pick(...stable.tile(12, -5), 10);
-  g.tape(...stable.tile(2, -5)).tape(...stable.tile(2, 5));
+  g.whetstone(...stable.tile(2, -5)).whetstone(...stable.tile(2, 5));
   g.light('blinds', ...wallTile(stable, 9), { aim: toBack(stable).map((v) => -4 * v), height: 2.2, width: 3, depth: 3.4, program: 'pulse' });
   sign(stable, 15, 'DOHYŌ', NEON[2], 0.5, 1.8);
   d.hall(3, { floor: 'tatami', wall: 'shoji' });

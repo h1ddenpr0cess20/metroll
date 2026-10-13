@@ -68,7 +68,7 @@ export function paris() {
   const shop = fake.hall(5, { wall: 'flats', floor: 'planks' });
   flat(g, shop, 1, { look: 'brick' });
   const attic = fake.room(5, 5, { wall: 'wallpaper', floor: 'planks' });
-  g.globe(...attic.tile(3, 0));
+  g.demo(...attic.tile(3, 0));
   g.pick(...attic.tile(1, -1), 10).pick(...attic.tile(1, 1), 10);
   d.turn('+x', STREET);
 
@@ -91,7 +91,7 @@ export function paris() {
   const isle = branch(d, quay, 11, 'front', 2);
   isle.ferry(9, { size: 3, period: 7, style: 'ferry' });
   const island = isle.room(5, 5, { floor: 'grass', wall: 'fence' });
-  g.globe(...island.tile(2, 0));
+  g.demo(...island.tile(2, 0));
   g.pick(...island.tile(3, -1), 10).pick(...island.tile(3, 1), 10);
   d.turn('+x', { wall: 'stone' });
   d.hall(3, { wall: 'stone', floor: 'cobble' });
@@ -105,7 +105,7 @@ export function paris() {
   }
   g.foe('mime', ...garden.tile(7, -2), { range: 3 });
   g.pick(...garden.tile(3, -2), 10).pick(...garden.tile(7, -3), 5).pick(...garden.tile(11, -2), 10);
-  g.tape(...garden.tile(13, -3));
+  g.whetstone(...garden.tile(13, -3));
   wash(g, garden, ['#ffd890', '#5a8ad8'], { cans: 2, program: 'pulse', every: 2 });
   d.hall(3, { wall: 'haussmann', floor: 'cobble' });
   d.turn('+z', { wall: 'haussmann', floor: 'cobble' });
@@ -140,8 +140,8 @@ export function paris() {
   g.block(...cabaret.rect(9, 3, -4, 2), 1.0, { prop: 'piano' });
   g.foe('waiter', ...cabaret.tile(6, 0), { range: 5 }).foe('influencer', ...cabaret.tile(12, 3), { range: 5 });
   g.pick(...cabaret.tile(2, 0), 10).pick(...cabaret.tile(8, 5), 10).pick(...cabaret.tile(13, -1), 10);
-  g.suitcase(...cabaret.tile(13, 5), 60);
-  g.tape(...cabaret.tile(11, -5));
+  g.vinyl(...cabaret.tile(13, 5), 60);
+  g.whetstone(...cabaret.tile(11, -5));
   wash(g, cabaret, ['#e8303a', '#ffd890'], { cans: 2, program: 'chase' });
   sign(cabaret, 7, 'CABARET', '#ff3a6a', 0.7, 1.9);
   // Behind the painted backdrop at the back of the stage: the last snow globe.
@@ -149,8 +149,8 @@ export function paris() {
   const skyHall = sky.hall(6, { wall: 'flats' });
   flat(g, skyHall, 1, { breakAt: 6.5, look: 'backdrop' });
   const nook = sky.room(5, 5, { wall: 'flats' });
-  g.globe(...nook.tile(3, 0));
-  g.suitcase(...nook.tile(1, 1), 70);
+  g.demo(...nook.tile(3, 0));
+  g.vinyl(...nook.tile(1, 1), 70);
   d.hall(3, { wall: 'curtain' });
   d.turn('+z', { wall: 'stucco' });
   d.ramp(6, 2.5, { wall: 'stucco' });

@@ -20,10 +20,10 @@ const DOOR_THICKNESS = 0.18;
 const SLEEP = 26;
 
 /** How far each turning pickup's model is let down to touch the floor (its lowest point, as sculpted, is above it). */
-const SETTLE = Object.freeze({ tape: -0.014, pass: -0.078, globe: -0.03, lighter: 0.005 });
+const SETTLE = Object.freeze({ whetstone: -0.014, pass: -0.078, demo: -0.03, lighter: 0.005 });
 
 /** Pickups that lie on the floor rather than float. */
-const STILL = new Set(['pick', 'suitcase']);
+const STILL = new Set(['pick', 'vinyl']);
 
 /** How long a foe that has taken a knock can't be hit again, and how hard a knock throws it. */
 const GUARD = Object.freeze({ foe: 0.9, boss: 1.5 });
@@ -270,11 +270,11 @@ export function createActors(GFX, venue, world, { killY }) {
    * push and its top speed (0 holds it still). A stomp lands here too: Rock
    * is thrown back from it, and the game hears of it.
    */
-  function tactic(m, b, rock, toRock, time) {
+  function tactic(m, b, troll, toTroll, time) {
     const how = m.stats.tactic;
     if (!how || !m.chasing) return { push: 1, top: 1 };
     if (how === 'lunge') {
-      if (time - (m.lungeAt ?? -99) > LUNGE.every && toRock < LUNGE.reach) m.lungeAt = time;
+      if (time - (m.lungeAt ?? -99) > LUNGE.every && toTroll < LUNGE.reach) m.lungeAt = time;
       const t = time - m.lungeAt;
       // A crouch, the rush for the close-up, and then he has to get his breath back: that is the time to hit him.
       if (t < LUNGE.crouch) return { push: 1, top: 0 };
@@ -288,19 +288,19 @@ export function createActors(GFX, venue, world, { killY }) {
       return { push: 3, top: 0.1 + 1.9 * Math.pow(1 - u, 4) };
     }
     if (how === 'stomp') {
-      if (m.stompAt === undefined && toRock < STOMP.reach && time - (m.stompedAt ?? -99) > STOMP.every) m.stompAt = time;
+      if (m.stompAt === undefined && toTroll < STOMP.reach && time - (m.stompedAt ?? -99) > STOMP.every) m.stompAt = time;
       if (m.stompAt === undefined) return { push: 1, top: 1 };
       if (time - m.stompAt < STOMP.windup) return { push: 1, top: 0 };
       // Down it comes: everything near enough is thrown back, the nearer the harder.
       m.stompAt = undefined;
       m.stompedAt = time;
       events.push({ type: 'stomp', x: b.x, y: b.y - m.stats.radius, z: b.z });
-      if (rock && toRock < STOMP.reach && Math.abs(rock.y - b.y) < 1.6) {
-        const k = 1 - toRock / STOMP.reach;
-        const dx = (rock.x - b.x) / (toRock || 1), dz = (rock.z - b.z) / (toRock || 1);
-        rock.vx += dx * STOMP.throw * k;
-        rock.vz += dz * STOMP.throw * k;
-        rock.vy += 2.5 * k;
+      if (troll && toTroll < STOMP.reach && Math.abs(troll.y - b.y) < 1.6) {
+        const k = 1 - toTroll / STOMP.reach;
+        const dx = (troll.x - b.x) / (toTroll || 1), dz = (troll.z - b.z) / (toTroll || 1);
+        troll.vx += dx * STOMP.throw * k;
+        troll.vz += dz * STOMP.throw * k;
+        troll.vy += 2.5 * k;
       }
       return { push: 1, top: 0 };
     }
@@ -338,10 +338,10 @@ export function createActors(GFX, venue, world, { killY }) {
     drain() { return events.splice(0); },
 
     /**
-     * One physics step for every foe. `rock` is Rock's ball, or null while
+     * One physics step for every foe. `troll` is Rock's ball, or null while
      * there isn't one to chase. Returns the foe Rock has run into, if any.
      */
-    step(dt, time, rock) {
+    step(dt, time, troll) {
       let touched = null;
       for (const m of foes) {
         if (m.gone) continue;
@@ -370,11 +370,11 @@ export function createActors(GFX, venue, world, { killY }) {
         const kind = m.stats;
         if (m.ball) {
           const b = m.ball;
-          const toRock = rock ? Math.hypot(rock.x - b.x, rock.z - b.z) : Infinity;
-          const fromHome = rock ? Math.hypot(rock.x - m.home[0], rock.z - m.home[2]) : Infinity;
-          m.chasing = rock !== null && toRock < m.range && fromHome < m.range + 1.5 && Math.abs(rock.y - b.y) < 1.6;
+          const toTroll = troll ? Math.hypot(troll.x - b.x, troll.z - b.z) : Infinity;
+          const fromHome = troll ? Math.hypot(troll.x - m.home[0], troll.z - m.home[2]) : Infinity;
+          m.chasing = troll !== null && toTroll < m.range && fromHome < m.range + 1.5 && Math.abs(troll.y - b.y) < 1.6;
           let tx = m.home[0], tz = m.home[2];
-          if (m.chasing) { tx = rock.x; tz = rock.z; }
+          if (m.chasing) { tx = troll.x; tz = troll.z; }
           else if (m.path) {
             const [px, pz] = m.path[m.leg % m.path.length];
             if (Math.hypot(px - b.x, pz - b.z) < 0.4) m.leg++;
@@ -383,7 +383,7 @@ export function createActors(GFX, venue, world, { killY }) {
           const dx = tx - b.x, dz = tz - b.z, d = Math.hypot(dx, dz);
           const idle = !m.chasing && !m.path && d < 0.5;
           const still = b.grounded && Math.hypot(b.vx, b.vz) < 0.05;
-          if (idle && still && toRock > SLEEP) { m.moving = false; continue; }
+          if (idle && still && toTroll > SLEEP) { m.moving = false; continue; }
           let ax = 0, az = 0;
           if (d > (m.chasing ? 1e-3 : 0.3)) {
             ax = dx / d; az = dz / d;
@@ -401,16 +401,16 @@ export function createActors(GFX, venue, world, { killY }) {
               az = v > 1e-3 ? -b.vz / v : 0;
             }
           }
-          const { push, top } = tactic(m, b, rock, toRock, time);
+          const { push, top } = tactic(m, b, troll, toTroll, time);
           if (top === 0) { ax = 0; az = 0; }
           stepBall(b, world, ax, az, dt, { push: PUSH * 0.6 * push, topSpeed: kind.speed * top });
           if (Math.hypot(b.vx, b.vz) > 0.15) m.heading = Math.atan2(b.vx, b.vz);
           m.moving = Math.hypot(b.vx, b.vz) > 0.3;
           m.x = b.x; m.y = b.y - kind.radius; m.z = b.z;
           if (b.y < killY) m.gone = true;
-          if (rock && !touched && open) {
-            const reach = rock.r + kind.radius + 0.02;
-            const ex = rock.x - b.x, ey = rock.y - b.y, ez = rock.z - b.z;
+          if (troll && !touched && open) {
+            const reach = troll.r + kind.radius + 0.02;
+            const ex = troll.x - b.x, ey = troll.y - b.y, ez = troll.z - b.z;
             if (ex * ex + ey * ey + ez * ez < reach * reach) touched = m;
           }
         } else {
@@ -423,10 +423,10 @@ export function createActors(GFX, venue, world, { killY }) {
           m.moving = true;
           if (kind.move === 'fly') m.y = m.flight;
           else m.y = venue.heightAt(x, z) ?? m.y;
-          if (rock && !touched && open) {
+          if (troll && !touched && open) {
             const centre = kind.move === 'fly' ? m.y : m.y + 0.2;
-            const flat = Math.hypot(rock.x - x, rock.z - z);
-            if (flat < rock.r + kind.radius * (kind.move === 'fly' ? 1 : 0.8) && Math.abs(rock.y - centre) < 0.7) touched = m;
+            const flat = Math.hypot(troll.x - x, troll.z - z);
+            if (flat < troll.r + kind.radius * (kind.move === 'fly' ? 1 : 0.8) && Math.abs(troll.y - centre) < 0.7) touched = m;
           }
         }
       }

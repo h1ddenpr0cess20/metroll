@@ -64,7 +64,7 @@ export function rio() {
   g.foe('sambista', ...quadra.tile(5, -3), { range: 6 }).foe('sambista', ...quadra.tile(11, -2), { range: 6 });
   g.foe('capoeira', ...quadra.tile(13, 4), { range: 5 });
   g.pick(...quadra.tile(2, 0), 10).pick(...quadra.tile(7, -4), 10).pick(...quadra.tile(13, -4), 10);
-  g.suitcase(...quadra.tile(2, 5), 50);
+  g.vinyl(...quadra.tile(2, 5), 50);
   sign(quadra, 7.5, 'ESCOLA DE SAMBA', CARNIVAL[1], 0.42, 1.8);
   for (const k of [3, 12]) g.light('strobe', ...wallTile(quadra, k), { colors: [CARNIVAL[2]], reach: 8, height: 1.4, cycle: 16, on: 4, shift: k });
   wash(g, quadra, [CARNIVAL[0], CARNIVAL[1]], { cans: 2, program: 'pulse', every: 2 });
@@ -73,7 +73,7 @@ export function rio() {
   const curtain = store.hall(5, STEPS);
   flat(g, curtain, 3, { look: 'curtain' });
   const costumes = store.room(5, 5, { floor: 'carpet', wall: 'stucco' });
-  g.globe(...costumes.tile(3, 0));
+  g.demo(...costumes.tile(3, 0));
   g.pick(...costumes.tile(1, -1), 10).pick(...costumes.tile(1, 1), 10);
   d.hall(2, STEPS);
   d.turn('+x', { floor: 'concrete', wall: 'block' });
@@ -95,7 +95,7 @@ export function rio() {
   g.pyro(...across(fireworks, 7, { beats: 4, offset: 0.5 }));
   g.foe('footballer', ...fireworks.tile(10, 0), { range: 3 });
   g.pick(...fireworks.tile(5, 0), 5).pick(...fireworks.tile(5, 1), 5).pick(...fireworks.tile(9, -1), 10);
-  g.tape(...fireworks.tile(11, 1));
+  g.whetstone(...fireworks.tile(11, 1));
   d.turn('+x', { floor: 'concrete', wall: 'corrugated' });
   d.hall(2, { floor: 'concrete', wall: 'corrugated' });
 
@@ -114,7 +114,7 @@ export function rio() {
   g.zap(...plank.rect(0, 7, plank.lo - 2, 5), top.h - 1.8, { fill: true });
   g.foe('macaw', ...plank.tile(3, 0), { path: [plank.tile(1, 0), plank.tile(5, 0)] });
   const crown = top.room(5, 5, { floor: 'panels', wall: 'fence' });
-  g.globe(...crown.tile(2, 0));
+  g.demo(...crown.tile(2, 0));
   // The first-aid post off the front of the shed: the passport, handed in to lost property.
   const aid = branch(d, shed, 5, 'front', 7);
   aid.hall(3, { floor: 'concrete', wall: 'block' });
@@ -122,7 +122,7 @@ export function rio() {
   g.pass(...post.tile(4, 0));
   g.pillar(...post.tile(2, 2), 0.8, { prop: 'cooler' });
   g.foe('sambista', ...post.tile(5, 2), { range: 4 });
-  g.tape(...post.tile(6, -2));
+  g.whetstone(...post.tile(6, -2));
   const lock = d.hall(5, { floor: 'concrete', wall: 'block' });
   barred(g, lock, 2);
   d.turn('+z', { floor: 'concrete', wall: 'block' });
@@ -145,7 +145,7 @@ export function rio() {
   for (const [a, b] of [[3, -4], [13, 4], [14, -4]]) g.bumper(...beach.tile(a, b), { radius: 0.45, look: 'palm' });
   g.foe('footballer', ...beach.tile(6, -3), { range: 6 }).foe('vendor', ...beach.tile(12, -2), { range: 6 }).foe('sambista', ...beach.tile(15, 2), { range: 5 });
   g.pick(...beach.tile(5, 3), 10).pick(...beach.tile(11, 0), 10).pick(...beach.tile(16, -3), 10);
-  g.suitcase(...beach.tile(16, 5), 70);
+  g.vinyl(...beach.tile(16, 5), 70);
   wash(g, beach, [CARNIVAL[3], CARNIVAL[2]], { cans: 3, program: 'static' });
   sign(beach, 4, 'COPACABANA', CARNIVAL[3], 0.45, 1.7);
   // Behind the beach bar's painted sign at the back of the beach: the last globe.
@@ -153,7 +153,7 @@ export function rio() {
   const signHall = bar.hall(5, { wall: 'flats' });
   flat(g, signHall, 3, { look: 'backdrop' });
   const nook = bar.room(5, 5, { floor: 'sand', wall: 'flats' });
-  g.globe(...nook.tile(3, 0));
+  g.demo(...nook.tile(3, 0));
   d.hall(3, { floor: 'mosaic', wall: 'fence' });
   d.exit(3);
   return g;

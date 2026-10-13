@@ -61,7 +61,7 @@ export function venice() {
   g.pyro(...across(square, 7, { beats: 4 }));
   g.foe('pizzaiolo', ...square.tile(5, 2), { range: 5 }).foe('tourist', ...square.tile(10, -2), { range: 4 });
   g.pick(...square.tile(1, -3), 10).pick(...square.tile(5, -4), 10).pick(...square.tile(11, 3), 10);
-  g.tape(...square.tile(11, -4));
+  g.whetstone(...square.tile(11, -4));
   for (const k of [4, 9]) lantern(square, k);
   sign(square, 6.5, 'SAN MARCO', LAGOON[2], 0.5, 1.7);
   d.hall(2, QUAY);
@@ -77,7 +77,7 @@ export function venice() {
   g.foe('gondolier', ...canal.tile(5, -1), { range: 4 }).foe('nonna', ...canal.tile(17, 0), { range: 3 });
   g.foe('pigeon', ...canal.tile(11, 0), { path: [canal.tile(3, 2), canal.tile(20, 2)] });
   g.pick(...canal.tile(2, 0), 10).pick(...canal.tile(10, 1), 5).pick(...canal.tile(13, -2), 5).pick(...canal.tile(21, 0), 10);
-  g.suitcase(...canal.tile(21, -2), 50);
+  g.vinyl(...canal.tile(21, -2), 50);
   for (const k of [4, 12, 20]) lantern(canal, k);
   g.light('festoon', ...canal.tile(1, -3), { to: [20 * canal.dir[0] + 6 * canal.across[0], 20 * canal.dir[1] + 6 * canal.across[1]], colors: [LAGOON[0], LAGOON[3]], height: 2.6 });
   // Off the quay, along a jetty, out over the water: the first snow globe, at the very end.
@@ -85,7 +85,7 @@ export function venice() {
   const jetty = jettyRoot.bridge(8, { floor: 'planks' });
   g.foe('pigeon', ...jetty.tile(4, 0), { path: [jetty.tile(1, 0), jetty.tile(6, 0)] });
   const end = jettyRoot.room(3, 3, { floor: 'planks', wall: 'fence' });
-  g.globe(...end.tile(1, 0));
+  g.demo(...end.tile(1, 0));
   d.hall(2, QUAY);
   d.turn('+z', QUAY);
   // Down the water steps into the palazzo.
@@ -108,15 +108,15 @@ export function venice() {
   g.pass(...shop.tile(4, 0));
   g.block(...shop.rect(5, 1, 2, 2), 0.8, { prop: 'desk' });
   g.foe('reveler', ...shop.tile(2, -2), { range: 3 });
-  g.tape(...shop.tile(6, -2));
+  g.whetstone(...shop.tile(6, -2));
   // Behind a pane of the glassworks' window, at the back of the ballroom: the second snow globe.
   const works = branch(d, ball, 13, 'back', 7);
   const pane = works.hall(5, { floor: 'marble', wall: 'stucco' });
   flat(g, pane, 3, { look: 'glass' });
   const store = works.room(5, 5, { floor: 'terracotta', wall: 'stucco' });
-  g.globe(...store.tile(3, 0));
+  g.demo(...store.tile(3, 0));
   g.pillar(...store.tile(3, 2), 0.7, { prop: 'amphora' });
-  g.suitcase(...store.tile(1, -1), 60);
+  g.vinyl(...store.tile(1, -1), 60);
   const water = d.hall(4, { floor: 'marble', wall: 'stucco' });
   barred(g, water, 2, 'bars');
   d.turn('+x', { floor: 'planks', wall: 'fence' });
@@ -137,7 +137,7 @@ export function venice() {
   const fall = furnace.hall(5, { floor: 'terracotta', wall: 'stone' });
   flat(g, fall, 3, { look: 'stone' });
   const hoard = furnace.room(5, 5, { floor: 'terracotta', wall: 'stone' });
-  g.globe(...hoard.tile(3, 0));
+  g.demo(...hoard.tile(3, 0));
   g.pillar(...hoard.tile(3, 2), 0.7, { prop: 'amphora' });
   d.hall(3, { floor: 'terracotta', wall: 'stucco' });
   d.exit(3);

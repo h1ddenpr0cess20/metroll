@@ -71,7 +71,7 @@ export function spain() {
   const cellar = bodega.hall(5, { floor: 'planks', wall: 'stone' });
   flat(g, cellar, 1, { look: 'wood' });
   const vault = bodega.room(5, 5, { floor: 'planks', wall: 'stone' });
-  g.globe(...vault.tile(3, 0));
+  g.demo(...vault.tile(3, 0));
   g.pick(...vault.tile(1, -1), 10).pick(...vault.tile(1, 1), 10);
   d.hall(5, TOWN);
   d.turn('+x', { floor: 'planks', wall: 'azulejo' });
@@ -85,7 +85,7 @@ export function spain() {
   g.foe('flamenco', ...tablao.tile(5, -2), { range: 5 }).foe('flamenco', ...tablao.tile(10, 2), { range: 5 });
   g.foe('matador', ...tablao.tile(13, -1), { range: 5 });
   g.pick(...tablao.tile(2, -3), 10).pick(...tablao.tile(9, -3), 10).pick(...tablao.tile(13, 4), 10);
-  g.tape(...tablao.tile(14, 3));
+  g.whetstone(...tablao.tile(14, 3));
   sign(tablao, 7, 'TABLAO', '#ffd890', 0.6);
   wash(g, tablao, ['#ff8a3a', '#e8202a'], { cans: 2, program: 'static' });
   // Through the mirror at the end of the bar: the dressing room, and a snow globe.
@@ -93,7 +93,7 @@ export function spain() {
   const mirror = back.hall(5, { floor: 'planks', wall: 'azulejo' });
   flat(g, mirror, 3, { look: 'glass', breakAt: 6 });
   const den = back.room(5, 5, { floor: 'planks', wall: 'stucco' });
-  g.globe(...den.tile(3, 0));
+  g.demo(...den.tile(3, 0));
   g.pick(...den.tile(1, -1), 10).pick(...den.tile(1, 1), 10);
   d.hall(3, { floor: 'planks', wall: 'azulejo' });
   d.turn('+z', TOWN);
@@ -116,7 +116,7 @@ export function spain() {
   g.sticky(...barn.rect(1, 5, -2, 5));
   for (const [a, b] of [[1, -3], [6, 3]]) g.pillar(...barn.tile(a, b), 0.7, { prop: 'bale' });
   g.foe('bull', ...barn.tile(4, 0), { range: 4 });
-  g.suitcase(...barn.tile(6, -3), 60);
+  g.vinyl(...barn.tile(6, -3), 60);
   const pen = d.hall(5, { floor: 'dirt', wall: 'stone' });
   barred(g, pen, 2);
   sign(pen, 4, 'TORIL', '#ff9a4a', 0.5);
@@ -136,7 +136,7 @@ export function spain() {
   const gorge = d.ferry(10, { size: 3, period: 7 });
   g.zap(...gorge.rect(0, 10, gorge.lo - 2, 7), d.h - 1.8, { fill: true });
   const landing = d.hall(3, { floor: 'dirt', wall: 'stone' });
-  g.tape(...landing.tile(1, 1));
+  g.whetstone(...landing.tile(1, 1));
   d.turn('+z', { floor: 'dirt', wall: 'stone' });
   d.stairs(3, 1.5, { wall: 'stone' });
 
@@ -151,8 +151,8 @@ export function spain() {
   g.zap(...plank.rect(0, 7, plank.lo - 2, 5), pit.h - 1.8, { fill: true });
   g.foe('runner', ...plank.tile(3, 0), { path: [plank.tile(1, 0), plank.tile(5, 0)] });
   const box = pit.room(5, 5, { floor: 'sand', wall: 'stucco' });
-  g.globe(...box.tile(2, 0));
-  g.suitcase(...box.tile(3, 1), 70);
+  g.demo(...box.tile(2, 0));
+  g.vinyl(...box.tile(3, 1), 70);
   d.hall(3, { floor: 'sand', wall: 'stucco' });
   d.ramp(5, 2, { wall: 'stucco' });
   // Out into the plaza, where the stage is.

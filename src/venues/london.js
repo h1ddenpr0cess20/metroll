@@ -68,7 +68,7 @@ export function london() {
   g.foe('guardsman', ...square.tile(10, -1), { range: 5, path: [square.tile(4, -1), square.tile(12, -1)] });
   g.foe('pigeon', ...square.tile(7, 0), { path: loop(square, 2) });
   g.pick(...square.tile(3, 3), 10).pick(...square.tile(12, -3), 10).pick(...square.tile(6, 0), 5);
-  g.suitcase(...square.tile(13, -4), 50);
+  g.vinyl(...square.tile(13, -4), 50);
   sign(square, 6.5, 'UNDERGROUND', SMOKE[2], 0.5, 1.7);
   lamppost(square, 3);
   lamppost(square, 12);
@@ -77,7 +77,7 @@ export function london() {
   const siteHall = site.hall(3, { width: 3, wall: 'brick' });
   flat(g, siteHall, 1, { look: 'flat' });
   const yard = site.room(5, 5, { wall: 'brick', floor: 'concrete' });
-  g.globe(...yard.tile(3, 0));
+  g.demo(...yard.tile(3, 0));
   g.pick(...yard.tile(1, -1), 10).pick(...yard.tile(1, 1), 10);
   d.hall(5, { wall: 'stucco', floor: 'cobble' });
   d.turn('+x', { wall: 'block', floor: 'checker' });
@@ -94,7 +94,7 @@ export function london() {
   g.drop(...across(shaft, 8, { beats: 4, offset: 0.5 }));
   g.pick(...shaft.tile(9, 0), 10);
   // Past the second phone box, the first roll of tape: for whatever the boxes took off him.
-  g.tape(...shaft.tile(10, 0));
+  g.whetstone(...shaft.tile(10, 0));
   d.turn('+z', { wall: 'block' });
   d.hall(3, { wall: 'block' });
   d.stairs(5, 2.5, { wall: 'block' });
@@ -106,10 +106,10 @@ export function london() {
   for (const [a, b] of [[4, 4], [9, 4]]) g.bumper(...park.tile(a, b), { radius: 0.4, look: 'bollard' });
   g.foe('guardsman', ...park.tile(5, 0), { range: 6 }).foe('gent', ...park.tile(9, 3), { range: 6 });
   g.foe('corgi', ...park.tile(7, -2), { path: loop(park, 2) });
-  g.suitcase(...park.tile(11, 5), 60).pick(...park.tile(1, -5), 10).pick(...park.tile(6, 5), 10);
+  g.vinyl(...park.tile(11, 5), 60).pick(...park.tile(1, -5), 10).pick(...park.tile(6, 5), 10);
   g.lighter(...park.tile(11, -5));
   // On the way out, once the guards have had a go at him, a roll of tape.
-  g.tape(...park.tile(12, 1));
+  g.whetstone(...park.tile(12, 1));
   g.light('spot', ...wallTile(park, 6), { colors: ['#fff4e0'], radius: 3, aim: toBack(park).map((v) => -4 * v), height: 2.2 });
   sign(park, 3, 'KEEP OFF THE GRASS', '#f4f0e8', 0.36, 1.7);
   // The lodge off the garden: the passport, left at the lost property.
@@ -126,7 +126,7 @@ export function london() {
   const plank = pier.bridge(7, { floor: 'planks' });
   g.foe('pigeon', ...plank.tile(3, 0), { path: [plank.tile(1, 0), plank.tile(5, 0)] });
   const jetty = pier.room(5, 5, { wall: 'fence', floor: 'planks' });
-  g.globe(...jetty.tile(2, 0));
+  g.demo(...jetty.tile(2, 0));
   d.hall(4, { wall: 'hedge' });
   const gate = d.hall(6, { wall: 'stucco' });
   barred(g, gate, 3);
@@ -141,8 +141,8 @@ export function london() {
   const luHall = lockup.hall(7, { wall: 'brick' });
   flat(g, luHall, 6, { breakAt: 6.5, look: 'drywall' });
   const store = lockup.room(5, 5, { wall: 'brick', floor: 'concrete' });
-  g.globe(...store.tile(3, 0));
-  g.suitcase(...store.tile(1, -1), 70).tape(...store.tile(1, 1));
+  g.demo(...store.tile(3, 0));
+  g.vinyl(...store.tile(1, -1), 70).whetstone(...store.tile(1, 1));
   g.foe('punk', ...market.tile(6, 1), { range: 5 });
   g.drop(...across(market, 8, { beats: 4 }));
   // The club: the stage door at the back of it.

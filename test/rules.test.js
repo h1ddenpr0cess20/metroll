@@ -3,7 +3,7 @@ import { test } from 'node:test';
 
 import { COMBO_WINDOW, comboAt, createHype, earn, MAX_MULTIPLIER, smashed, windowLeft } from '../src/hype.js';
 import { createIntegrity, cracked, encore, heal, hurt, shattered } from '../src/integrity.js';
-import { GLOBES, goals, stars } from '../src/rating.js';
+import { DEMOS, goals, stars } from '../src/rating.js';
 import { closingSpeed, CRIT, resolveImpact } from '../src/smash.js';
 import { createStorage } from '../src/storage.js';
 import { FOES } from '../src/foes.js';
@@ -42,10 +42,10 @@ test('a boss is worn down, and never goes down for nothing', () => {
 });
 
 test('the closing speed is along the line between them, and a drop onto someone counts too', () => {
-  const rock = { x: 0, y: 1, z: 0, vx: 6, vy: 0, vz: 0, r: 0.45 };
-  assert.equal(closingSpeed(rock, { x: 2, y: 0, z: 0 }), 6);
-  assert.equal(closingSpeed(rock, { x: -2, y: 0, z: 0 }), 0);
-  assert.equal(closingSpeed(rock, { x: 2, y: 0, z: 0 }, [-2, 0, 0]), 8);
+  const troll = { x: 0, y: 1, z: 0, vx: 6, vy: 0, vz: 0, r: 0.45 };
+  assert.equal(closingSpeed(troll, { x: 2, y: 0, z: 0 }), 6);
+  assert.equal(closingSpeed(troll, { x: -2, y: 0, z: 0 }), 0);
+  assert.equal(closingSpeed(troll, { x: 2, y: 0, z: 0 }, [-2, 0, 0]), 8);
   const falling = { x: 0, y: 3, z: 0, vx: 0, vy: -5, vz: 0, r: 0.45 };
   assert.ok(closingSpeed(falling, { x: 0, y: 0, z: 0.1, height: 0.5 }) > 3);
 });
@@ -84,28 +84,28 @@ test('hype: smashes in a row build a combo that multiplies, up to the cap, and i
 });
 
 test('integrity: hurt, heal up to the best and no more, shatter, and an encore from a lighter', () => {
-  const rock = createIntegrity();
-  assert.equal(hurt(rock, 30), 30);
-  assert.equal(rock.hp, 70);
-  assert.equal(heal(rock, 25), 25);
-  assert.equal(heal(rock, 25), 5);
-  assert.equal(cracked(rock), 0);
-  hurt(rock, 150);
-  assert.ok(shattered(rock));
-  assert.equal(encore(rock), false);
-  rock.encores = 1;
-  assert.equal(encore(rock), true);
-  assert.equal(rock.hp, 50);
-  assert.equal(rock.encores, 0);
+  const troll = createIntegrity();
+  assert.equal(hurt(troll, 30), 30);
+  assert.equal(troll.hp, 70);
+  assert.equal(heal(troll, 25), 25);
+  assert.equal(heal(troll, 25), 5);
+  assert.equal(cracked(troll), 0);
+  hurt(troll, 150);
+  assert.ok(shattered(troll));
+  assert.equal(encore(troll), false);
+  troll.encores = 1;
+  assert.equal(encore(troll), true);
+  assert.equal(troll.hp, 50);
+  assert.equal(troll.encores, 0);
   assert.equal(heal({ hp: 0, max: 100 }, 10), 0, 'no healing the dead');
 });
 
-test('stars: one for making the show, one for smashing three in four, one for the three snow globes', () => {
-  assert.equal(stars({ smashed: 0, foes: 12, globes: 0 }), 1);
-  assert.equal(stars({ smashed: 9, foes: 12, globes: 0 }), 2);
-  assert.equal(stars({ smashed: 8, foes: 12, globes: GLOBES }), 2);
-  assert.equal(stars({ smashed: 9, foes: 12, globes: GLOBES }), 3);
-  assert.equal(goals({ smashed: 0, foes: 0, globes: 0 }).find((g) => g.id === 'crowd').met, true, 'nobody to smash is a pass');
+test('stars: one for making the show, one for smashing three in four, one for the three snow demos', () => {
+  assert.equal(stars({ smashed: 0, foes: 12, demos: 0 }), 1);
+  assert.equal(stars({ smashed: 9, foes: 12, demos: 0 }), 2);
+  assert.equal(stars({ smashed: 8, foes: 12, demos: DEMOS }), 2);
+  assert.equal(stars({ smashed: 9, foes: 12, demos: DEMOS }), 3);
+  assert.equal(goals({ smashed: 0, foes: 0, demos: 0 }).find((g) => g.id === 'crowd').met, true, 'nobody to smash is a pass');
 });
 
 function memory(initial = null) {
@@ -116,9 +116,9 @@ function memory(initial = null) {
 test('storage: keeps the best of each scene and opens the next one', () => {
   const store = memory();
   const s = createStorage(store);
-  s.cleared(0, { hype: 500, time: 90, globes: 2, smashed: 5, stars: 2 });
-  s.cleared(0, { hype: 400, time: 80, globes: 3, smashed: 4, stars: 3 });
-  assert.deepEqual(s.venue(0), { stars: 3, best: 500, time: 80, globes: 3, smashed: 5 });
+  s.cleared(0, { hype: 500, time: 90, demos: 2, smashed: 5, stars: 2 });
+  s.cleared(0, { hype: 400, time: 80, demos: 3, smashed: 4, stars: 3 });
+  assert.deepEqual(s.venue(0), { stars: 3, best: 500, time: 80, demos: 3, smashed: 5 });
   assert.equal(s.load().reached, 1);
   assert.equal(s.totalStars(), 3);
   // And it was written, and reads back.
@@ -137,7 +137,7 @@ test('storage: a missing, broken or hostile store changes nothing', () => {
   assert.equal(hostile.load().settings.sfx, 0.2);
   assert.equal('evil' in hostile.load().settings, false);
   const throwing = createStorage({ getItem() { throw new Error('no'); }, setItem() { throw new Error('no'); } });
-  assert.doesNotThrow(() => throwing.cleared(0, { hype: 1, time: 1, globes: 0, smashed: 0, stars: 1 }));
+  assert.doesNotThrow(() => throwing.cleared(0, { hype: 1, time: 1, demos: 0, smashed: 0, stars: 1 }));
 });
 
 test('storage: settings are remembered, and only the known ones', () => {
