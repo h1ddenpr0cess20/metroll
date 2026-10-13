@@ -2,7 +2,8 @@ import '@fontsource/anton/400.css';
 import '@fontsource/barlow-condensed/500.css';
 import '@fontsource/barlow-condensed/600.css';
 import '@fontsource/barlow-condensed/700.css';
-import '@fontsource/alfa-slab-one/400.css';
+import '@fontsource/pirata-one/400.css';
+import '@fontsource/metal-mania/400.css';
 
 import { createAudio } from './audio.js';
 import { createGame } from './game.js';

@@ -1,34 +1,36 @@
 /*
- * Rock 'n' Roller III: World Tour. A game dressed as a stack of old travel
- * posters and luggage labels: the night-blue of the sky over the stops,
- * the cream of the paper, the orange of a sunset, the red of a postmark
- * and the blue of the sea; Alfa Slab One (a poster's slab face) for the
- * title, the labels and the cards, Anton for the numbers, Barlow Condensed
- * for the rest. All ship with the game (no network), imported from
- * main.js. Every stop has its own light, graded on the picture alone.
+ * Metroll. A game dressed as a stack of gig posters and flyers photocopied
+ * too many times: the black of a T-shirt, the steel of the thing itself,
+ * the red of the blood and the chrome of a logo from a record shop;
+ * Metal Mania for the name, Pirata One (a blackletter) for the banners and
+ * the cards, Anton for the numbers, Barlow Condensed for the rest. All
+ * ship with the game (no network), imported from main.js. Every track has
+ * its own light, graded on the picture alone.
  */
 
 :root {
-  --ink: #101826;
-  --ink-2: #172236;
-  --panel: rgba(16, 24, 38, 0.78);
+  --ink: #0c0c10;
+  --ink-2: #16161c;
+  --panel: rgba(12, 12, 16, 0.82);
   --line: rgba(255, 255, 255, 0.16);
-  --text: #f6efe0;
-  --dim: #a8b0c4;
-  --sun: #f0782a;
-  --sun-hi: #ffb468;
-  --sun-lo: #a8401a;
-  --stamp: #c8302a;
-  --sea: #1e4a9a;
-  --paper: #f4ead2;
-  --paper-2: #e8dcbc;
-  --print: #1a2232;
-  --print-dim: #5a5446;
+  --text: #eceae4;
+  --dim: #9a9aa6;
+  --sun: #d8202a;
+  --sun-hi: #ff5a4a;
+  --sun-lo: #7a0e14;
+  --stamp: #a81820;
+  --sea: #3a3e52;
+  --paper: #e4e0d6;
+  --paper-2: #c8c4ba;
+  --print: #14141a;
+  --print-dim: #4a4a52;
   --yellow: #ffd23a;
   --green: #3ae88a;
   --red: #ff4a3a;
+  --chrome: linear-gradient(180deg, #ffffff 0%, #d8dce6 28%, #8a909e 52%, #e8ecf4 56%, #6a707e 80%, #3a3e48 100%);
   --display: "Anton", Impact, "Arial Narrow Bold", "Arial Narrow", sans-serif;
-  --poster: "Alfa Slab One", "Rockwell", "Roboto Slab", Georgia, serif;
+  --poster: "Pirata One", "UnifrakturCook", "Old English Text MT", Georgia, serif;
+  --logo: "Metal Mania", "Pirata One", Impact, fantasy;
   --body: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
   --safe-t: env(safe-area-inset-top, 0px);
   --safe-b: env(safe-area-inset-bottom, 0px);
@@ -94,7 +96,7 @@ kbd {
   position: absolute; top: calc(14px + var(--safe-t)); left: calc(18px + var(--safe-l));
   display: grid; gap: 0; padding: 7px 30px 7px 14px; color: var(--print);
   background: var(--paper); border: 3px solid var(--sea); border-radius: 4px 28px 28px 4px;
-  box-shadow: inset 0 0 0 2px var(--paper), inset 0 0 0 3px rgba(30,74,154,0.5), 0 4px 14px rgba(0,0,0,0.45);
+  box-shadow: inset 0 0 0 2px var(--paper), inset 0 0 0 3px rgba(216,32,42,0.5), 0 4px 14px rgba(0,0,0,0.45);
   transform: rotate(-1.5deg);
 }
 .plate::after {
@@ -110,7 +112,7 @@ kbd {
 }
 .hype .num {
   font-family: var(--display); font-size: clamp(40px, 6.2vw, 68px); line-height: 1; color: var(--paper);
-  text-shadow: 0 0 3px #fff, 0 0 14px var(--sun), 0 0 30px rgba(240,120,42,0.7), 0 3px 0 rgba(0,0,0,0.5); letter-spacing: 0.03em;
+  text-shadow: 0 0 3px #fff, 0 0 14px var(--sun), 0 0 30px rgba(216,32,42,0.7), 0 3px 0 rgba(0,0,0,0.5); letter-spacing: 0.03em;
   font-variant-numeric: tabular-nums;
 }
 .hype .num.bump { animation: bump 0.22s ease-out; }
@@ -130,7 +132,7 @@ kbd {
 .carried .chip { display: none; align-items: baseline; gap: 6px; font-family: var(--display); font-size: 20px; letter-spacing: 0.04em; }
 .carried .chip.show { display: flex; }
 .carried .chip small { font-family: var(--body); font-weight: 600; font-size: 11px; letter-spacing: 0.22em; color: var(--dim); text-transform: uppercase; }
-.carried .chip.globes { color: var(--sun-hi); text-shadow: 0 0 12px rgba(240,120,42,0.6); }
+.carried .chip.demos { color: var(--sun-hi); text-shadow: 0 0 12px rgba(216,32,42,0.6); }
 .carried .chip.passes { color: var(--paper); text-shadow: 0 0 12px rgba(244,234,210,0.5); }
 .carried .chip.encores { color: #ff8a6a; text-shadow: 0 0 12px rgba(255,110,80,0.55); }
 .carried .chip.pop { animation: bump 0.3s ease-out; }
@@ -161,7 +163,7 @@ kbd {
 #say {
   position: absolute; left: 50%; bottom: calc(26px + var(--safe-b)); transform: translateX(-50%);
   max-width: min(560px, 62vw); text-align: center; font-family: var(--body); font-weight: 500; font-style: italic;
-  font-size: clamp(18px, 2.2vw, 24px); color: #fff; padding: 6px 18px; background: rgba(16,24,38,0.66); border-radius: 18px;
+  font-size: clamp(18px, 2.2vw, 24px); color: #fff; padding: 6px 18px; background: rgba(12,12,16,0.7); border-radius: 18px;
   opacity: 0; transition: opacity 0.35s; text-shadow: 0 1px 8px #000;
 }
 #say.show { opacity: 1; }
@@ -170,9 +172,9 @@ kbd {
 #banner {
   position: absolute; left: 50%; top: 36%; transform: translate(-50%, -50%); text-align: center; white-space: pre-line;
   font-family: var(--poster); font-size: clamp(32px, 6vw, 70px); line-height: 1.04; letter-spacing: 0.03em; text-transform: uppercase;
-  color: var(--paper); text-shadow: 0 0 4px #fff, 0 0 18px var(--sun), 0 0 42px rgba(240,120,42,0.7), 0 4px 0 #2a1406; width: min(92vw, 900px);
+  color: var(--paper); text-shadow: 0 0 4px #fff, 0 0 18px var(--sun), 0 0 42px rgba(216,32,42,0.7), 0 4px 0 #14080a; width: min(92vw, 900px);
 }
-#banner.normal { font-size: clamp(24px, 4.2vw, 48px); text-shadow: 0 0 3px #fff, 0 0 14px rgba(244,234,210,0.8), 0 0 30px rgba(240,120,42,0.5), 0 3px 0 #2a1406; }
+#banner.normal { font-size: clamp(24px, 4.2vw, 48px); text-shadow: 0 0 3px #fff, 0 0 14px rgba(244,234,210,0.8), 0 0 30px rgba(216,32,42,0.5), 0 3px 0 #14080a; }
 #banner.hurt { color: #ffd7d2; text-shadow: 0 0 3px #fff, 0 0 14px var(--red), 0 0 32px var(--red); }
 #banner small { display: block; margin-top: 10px; font-family: var(--body); font-weight: 500; font-size: 0.32em; letter-spacing: 0.12em; text-shadow: 0 1px 6px #000; text-transform: none; color: #fff; }
 #banner.pop { animation: pop 0.45s cubic-bezier(0.2, 1.4, 0.4, 1); }
@@ -189,66 +191,58 @@ kbd {
 /* ———————————————————————————————————— screens */
 
 .screen { position: fixed; inset: 0; display: grid; place-items: center; text-align: center; padding: 20px; }
-.scrim { background: radial-gradient(ellipse at center, rgba(16,24,38,0.4), rgba(10,14,24,0.86)); }
+.scrim { background: radial-gradient(ellipse at center, rgba(12,12,16,0.4), rgba(6,6,10,0.88)); }
 
-/* The title: down the left on a wide screen, so Rock is in the middle of the picture, not behind the logo; stacked top and bottom, with Rock between, on a tall one. */
+/* The title: down the left on a wide screen, so Metroll is in the middle of the picture, not behind the logo; stacked top and bottom, with Metroll between, on a tall one. */
 .screen.title { place-items: center start; text-align: left; padding-left: clamp(24px, 6vw, 110px); }
 .screen.title .logo, .screen.title .menu, .screen.title .help { justify-items: start; }
-.screen.title .logo .top { font-size: clamp(46px, 8vw, 120px); }
-.screen.title .logo .bottom { font-size: clamp(40px, 7vw, 104px); }
+.screen.title .logo .top { font-size: clamp(56px, 10vw, 150px); }
+.screen.title .logo .bottom { font-size: clamp(30px, 5vw, 70px); }
 .screen.title .logo .tag { letter-spacing: 0.34em; }
 .screen.title .help { max-width: 44ch; color: #ece4d4; text-shadow: 0 1px 3px #000, 0 0 10px rgba(0,0,0,0.8); }
 @media (max-aspect-ratio: 1/1) {
   .screen.title { place-items: stretch; text-align: center; padding: 5vh 16px; }
   .screen.title > div { display: grid; grid-template-rows: auto 1fr auto auto; height: 100%; justify-items: center; }
   .screen.title .logo, .screen.title .menu, .screen.title .help { justify-items: center; }
-  .screen.title .logo .top { font-size: clamp(44px, 15vw, 110px); }
-  .screen.title .logo .bottom { font-size: clamp(38px, 13vw, 96px); }
+  .screen.title .logo .top { font-size: clamp(54px, 19vw, 130px); }
+  .screen.title .logo .bottom { font-size: clamp(30px, 10vw, 80px); }
   .screen.title .menu { align-self: end; }
 }
 
-/* The logo: the name in cream, lit; WORLD TOUR in the poster's slab, a sunset down through the letters; the III a postmark. */
+/* The logo: METROLL in chrome with a red glow behind it, and GREATEST HITS under it in blackletter, blood coming through the letters. */
 .logo { display: grid; gap: 0; justify-items: center; margin-bottom: 20px; }
-.logo .top, .logo .bottom { line-height: 0.95; text-transform: uppercase; margin: 0; color: var(--paper); }
+.logo .top, .logo .bottom { line-height: 0.95; margin: 0; }
 .logo .top {
-  font-family: var(--display); letter-spacing: 0.04em; font-size: clamp(52px, 11vw, 150px);
-  text-shadow: 0 0 4px #fff, 0 0 18px rgba(240,120,42,0.85), 0 0 46px rgba(240,120,42,0.55), 0 5px 0 #2a1406;
+  font-family: var(--logo); font-weight: 400; letter-spacing: 0.02em; font-size: clamp(64px, 14vw, 190px);
+  background: var(--chrome); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 0 #14080a) drop-shadow(0 0 22px rgba(216,32,42,0.75)) drop-shadow(0 0 60px rgba(216,32,42,0.4));
 }
 .logo .bottom {
-  font-family: var(--poster); font-weight: 400; letter-spacing: 0.02em; font-size: clamp(46px, 9vw, 130px);
-  background: linear-gradient(180deg, #ffe08a 0%, var(--sun-hi) 30%, var(--sun) 55%, var(--stamp) 85%);
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 5px 0 #2a1406) drop-shadow(0 0 18px rgba(240,120,42,0.5));
-}
-.logo .two {
-  display: inline-grid; place-items: center; width: 1.9em; height: 1.9em; margin-left: 0.2em; vertical-align: 0.5em;
-  font-family: var(--poster); font-size: 0.3em; line-height: 1; letter-spacing: -0.02em; color: var(--stamp); text-shadow: none;
-  border: 0.09em solid var(--stamp); border-radius: 50%; box-shadow: 0 0 0 0.05em var(--paper), inset 0 0 0 0.05em var(--paper);
-  background: var(--paper); transform: rotate(-14deg);
+  font-family: var(--poster); font-weight: 400; letter-spacing: 0.04em; font-size: clamp(32px, 6vw, 84px); color: var(--sun-hi);
+  text-shadow: 0 0 4px #fff3, 0 0 18px var(--sun), 0 3px 0 #14080a;
 }
 .logo .presents { margin: 0 0 6px; font-weight: 600; font-size: clamp(12px, 1.3vw, 16px); letter-spacing: 0.5em; text-transform: uppercase; color: var(--sun-hi); }
 .logo .presents::before, .logo .presents::after { content: ""; display: inline-block; width: 2.4em; height: 1px; margin: 0 0.8em; vertical-align: 0.3em; background: linear-gradient(90deg, transparent, var(--sun-hi), transparent); }
-.logo .amp { font-size: 0.5em; color: var(--sun-hi); text-shadow: 0 0 10px var(--sun); display: inline-block; transform: translateY(-0.28em); margin: 0 0.12em; }
-.logo .tag { margin-top: 12px; font-weight: 600; font-size: clamp(13px, 1.5vw, 18px); letter-spacing: 0.5em; text-transform: uppercase; color: var(--paper); }
+.logo .tag { margin-top: 12px; font-weight: 600; font-size: clamp(13px, 1.5vw, 18px); letter-spacing: 0.4em; text-transform: uppercase; color: var(--paper); }
 
 .menu { display: grid; gap: 12px; justify-items: center; }
 /* A button: a printed label, cream on sunset orange, a cream line round the inside of its edge. */
 .btn {
   position: relative; min-width: 260px; padding: 12px 34px 11px; cursor: pointer; border: 0; color: var(--paper);
   font-family: var(--poster); font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.1;
-  background: linear-gradient(180deg, var(--sun-hi), var(--sun) 50%, #d85a1a); border-radius: 6px;
-  text-shadow: 0 2px 0 rgba(90,30,8,0.6);
-  box-shadow: inset 0 0 0 3px var(--sun), inset 0 0 0 5px var(--paper), 0 0 24px rgba(240,120,42,0.35), 0 6px 0 #6a2808;
+  background: linear-gradient(180deg, var(--sun-hi), var(--sun) 50%, #a81820); border-radius: 6px;
+  text-shadow: 0 2px 0 rgba(60,8,12,0.7);
+  box-shadow: inset 0 0 0 3px var(--sun), inset 0 0 0 5px var(--paper), 0 0 24px rgba(216,32,42,0.35), 0 6px 0 #4a0a10;
   transition: transform 0.08s, box-shadow 0.08s, filter 0.12s;
 }
 .btn > span { display: inline-block; }
-.btn:hover, .btn:focus-visible { filter: brightness(1.1); outline: none; box-shadow: inset 0 0 0 3px var(--sun), inset 0 0 0 5px #fff, 0 0 38px rgba(240,120,42,0.7), 0 6px 0 #6a2808; }
-.btn:active { transform: translateY(4px); box-shadow: inset 0 0 0 3px var(--sun), inset 0 0 0 5px #fff, 0 0 24px rgba(240,120,42,0.5), 0 2px 0 #6a2808; }
+.btn:hover, .btn:focus-visible { filter: brightness(1.1); outline: none; box-shadow: inset 0 0 0 3px var(--sun), inset 0 0 0 5px #fff, 0 0 38px rgba(216,32,42,0.7), 0 6px 0 #4a0a10; }
+.btn:active { transform: translateY(4px); box-shadow: inset 0 0 0 3px var(--sun), inset 0 0 0 5px #fff, 0 0 24px rgba(216,32,42,0.5), 0 2px 0 #4a0a10; }
 .btn.alt {
-  background: linear-gradient(180deg, #24345a, var(--ink-2)); color: var(--paper); font-size: 19px; min-width: 200px; text-shadow: none;
-  box-shadow: inset 0 0 0 3px var(--ink-2), inset 0 0 0 5px rgba(244,234,210,0.75), 0 0 18px rgba(30,74,154,0.35), 0 6px 0 #080c14;
+  background: linear-gradient(180deg, #34343e, var(--ink-2)); color: var(--paper); font-size: 19px; min-width: 200px; text-shadow: none;
+  box-shadow: inset 0 0 0 3px var(--ink-2), inset 0 0 0 5px rgba(244,234,210,0.75), 0 0 18px rgba(216,32,42,0.2), 0 6px 0 #050508;
 }
-.btn.alt:hover, .btn.alt:focus-visible { box-shadow: inset 0 0 0 3px var(--ink-2), inset 0 0 0 5px var(--sun-hi), 0 0 30px rgba(240,120,42,0.45), 0 6px 0 #080c14; }
+.btn.alt:hover, .btn.alt:focus-visible { box-shadow: inset 0 0 0 3px var(--ink-2), inset 0 0 0 5px var(--sun-hi), 0 0 30px rgba(216,32,42,0.45), 0 6px 0 #050508; }
 .btn.small { font-size: 16px; min-width: 0; padding: 8px 22px 7px; }
 
 .help { margin-top: 18px; display: grid; gap: 4px; font-size: clamp(14px, 1.5vw, 17px); color: var(--dim); letter-spacing: 0.04em; }
@@ -256,7 +250,7 @@ kbd {
 @media (pointer: coarse) { .help .keys { display: none; } .help .touch { display: block; } }
 .best { margin-top: 6px; color: var(--sun-hi); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; font-size: 14px; }
 
-/* The itinerary: a luggage label for every stop, the country's colour down its edge, the stop's number a postmark. */
+/* The tracklist: a flyer for every track, its poster colour down the edge, the track's number a stamp. */
 .tour { align-content: start; overflow: auto; padding-top: calc(28px + var(--safe-t)); }
 .tour h2 { margin: 0 0 4px; font-family: var(--poster); font-weight: 400; font-size: clamp(34px, 6vw, 64px); text-transform: uppercase; letter-spacing: 0.04em; }
 .tour .sub { color: var(--dim); letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600; font-size: 13px; margin-bottom: 18px; }
@@ -276,7 +270,7 @@ kbd {
   font-family: var(--display); font-size: 20px; line-height: 1; color: var(--stamp); opacity: 0.8;
   border: 2px solid var(--stamp); border-radius: 50%; box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--stamp); transform: rotate(-16deg);
 }
-.venue .country { font-weight: 700; font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--tint, var(--sea)); filter: brightness(0.8); }
+.venue .place { font-weight: 700; font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--tint, var(--sea)); filter: brightness(0.8); }
 .venue .name { font-family: var(--poster); font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1.05; padding-right: 44px; color: var(--print); }
 .venue .line { font-size: 14px; color: var(--print-dim); min-height: 2.5em; }
 .venue .foot { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 13px; color: var(--print-dim); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; border-top: 1px dashed rgba(26,34,50,0.3); padding-top: 6px; }
@@ -284,12 +278,12 @@ kbd {
 .stars b { font-weight: 400; color: var(--sun); }
 .back { margin-top: 20px; }
 
-/* The review, and the other cards: a postcard home, the airmail stripes round its edge, a stamp in the corner. */
+/* The review, and the other cards: a gig flyer, hazard stripes round its edge, a stamp in the corner. */
 .card {
   position: relative; width: min(520px, 94vw); padding: 26px 30px 26px; text-align: center; color: var(--print);
   background: linear-gradient(180deg, var(--paper), var(--paper-2)); border-radius: 6px;
   border: 8px solid transparent;
-  background-image: linear-gradient(180deg, var(--paper), var(--paper-2)), repeating-linear-gradient(135deg, var(--stamp) 0 14px, var(--paper) 14px 22px, var(--sea) 22px 36px, var(--paper) 36px 44px);
+  background-image: linear-gradient(180deg, var(--paper), var(--paper-2)), repeating-linear-gradient(135deg, var(--stamp) 0 14px, var(--ink) 14px 22px, var(--sun-lo) 22px 36px, var(--ink) 36px 44px);
   background-origin: border-box; background-clip: padding-box, border-box;
   box-shadow: 0 20px 60px rgba(0,0,0,0.6);
 }
@@ -299,7 +293,7 @@ kbd {
   box-shadow: 0 0 0 1px rgba(26,34,50,0.2);
 }
 .card h2 { margin: 0; font-family: var(--poster); font-weight: 400; font-size: clamp(28px, 5vw, 42px); letter-spacing: 0.04em; text-transform: uppercase; }
-.card h2.neon { color: var(--sea); text-shadow: 0 2px 0 rgba(30,74,154,0.18); }
+.card h2.neon { color: var(--stamp); text-shadow: 0 2px 0 rgba(216,32,42,0.2); }
 .card.over h2.neon { color: var(--stamp); text-shadow: 0 2px 0 rgba(200,48,42,0.18); }
 .card .venue-name { font-weight: 700; letter-spacing: 0.3em; font-size: 13px; text-transform: uppercase; color: var(--print-dim); margin-bottom: 6px; }
 .big-stars { font-size: 52px; letter-spacing: 0.1em; margin: 6px 0 8px; color: rgba(26,34,50,0.14); }
@@ -344,8 +338,8 @@ kbd {
 #rev-button {
   position: fixed; right: calc(22px + var(--safe-r)); bottom: calc(70px + var(--safe-b)); width: 96px; height: 96px; border-radius: 50%;
   display: none; place-items: center; font-family: var(--poster); font-size: 22px; letter-spacing: 0.06em;
-  color: var(--paper); background: radial-gradient(circle at 35% 30%, var(--sun-hi), var(--sun-lo)); border: 3px solid var(--paper); box-shadow: 0 0 30px rgba(240,120,42,0.7);
-  text-shadow: 0 2px 0 rgba(90,30,8,0.6); touch-action: none; z-index: 6;
+  color: var(--paper); background: radial-gradient(circle at 35% 30%, var(--sun-hi), var(--sun-lo)); border: 3px solid var(--paper); box-shadow: 0 0 30px rgba(216,32,42,0.7);
+  text-shadow: 0 2px 0 rgba(60,8,12,0.7); touch-action: none; z-index: 6;
 }
 #rev-button:active, #rev-button.held { transform: scale(0.94); filter: brightness(1.25); }
 @media (pointer: coarse) { #rev-button.available { display: grid; } }
@@ -378,18 +372,25 @@ kbd {
 /* ———————————————————————————————————— the light of each stop */
 
 /*
- * Every stop has its own light: the picture (and only the picture) is
- * graded by the stop's `look.grade`. London's fog, the dusk in Paris and
- * Venice, the glare off the Alps, the heat of Spain and Egypt, Tokyo's
- * neon, the colour of Rio and Sydney; and a haze of sand over everything
- * in a sandstorm.
+ * Every track has its own light: the picture (and only the picture) is
+ * graded by the track's `look.grade`. Birmingham's rain on steel, the
+ * Strip's neon, the Bay's faded denim, Whitby's violet mist, a basement's
+ * bare bulbs, Tampa's green dark, Norway's cold, the bayou's haze, a
+ * factory's grey, Woodstock's dust, the Warped Tour's sunset and Wacken's
+ * storm; and a haze of sand over everything in a sandstorm.
  */
-#view[data-grade="fog"] canvas { filter: saturate(0.72) contrast(0.9) brightness(1.06); }
-#view[data-grade="dusk"] canvas { filter: sepia(0.16) saturate(1.2) contrast(1.04); }
-#view[data-grade="alpine"] canvas { filter: saturate(1.15) brightness(0.96) contrast(1.14) hue-rotate(-4deg); }
-#view[data-grade="warm"] canvas { filter: sepia(0.24) saturate(1.25) contrast(1.05) brightness(1.03); }
-#view[data-grade="neon"] canvas { filter: saturate(1.4) contrast(1.1); }
-#view[data-grade="tropical"] canvas { filter: saturate(1.3) contrast(1.04) brightness(1.03); }
+#view[data-grade="steel"] canvas { filter: saturate(0.82) contrast(1.1) brightness(1.02); }
+#view[data-grade="neon"] canvas { filter: saturate(1.45) contrast(1.1) hue-rotate(-6deg); }
+#view[data-grade="denim"] canvas { filter: saturate(0.9) contrast(1.06) hue-rotate(4deg); }
+#view[data-grade="mist"] canvas { filter: saturate(0.82) contrast(0.94) brightness(1.04) hue-rotate(10deg); }
+#view[data-grade="basement"] canvas { filter: sepia(0.18) saturate(1.1) contrast(1.12) brightness(1.04); }
+#view[data-grade="swamp"] canvas { filter: saturate(1.2) contrast(1.08) hue-rotate(-10deg); }
+#view[data-grade="frost"] canvas { filter: saturate(0.74) contrast(1.06) brightness(1.08) hue-rotate(6deg); }
+#view[data-grade="bayou"] canvas { filter: sepia(0.22) saturate(1.2) contrast(1.05); }
+#view[data-grade="industrial"] canvas { filter: saturate(0.7) contrast(1.16) brightness(1.02); }
+#view[data-grade="dust"] canvas { filter: sepia(0.3) saturate(1.2) contrast(1.04) brightness(1.04); }
+#view[data-grade="scene"] canvas { filter: saturate(1.3) contrast(1.08); }
+#view[data-grade="storm"] canvas { filter: saturate(0.78) contrast(1.1) brightness(0.98); }
 
 #vignette { position: fixed; inset: 0; pointer-events: none; background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.5) 100%); }
 body.sandstorm #vignette { background: radial-gradient(ellipse at center, rgba(214,170,100,0.22) 30%, rgba(150,100,40,0.55) 100%); }

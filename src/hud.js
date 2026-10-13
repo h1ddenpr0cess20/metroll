@@ -3,20 +3,20 @@ import { MAX_INTEGRITY } from './integrity.js';
 import { VENUES } from './venues/index.js';
 
 /**
- * Everything on screen that isn't the 3D view: the stop, the hype and the
- * combo along the top; Rock's integrity (a level meter) and rev along the
- * bottom, and what he says; a map of what has been seen; the big messages
- * in the middle and the numbers that fly up off a smash; and the screens —
- * title, the itinerary, pause and settings, the review after a stop, and
+ * Everything on screen that isn't the 3D view: the track, the cred and the
+ * combo along the top; Metroll's spikes (a level meter) and rage along the
+ * bottom, and what it says; a map of what has been seen; the big messages
+ * in the middle and the numbers that fly up off a smash; and the screens:
+ * title, the tracklist, pause and settings, the review after a track, and
  * the end.
  */
 
 const SEGMENTS = 24;
 
-/** The stops' names and poster colours, read once. */
+/** The tracks' names, places and poster colours, read once. */
 const INFO = VENUES.map((make) => {
   const v = make();
-  return { name: v.name, act: v.act, intro: v.intro, country: v.look.country ?? '', tint: v.look.poster ?? v.palette.walls?.[0] ?? '#2a1a3a', grade: v.look.grade ?? '' };
+  return { name: v.name, act: v.act, intro: v.intro, place: `${v.look.year ?? ''} · ${v.look.genre ?? ''}`, tint: v.look.poster ?? v.palette.walls?.[0] ?? '#2a1a3a', grade: v.look.grade ?? '' };
 });
 
 const el = (tag, className = '', html = '') => {
@@ -26,7 +26,7 @@ const el = (tag, className = '', html = '') => {
   return e;
 };
 
-/** `n` with thousands separated, for the hype. */
+/** `n` with thousands separated, for the cred. */
 const grand = (n) => Math.round(n).toLocaleString('en-US');
 
 /** Seconds as m:ss. */
@@ -41,18 +41,18 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
   hud.hidden = true;
   hud.innerHTML = `
     <div class="plate"><span class="act"></span><span class="name"></span></div>
-    <div class="hype"><span class="label">Hype</span><span class="num">0</span>
+    <div class="hype"><span class="label">Cred</span><span class="num">0</span>
       <div class="combo"><b>×1</b><div class="bar"><i></i></div></div></div>
     <div class="carried">
-      <div class="chip demos"><span class="n">0/3</span><small>snow demos</small></div>
-      <div class="chip passes"><span class="n">0</span><small>passport</small></div>
-      <div class="chip encores"><span class="n">0</span><small>encore</small></div>
+      <div class="chip demos"><span class="n">0/3</span><small>demos</small></div>
+      <div class="chip passes"><span class="n">0</span><small>pass</small></div>
+      <div class="chip encores"><span class="n">0</span><small>lighter</small></div>
     </div>
     <canvas id="map" width="180" height="180" aria-label="Map of what has been seen"></canvas>
     <div class="meters">
-      <div class="meter"><div class="row"><span class="label">Integrity</span><span class="value" id="integrity-value">100%</span></div>
+      <div class="meter"><div class="row"><span class="label">Spikes</span><span class="value" id="integrity-value">100%</span></div>
         <div class="vu" id="vu">${'<i></i>'.repeat(SEGMENTS)}</div></div>
-      <div class="meter"><div class="row"><span class="label">Rev</span><span class="label"><kbd>Space</kbd></span></div>
+      <div class="meter"><div class="row"><span class="label">Rage</span><span class="label"><kbd>Space</kbd></span></div>
         <div class="rev" id="rev"><i></i></div></div>
     </div>
     <div id="say"></div>`;
@@ -83,10 +83,10 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
   popsEl.id = 'pops';
   ui.append(popsEl, bannerEl);
 
-  const revButton = el('button', '', 'REV');
+  const revButton = el('button', '', 'RAGE');
   revButton.id = 'rev-button';
   revButton.type = 'button';
-  revButton.setAttribute('aria-label', 'Rev');
+  revButton.setAttribute('aria-label', 'Rage');
   const held = (on) => (e) => { e.preventDefault(); e.stopPropagation(); revButton.classList.toggle('held', on); onRevHeld?.(on); };
   revButton.addEventListener('pointerdown', held(true));
   for (const t of ['pointerup', 'pointercancel', 'pointerleave']) revButton.addEventListener(t, held(false));
@@ -125,28 +125,28 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
   const title = screen('title', 'title', `
     <div>
       <header class="logo">
-        <p class="presents">Live on stage, all over the world</p>
-        <h1 class="top">Rock <span class="amp">'n'</span> Roller <span class="two">III</span></h1>
-        <h1 class="bottom">World Tour</h1>
-        <p class="tag">a boulder goes abroad</p>
+        <p class="presents">the compilation nobody asked for</p>
+        <h1 class="top">Metroll</h1>
+        <h1 class="bottom">Greatest Hits</h1>
+        <p class="tag">a spiked ball trolls fifty years of metal</p>
       </header>
       <div class="menu">
-        <button class="btn" data-act="start" type="button"><span>Let's go</span></button>
-        <button class="btn alt" data-act="tour" type="button"><span>Itinerary</span></button>
+        <button class="btn" data-act="start" type="button"><span>Play the album</span></button>
+        <button class="btn alt" data-act="tour" type="button"><span>Tracklist</span></button>
         <button class="btn alt small" data-act="settings" type="button"><span>Settings</span></button>
         <p class="best"></p>
       </div>
       <p class="help">
-        <span class="keys"><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> or <kbd>WASD</kbd> roll · <kbd>Space</kbd> rev · <kbd>Q</kbd><kbd>E</kbd> turn the view · wheel zoom · <kbd>P</kbd> pause</span>
-        <span class="touch">hold a finger and roll toward it · REV button to charge · two fingers to turn and zoom</span>
-        <span>run into people at speed. it's what rocks do. even abroad.</span>
+        <span class="keys"><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> or <kbd>WASD</kbd> roll · <kbd>Space</kbd> rage · <kbd>Q</kbd><kbd>E</kbd> turn the view · wheel zoom · <kbd>P</kbd> pause</span>
+        <span class="touch">hold a finger and roll toward it · RAGE button to charge · two fingers to turn and zoom</span>
+        <span>run into people at speed. it's what spiked balls are for. you're welcome.</span>
       </p>
     </div>`);
 
   const tour = screen('tour', 'tour scrim', `
     <div style="width:100%">
-      <h2 class="display neon">Itinerary</h2>
-      <p class="sub">pick a stop · ten cities, ten shows, one boulder</p>
+      <h2 class="display neon">Tracklist</h2>
+      <p class="sub">pick a track · twelve tracks, fifty years, one very rude ball</p>
       <div class="venues" id="venues"></div>
       <button class="btn alt small back" data-act="back" type="button"><span>Back</span></button>
     </div>`);
@@ -161,32 +161,32 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       <ul class="goals"></ul>
       <div class="tally"></div>
       <div class="row">
-        <button class="btn" data-act="next" type="button"><span>Next stop</span></button>
+        <button class="btn" data-act="next" type="button"><span>Next track</span></button>
         <button class="btn alt small" data-act="again" type="button"><span>Play it again</span></button>
-        <button class="btn alt small" data-act="tour" type="button"><span>Itinerary</span></button>
+        <button class="btn alt small" data-act="tour" type="button"><span>Tracklist</span></button>
       </div>
     </div>`);
 
   const over = screen('over', 'scrim', `
     <div class="card over">
       <div class="venue-name"></div>
-      <h2 class="neon" style="--glow: var(--red)">Shattered</h2>
+      <h2 class="neon" style="--glow: var(--red)">Blunted</h2>
       <p class="quip"></p>
       <div class="tally"></div>
       <div class="row">
         <button class="btn" data-act="again" type="button"><span>Try again</span></button>
-        <button class="btn alt small" data-act="tour" type="button"><span>Itinerary</span></button>
+        <button class="btn alt small" data-act="tour" type="button"><span>Tracklist</span></button>
       </div>
     </div>`);
 
   const pause = screen('pause', 'scrim', `
     <div class="card">
-      <h2 class="neon" style="--glow: var(--red)">Layover</h2>
+      <h2 class="neon" style="--glow: var(--red)">Intermission</h2>
       <div class="settings"></div>
       <div class="row" style="margin-top:14px">
         <button class="btn" data-act="resume" type="button"><span>Back to it</span></button>
         <button class="btn alt small" data-act="again" type="button"><span>From the top</span></button>
-        <button class="btn alt small" data-act="tour" type="button"><span>Itinerary</span></button>
+        <button class="btn alt small" data-act="tour" type="button"><span>Tracklist</span></button>
       </div>
     </div>`);
 
@@ -245,7 +245,7 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
 
   const stars = (n) => `<b>${'★'.repeat(n)}</b>${'★'.repeat(3 - n)}`;
 
-  /** The map: every tile seen so far, Rock, the people near him, and his mark once found. */
+  /** The map: every tile seen so far, Metroll, the people near it, and its mark once found. */
   function drawMap(gig) {
     const { venue, explored, ball } = gig;
     const s = mapScale;
@@ -295,12 +295,12 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       const total = Object.values(saved.venues).reduce((s, v) => s + v.stars, 0);
       const best = Object.values(saved.venues).reduce((s, v) => s + (v.best ?? 0), 0);
       title.querySelector('.best').textContent = saved.reached > 0 || total > 0
-        ? `${total} of ${INFO.length * 3} stars · ${grand(best)} hype`
+        ? `${total} of ${INFO.length * 3} stars · ${grand(best)} cred`
         : '';
-      title.querySelector('[data-act=start]').firstElementChild.textContent = saved.reached > 0 ? 'Keep rolling' : 'Let\'s go';
+      title.querySelector('[data-act=start]').firstElementChild.textContent = saved.reached > 0 ? 'Keep rolling' : 'Play the album';
     },
 
-    /** The itinerary: every stop as a card; those not yet reached are locked. */
+    /** The tracklist: every track as a card; those not yet reached are locked. */
     tour(saved) {
       this.saved = saved;
       hideScreens();
@@ -311,7 +311,7 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
         b.type = 'button';
         b.style.setProperty('--tint', v.tint);
         b.disabled = i > saved.reached;
-        b.innerHTML = `<span class="num">${i + 1}</span><span class="country">${v.country}</span><span class="name">${v.name}</span><span class="line">${v.intro}</span>`
+        b.innerHTML = `<span class="num">${i + 1}</span><span class="place">${v.place}</span><span class="name">${v.name}</span><span class="line">${v.intro}</span>`
           + `<span class="foot"><span class="stars">${stars(s.stars)}</span><span>${s.best ? grand(s.best) : b.disabled ? 'locked' : 'new'}</span></span>`;
         b.addEventListener('click', (e) => { e.stopPropagation(); onStart?.(i); });
         return b;
@@ -331,11 +331,11 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       this.title(this.saved);
     },
 
-    /** The stop begins: the HUD up, the screens down. */
+    /** The track begins: the HUD up, the screens down. */
     play(venue) {
       hideScreens();
       hud.hidden = false;
-      plate.querySelector('.act').textContent = `Stop ${venue.act}${venue.look.country ? ` · ${venue.look.country}` : ''}`;
+      plate.querySelector('.act').textContent = `Track ${venue.act}${venue.look.year ? ` · ${venue.look.year}` : ''}`;
       plate.querySelector('.name').textContent = venue.name;
       revButton.classList.add('available');
     },
@@ -349,7 +349,7 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       comboBar.style.transform = `scaleX(${Math.max(0, Math.min(1, left))})`;
     },
 
-    /** Rock's integrity as a light meter, lit green through yellow to red. */
+    /** Metroll's spikes as a light meter, lit green through yellow to red. */
     integrity(troll) {
       const frac = Math.max(0, troll.hp) / troll.max;
       const lit = Math.ceil(frac * SEGMENTS);
@@ -364,7 +364,7 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       lastHp = troll.hp;
     },
 
-    /** The rev meter: `frac` full, `active` while it is being spent. */
+    /** The rage meter: `frac` full, `active` while it is being spent. */
     rev(frac, active) {
       revBar.style.transform = `scaleX(${Math.max(0, Math.min(1, frac))})`;
       revEl.classList.toggle('active', active);
@@ -383,8 +383,8 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       set(chips.encores, encores, null, encores > 0);
     },
 
-    /** Rock says something; `who` names whoever it is about (a foe's blurb, say). */
-    say(text, who = 'Rock', seconds = 3.4) {
+    /** Metroll says something; `who` names whoever it is about (a foe's blurb, say). */
+    say(text, who = 'Metroll', seconds = 3.4) {
       if (!text) return;
       sayEl.innerHTML = `<b>${who}</b>${text}`;
       sayEl.classList.add('show');
@@ -422,7 +422,7 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       s.style.opacity = String(Math.min(0.22, level * 0.22));
     },
 
-    /** A new stop: a map canvas to fit it. */
+    /** A new track: a map canvas to fit it. */
     map(gig) {
       const { cols, rows } = gig.venue;
       mapScale = Math.max(1, Math.floor(Math.min(180 / cols, 180 / rows)));
@@ -443,11 +443,11 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       drawMap(gig);
     },
 
-    /** The review after a stop: stars, goals, numbers. `result` from the game. */
+    /** The review after a track: stars, goals, numbers. `result` from the game. */
     review(result) {
       hideScreens();
       review.hidden = false;
-      review.querySelector('.venue-name').textContent = `Stop ${result.act} · ${result.name}`;
+      review.querySelector('.venue-name').textContent = `Track ${result.act} · ${result.name}`;
       review.querySelector('.big-stars').innerHTML = stars(result.stars);
       review.querySelector('.newbest').hidden = !result.newBest;
       review.querySelector('.goals').innerHTML = goals(result).map((g) => `
@@ -455,21 +455,21 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
         <span class="t">${g.title}<br><small>${g.text}</small></span>
         <small>${g.progress ? `${g.progress[0]}/${g.progress[1]}` : ''}</small></li>`).join('');
       review.querySelector('.tally').innerHTML = `
-        <div><b>${grand(result.hype)}</b><span class="label">Hype</span></div>
+        <div><b>${grand(result.hype)}</b><span class="label">Cred</span></div>
         <div><b>${clock(result.time)}</b><span class="label">Time</span></div>
         <div><b>${result.best}</b><span class="label">Best combo</span></div>`;
       review.querySelector('[data-act=next]').hidden = !result.hasNext;
       review.querySelector('[data-act=next]').focus({ preventScroll: true });
     },
 
-    /** Shattered: where, and how much, and what he says. */
+    /** Blunted: where, and how much, and what it says. */
     over(result, quip = '') {
       hideScreens();
       over.hidden = false;
-      over.querySelector('.venue-name').textContent = `Stop ${result.act} · ${result.name}`;
+      over.querySelector('.venue-name').textContent = `Track ${result.act} · ${result.name}`;
       over.querySelector('.quip').textContent = quip ? `“${quip}”` : '';
       over.querySelector('.tally').innerHTML = `
-        <div><b>${grand(result.hype)}</b><span class="label">Hype</span></div>
+        <div><b>${grand(result.hype)}</b><span class="label">Cred</span></div>
         <div><b>${result.smashed}/${result.foes}</b><span class="label">Smashed</span></div>
         <div><b>${clock(result.time)}</b><span class="label">Time</span></div>`;
       over.querySelector('[data-act=again]').focus({ preventScroll: true });
@@ -488,7 +488,7 @@ export function createHud(root, { onStart, onResume, onRestart, onQuit, onNext, 
       muteButton.textContent = on ? 'sound off' : 'sound on';
     },
 
-    /** Show or hide the rev button (for fingers). */
+    /** Show or hide the rage button (for fingers). */
     touchRev(on) { revButton.classList.toggle('available', on); },
   };
   return api;
