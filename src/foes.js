@@ -87,6 +87,13 @@ export const FOES = Object.freeze({
   brassman: { name: 'Brass Man', blurb: 'A second line, a first line and a one-man blockage of Bourbon Street.', move: 'walk', toughness: 5, power: 5, hype: 70, radius: 0.37, speed: 3.6, shout: 'WOO!' },
   cultist: { name: 'Cultist', blurb: 'Chanting. Not at you, probably. Candle, book, bad attitude.', move: 'walk', toughness: 5, power: 5, hype: 90, radius: 0.38, speed: 1.8 },
   doomlord: { name: 'The Doomlord', blurb: 'Plays one chord. It takes six minutes. Everyone is very impressed.', move: 'walk', toughness: 9, power: 8, hype: 700, radius: 1.0, speed: 1.2, boss: true, hp: 45, tactic: 'stomp' },
+  // Berlin.
+  welder: { name: 'Welder', blurb: 'Does not look up. Does not need to. Everything is about to be on fire.', move: 'walk', toughness: 5, power: 5, hype: 90, radius: 0.4, speed: 2.4 },
+  engineer: { name: 'Engineer', blurb: 'Here to inspect. Has found several things wrong, of which you are the largest.', move: 'walk', toughness: 5, power: 6, hype: 70, radius: 0.41, speed: 3.0, shout: 'ACHTUNG!' },
+  raver: { name: 'Raver', blurb: 'Dancing since Friday. It is Monday. Does not intend to be told.', move: 'walk', toughness: 3, power: 3, hype: 50, radius: 0.35, speed: 4.2, shout: 'WHOOO!' },
+  clubber: { name: 'Clubber', blurb: 'In a queue since Thursday. Sunglasses. Indoors. At night. Black.', move: 'walk', toughness: 5, power: 5, hype: 70, radius: 0.37, speed: 2.6 },
+  robot: { name: 'Line Robot', blurb: 'One job. Has done it since 1974. You are the job.', move: 'walk', toughness: 6, power: 6, hype: 100, radius: 0.42, speed: 2.0, shout: 'BEEP.' },
+  drone: { name: 'Camera Drone', blurb: 'Hired for the crowd shot. Now very interested in you. The red light means recording.', move: 'fly', toughness: 2, power: 3, hype: 50, radius: 0.32, speed: 3.4 },
   pigeon: { name: 'Pigeon', blurb: 'Seen every canal in the Midlands. Has opinions about your tone.', move: 'fly', toughness: 2, power: 2, hype: 30, radius: 0.3, speed: 3.2 },
 });
 

@@ -4,6 +4,7 @@ import blader from './blader.js';
 import bobby from './bobby.js';
 import bouncer from './bouncer.js';
 import brassman from './brassman.js';
+import clubber from './clubber.js';
 import cop from './cop.js';
 import coroner from './coroner.js';
 import corpsepaint from './corpsepaint.js';
@@ -15,7 +16,9 @@ import cultist from './cultist.js';
 import diver from './diver.js';
 import doomlord from './doomlord.js';
 import dracfan from './dracfan.js';
+import drone from './drone.js';
 import drunk from './drunk.js';
+import engineer from './engineer.js';
 import floridaman from './floridaman.js';
 import folkie from './folkie.js';
 import foreman from './foreman.js';
@@ -37,7 +40,9 @@ import poser from './poser.js';
 import promoter from './promoter.js';
 import punk from './punk.js';
 import rat from './rat.js';
+import raver from './raver.js';
 import roadie from './roadie.js';
+import robot from './robot.js';
 import security from './security.js';
 import shredder from './shredder.js';
 import skater from './skater.js';
@@ -47,15 +52,17 @@ import stoner from './stoner.js';
 import tapetrader from './tapetrader.js';
 import toughguy from './toughguy.js';
 import troll from './troll.js';
+import welder from './welder.js';
 import wolf from './wolf.js';
 import zinekid from './zinekid.js';
 import zombie from './zombie.js';
 
 /** Everyone sculpted, by name (see foes.js for who they are). */
 export const CAST = {
-  bat, blackcat, blader, bobby, bouncer, brassman, cop, coroner, corpsepaint, count, critic, crow,
-  crowdsurfer, cultist, diver, doomlord, dracfan, drunk, floridaman, folkie, foreman, frontman,
-  gatekeeper, gator, goth, headbanger, hippie, hxckid, limodriver, merchguy, mosher, mourner,
-  pallbearer, pigeon, poet, poser, promoter, punk, rat, roadie, security, shredder, skater, skier,
-  soundguy, stoner, tapetrader, toughguy, troll, wolf, zinekid, zombie,
+  bat, blackcat, blader, bobby, bouncer, brassman, clubber, cop, coroner, corpsepaint, count,
+  critic, crow, crowdsurfer, cultist, diver, doomlord, dracfan, drone, drunk, engineer, floridaman,
+  folkie, foreman, frontman, gatekeeper, gator, goth, headbanger, hippie, hxckid, limodriver,
+  merchguy, mosher, mourner, pallbearer, pigeon, poet, poser, promoter, punk, rat, raver, roadie,
+  robot, security, shredder, skater, skier, soundguy, stoner, tapetrader, toughguy, troll, welder,
+  wolf, zinekid, zombie,
 };
