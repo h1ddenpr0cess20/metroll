@@ -99,6 +99,11 @@ export const FOES = Object.freeze({
   dj: { name: 'DJ', blurb: 'Was booked for a metal show. Is playing what he likes. It is going about as well as you would expect.', move: 'walk', toughness: 3, power: 3, hype: 50, radius: 0.37, speed: 3.0, shout: 'WIKKA WIKKA!' },
   candlekid: { name: 'Candle Kid', blurb: 'A vigil, a candle and a lot of hope. Within the hour: a bonfire.', move: 'walk', toughness: 3, power: 3, hype: 40, radius: 0.34, speed: 2.4 },
   medic: { name: 'Medic', blurb: 'Has seen four hundred cases of the same thing since noon. The thing is water.', move: 'walk', toughness: 5, power: 4, hype: 60, radius: 0.38, speed: 4.4, shout: 'MAKE A HOLE!' },
+  // Warped Tour.
+  scenekid: { name: 'Scene Kid', blurb: 'Four thousand friends. Knows none of them. The phone is at the MySpace angle.', move: 'walk', toughness: 3, power: 3, hype: 50, radius: 0.34, speed: 3.8, shout: 'RAWR!' },
+  emo: { name: 'Emo', blurb: 'Fine. Totally fine. Has a journal. Would like to read you a page.', move: 'walk', toughness: 3, power: 3, hype: 50, radius: 0.35, speed: 2.2 },
+  streetteam: { name: 'Street Team', blurb: 'Free stickers. Free flyers. A free energy drink, if you listen to the whole sentence.', move: 'walk', toughness: 4, power: 3, hype: 50, radius: 0.37, speed: 4.0, shout: 'FREE STICKERS!' },
+  screamer: { name: 'Screamer', blurb: 'Whisper to the end of the world in one bar. Has lost his voice every week since 2003.', move: 'walk', toughness: 6, power: 6, hype: 90, radius: 0.38, speed: 3.6, shout: 'AAAAARGH!' },
   pigeon: { name: 'Pigeon', blurb: 'Seen every canal in the Midlands. Has opinions about your tone.', move: 'fly', toughness: 2, power: 2, hype: 30, radius: 0.3, speed: 3.2 },
 });
 

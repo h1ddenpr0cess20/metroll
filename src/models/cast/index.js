@@ -20,6 +20,7 @@ import doomlord from './doomlord.js';
 import dracfan from './dracfan.js';
 import drone from './drone.js';
 import drunk from './drunk.js';
+import emo from './emo.js';
 import engineer from './engineer.js';
 import floridaman from './floridaman.js';
 import folkie from './folkie.js';
@@ -47,12 +48,15 @@ import rat from './rat.js';
 import raver from './raver.js';
 import roadie from './roadie.js';
 import robot from './robot.js';
+import scenekid from './scenekid.js';
+import screamer from './screamer.js';
 import security from './security.js';
 import shredder from './shredder.js';
 import skater from './skater.js';
 import skier from './skier.js';
 import soundguy from './soundguy.js';
 import stoner from './stoner.js';
+import streetteam from './streetteam.js';
 import tapetrader from './tapetrader.js';
 import toughguy from './toughguy.js';
 import troll from './troll.js';
@@ -64,9 +68,9 @@ import zombie from './zombie.js';
 /** Everyone sculpted, by name (see foes.js for who they are). */
 export const CAST = {
   bat, blackcat, blader, bobby, bouncer, brassman, candlekid, clubber, cop, coroner, corpsepaint,
-  count, critic, crow, crowdsurfer, cultist, diver, dj, doomlord, dracfan, drone, drunk, engineer,
-  floridaman, folkie, foreman, frontman, gatekeeper, gator, goth, headbanger, hippie, hxckid,
-  limodriver, medic, merchguy, mosher, mourner, nuguy, pallbearer, pigeon, poet, poser, promoter,
-  punk, rat, raver, roadie, robot, security, shredder, skater, skier, soundguy, stoner, tapetrader,
-  toughguy, troll, welder, wolf, zinekid, zombie,
+  count, critic, crow, crowdsurfer, cultist, diver, dj, doomlord, dracfan, drone, drunk, emo,
+  engineer, floridaman, folkie, foreman, frontman, gatekeeper, gator, goth, headbanger, hippie,
+  hxckid, limodriver, medic, merchguy, mosher, mourner, nuguy, pallbearer, pigeon, poet, poser,
+  promoter, punk, rat, raver, roadie, robot, scenekid, screamer, security, shredder, skater, skier,
+  soundguy, stoner, streetteam, tapetrader, toughguy, troll, welder, wolf, zinekid, zombie,
 };
