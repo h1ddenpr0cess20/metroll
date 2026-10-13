@@ -29,7 +29,12 @@ after it are built on it.
   and the premiere.
 - **[Rock 'n' Roller III: World Tour](https://github.com/h1ddenpr0cess20/rocknroller-iii)**:
   the third. Rock takes the band round the world, ten stops from London to New
-  York, smashing the annoying people abroad. Metroll is built on its engine.
+  York, smashing the annoying people abroad. [Metroll](https://github.com/h1ddenpr0cess20/metroll) is built on its engine.
+- **[Metroll](https://github.com/h1ddenpr0cess20/metroll)**: a spiked steel
+  ball, the head of a morning star, rolls through fifty years of metal in
+  twelve tracks, from Birmingham in 1970 to a muddy field at Wacken, trolling
+  every poser, gatekeeper and scenester in the way. Built on Rock 'n' Roller
+  III's engine, and Rock himself turns up in the last one.
 - **[Catroller](https://github.com/h1ddenpr0cess20/catroller)**: a sneaky
   rolling game. You're a ball of red yarn loose in a house at night, trying to
   reach the cat flap past six cats. Mice, flies and beetles keep the cats busy,

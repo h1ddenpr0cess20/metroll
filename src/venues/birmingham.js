@@ -125,6 +125,7 @@ export function birmingham() {
   // The works gate: the security barrier, shut, until somebody has a pass.
   const gate = d.hall(6, { wall: 'brick', floor: 'cobble' });
   barred(g, gate, 3);
+  g.foe('gatekeeper', ...gate.tile(1, 1), { range: 3 });
   g.pick(...gate.tile(1, 0), 5);
   sign(gate, 5, 'STAFF ONLY', '#ff4a3a', 0.4, 1.7);
   d.turn('+x', { wall: 'brick', floor: 'cobble' });

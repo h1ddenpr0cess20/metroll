@@ -127,6 +127,7 @@ export function bay() {
   // The gate to the stage: iron bars, and nobody through them without a pass.
   const gate = d.hall(8, { width: 3, wall: 'block', floor: 'concrete' });
   barred(g, gate, 3, 'bars');
+  g.foe('gatekeeper', ...gate.tile(1, 1), { range: 3 });
   g.pick(...gate.tile(1, 0), 5);
   sign(gate, 6, 'BACKSTAGE', '#ff4a3a', 0.4, 1.7);
 

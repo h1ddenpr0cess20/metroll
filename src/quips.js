@@ -155,15 +155,15 @@ const INDUSTRIAL = Object.freeze({
 
 /** Nu metal, Woodstock '99: baggy pants, wallet chains, and rage. */
 const NUMETAL = Object.freeze({
-  smash: ['Break stuff? I\'m breaking you.', 'Baggy pants. Wallet chain. Nine out of ten decisions.', 'Duuude. Bro. Dude.', 'Rap-rock. Peak 1999.', 'Turntable? In a metal band? Bold.'],
-  crit: ['Absolutely nu. Absolutely metal. Absolutely flattened.'],
+  smash: ['Break stuff? I\'m breaking you.', 'Baggy pants. Wallet chain. Nine out of ten decisions.', 'Duuude. Bro. Dude.', 'Rap-rock. Peak 1999.', 'Turntable? In a metal band? Bold.', 'Keep rollin\', rollin\', rollin\', rollin\'. Somebody wrote a whole song about me.'],
+  crit: ['Absolutely nu. Absolutely metal. Absolutely flattened.', 'Rollin\', rollin\', rollin\'... and that\'s a crit.'],
   bonk: ['Okay, that guy had a wallet chain.'],
-  tap: ['I bounced off a baggy-pants guy. Bro.'],
+  tap: ['I bounced off a baggy-pants guy. Bro.', 'Rollin\', rollin\'... into a guy. Not the plan.'],
   burnt: ['Woodstock. Fire. Historical.', 'Peace, love and extremely hot.'],
   fell: ['Down in the mud. Woodstock. Classic.'],
   demo: ['Demo. Burned on a CD-R. Labelled in Sharpie.'],
-  ready: ['Woodstock. 1999. It\'s hot, it\'s loud, what could go wrong.', 'Alright. Rage. Peace. Mud. Go.'],
-  clear: ['Peace. Love. Rage. Next.'],
+  ready: ['Woodstock. 1999. It\'s hot, it\'s loud, what could go wrong.', 'Alright. Rage. Peace. Mud. Go.', 'Keep rollin\', rollin\', rollin\', rollin\'. I\'m a ball. It\'s literally the job description.'],
+  clear: ['Peace. Love. Rage. Next.', 'Rollin\', rollin\', rollin\', rollin\'. Done. Next.'],
 });
 
 /** Screamo / scene, Warped Tour: eyeliner and feelings. */

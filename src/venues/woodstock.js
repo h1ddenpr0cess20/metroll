@@ -26,7 +26,7 @@ const HEAT = ['#ff7a1a', '#ffd23a', '#ff3a3a', '#3ad8ff'];
 export function woodstock() {
   const g = new Venue({
     name: "Woodstock '99", act: 10, cols: 150, rows: 130, palette: WOODSTOCK, tempo: 96,
-    intro: 'Peace. Love. A hundred and one degrees. Water is four dollars. The kids have a lot of feelings and a lot of lighters.',
+    intro: 'Peace. Love. A hundred and one degrees. Water is four dollars. The kids have a lot of feelings and a lot of lighters. Keep rollin\', rollin\', rollin\', rollin\'.',
     look: {
       place: "Woodstock '99", year: 1999, genre: 'Nu Metal', poster: '#c8601a', grade: 'dust', weather: 'sand', voice: 'numetal', theme: 'airfield',
       floor: 'asphalt', wall: 'plywood', lamp: 'bulb', crusher: 'rig', lift: 'hay', gate: 'bars',
@@ -103,6 +103,7 @@ export function woodstock() {
   g.foe('hippie', ...bank0.tile(3, 0), { range: 3 });
   g.pick(...bank0.tile(1, 0), 5).pick(...bank0.tile(5, 1), 5);
   lamppost(bank0, 2);
+  sign(bank0, 4.5, 'KEEP ROLLIN\'', HEAT[0], 0.45, 1.7);
   d.ferry(15, { size: 3, period: 9 });
   const bank = d.hall(10, { width: 5, ...DIRT });
   g.pillar(...backTile(bank, 2), 1.3, { prop: 'loo' });

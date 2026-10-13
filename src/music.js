@@ -172,7 +172,7 @@ export const THEMES = {
     riff: [[0, 3, 8], [8, 2, 6], [14, 1, 2], [16, 0, 10], [26, 1, 2], [28, 2, 4]],
     lead: 'muted', gain: 1.1, drumLevel: 1.1,
   },
-  // Berlin, 1996: four on the floor, a synth bass ticking over, an arpeggio like a machine, a hard square lead.
+  // Berlin, 1995: four on the floor, a synth bass ticking over, an arpeggio like a machine, a hard square lead.
   powerplant: {
     key: 35, scale: 'phrygian', prog: [0, 0, 0, 0, 1, 1, 0, 6], drums: 'industrial', rhythm: 'drive', strum: 'stabs', mono: true, bass: 'octave', tone: 'synth', arp: true, pad: true,
     riff: [[0, 0, 1], [2, 0, 1], [4, 1, 1], [6, 0, 1], [8, 3, 2], [10, 2, 2], [12, 1, 2], [14, 0, 2], [16, 0, 1], [18, 0, 1], [20, 1, 1], [22, 0, 1], [24, 4, 2], [26, 3, 2], [28, 1, 2], [30, 0, 2]],
