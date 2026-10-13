@@ -10,7 +10,7 @@ import { drive } from './helpers/autopilot.js';
 const TRACKS = 12;
 
 test('every track has three demo tapes, a place, a year, a genre, a theme the score can play and people who exist', () => {
-  assert.ok(VENUES.length >= 1 && VENUES.length <= TRACKS, `${VENUES.length} tracks`);
+  assert.equal(VENUES.length, TRACKS, 'twelve tracks on the compilation');
   for (let i = 0; i < VENUES.length; i++) {
     const venue = loadVenue(i);
     assert.equal(venue.act, i + 1, `${venue.name} is act ${i + 1}`);

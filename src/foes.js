@@ -104,6 +104,13 @@ export const FOES = Object.freeze({
   emo: { name: 'Emo', blurb: 'Fine. Totally fine. Has a journal. Would like to read you a page.', move: 'walk', toughness: 3, power: 3, hype: 50, radius: 0.35, speed: 2.2 },
   streetteam: { name: 'Street Team', blurb: 'Free stickers. Free flyers. A free energy drink, if you listen to the whole sentence.', move: 'walk', toughness: 4, power: 3, hype: 50, radius: 0.37, speed: 4.0, shout: 'FREE STICKERS!' },
   screamer: { name: 'Screamer', blurb: 'Whisper to the end of the world in one bar. Has lost his voice every week since 2003.', move: 'walk', toughness: 6, power: 6, hype: 90, radius: 0.38, speed: 3.6, shout: 'AAAAARGH!' },
+  // Wacken.
+  viking: { name: 'Viking', blurb: 'Came a long way by boat for a festival that turns out to be a field. Will take the field.', move: 'walk', toughness: 6, power: 7, hype: 90, radius: 0.43, speed: 3.0, shout: 'VALHALLA!' },
+  wizard: { name: 'Wizard', blurb: 'Seven hundred years in a tower, writing a concept album about a dragon. Here to read it to you.', move: 'walk', toughness: 5, power: 6, hype: 80, radius: 0.38, speed: 2.0 },
+  knight: { name: 'Knight', blurb: 'From the re-enactment society in the next field. Cannot see out of the helm. Cannot hear. Cannot be told.', move: 'walk', toughness: 7, power: 7, hype: 100, radius: 0.43, speed: 2.4, shout: 'FOR THE REALM!' },
+  beerguy: { name: 'Beer Guy', blurb: 'Thirty beers in. The happiest man in Germany. Will tell you why, at length.', move: 'walk', toughness: 4, power: 4, hype: 60, radius: 0.45, speed: 2.2, shout: 'PROST!' },
+  purist: { name: 'Purist', blurb: 'Will tell you which of your favourites are not metal. All of them. Metal ended in 1986.', move: 'walk', toughness: 6, power: 6, hype: 90, radius: 0.37, speed: 2.8, shout: 'POSER!' },
+  rock: { name: 'Rock', blurb: 'The original. Rolled through thirty venues and has taken it badly that somebody gave the spiked one the record.', move: 'walk', toughness: 9, power: 9, hype: 1000, radius: 1.0, speed: 1.6, boss: true, hp: 60, tactic: 'tempo', shout: 'ROCK AND ROLL!' },
   pigeon: { name: 'Pigeon', blurb: 'Seen every canal in the Midlands. Has opinions about your tone.', move: 'fly', toughness: 2, power: 2, hype: 30, radius: 0.3, speed: 3.2 },
 });
 
