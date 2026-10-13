@@ -107,21 +107,24 @@ function amp(GFX, { venue }) {
 /** Road cases: black laminate in a silver frame, latches, a stencil; two stacked on every tile of the block. */
 function roadCase(GFX, { rise, w = 1, d = 1 }) {
   const group = new GFX.Group();
-  const [c, ctx] = canvas(256, 128);
-  ctx.fillStyle = '#26262b';
-  ctx.fillRect(0, 0, 256, 128);
-  ctx.strokeStyle = '#a9adb6';
-  ctx.lineWidth = 10;
-  ctx.strokeRect(5, 5, 246, 118);
-  ctx.fillStyle = '#e9e5da';
-  ctx.font = '700 36px "Anton", Impact, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('FRAGILE', 128, 62);
-  ctx.font = '700 18px "Anton", Impact, sans-serif';
-  ctx.fillText('THIS WAY UP  ▲', 128, 92);
-  ctx.fillStyle = '#c8c8d0';
-  ctx.fillRect(100, 110, 56, 8);
-  const tex = typeof document === 'undefined' ? null : texture(GFX, c);
+  const browser = typeof document !== 'undefined';
+  const [c, ctx] = browser ? canvas(256, 128) : [null, null];
+  if (browser) {
+    ctx.fillStyle = '#26262b';
+    ctx.fillRect(0, 0, 256, 128);
+    ctx.strokeStyle = '#a9adb6';
+    ctx.lineWidth = 10;
+    ctx.strokeRect(5, 5, 246, 118);
+    ctx.fillStyle = '#e9e5da';
+    ctx.font = '700 36px "Anton", Impact, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('FRAGILE', 128, 62);
+    ctx.font = '700 18px "Anton", Impact, sans-serif';
+    ctx.fillText('THIS WAY UP  ▲', 128, 92);
+    ctx.fillStyle = '#c8c8d0';
+    ctx.fillRect(100, 110, 56, 8);
+  }
+  const tex = browser ? texture(GFX, c) : null;
   const face = new GFX.MeshStandardMaterial({ color: new GFX.Color('#ffffff'), map: tex, roughness: 0.55 });
   const top = std(GFX, '#202024', { roughness: 0.6 });
   const lower = Math.min(0.56, rise * 0.58);
