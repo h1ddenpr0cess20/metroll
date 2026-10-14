@@ -125,12 +125,12 @@ export async function createStage(host) {
   shadowSpan(1);
   scene.add(key, key.target);
 
-  // Metroll's own light, high over it and faint: enough to find it in the dark, not so much it lights up its own shadow.
-  const lantern = new GFX.PointLight(0xffe2b8, 1.4, 12, 1.2);
+  // Metroll's own light, high over it, faint and wide: enough to find it in the dark, a wash over the floor round it rather than a spot under it.
+  const lantern = new GFX.PointLight(0xffe2b8, 1.1, 22, 0.9);
   scene.add(lantern);
   // The fixtures nearest it: the light show sets where they are, what colour and how bright.
   const fixtureLights = Array.from({ length: FIXTURE_LIGHTS }, () => {
-    const light = new GFX.PointLight(0xffffff, 0, 7, 1.7);
+    const light = new GFX.PointLight(0xffffff, 0, 7, 1.1);
     scene.add(light);
     return light;
   });
@@ -220,7 +220,7 @@ export async function createStage(host) {
     key.position.copy(stage.target).addScaledVector(KEY, 45 + span);
     key.target.position.copy(stage.target);
     key.target.updateMatrixWorld();
-    lantern.position.set(stage.troll.x, stage.troll.y + 4, stage.troll.z);
+    lantern.position.set(stage.troll.x, stage.troll.y + 7, stage.troll.z);
   };
 
   const fit = () => renderer.setSize(host.clientWidth || 1, host.clientHeight || 1);
