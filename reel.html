@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101826">
+<title>Metroll · reels</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/src/styles.css">
+<link rel="stylesheet" href="/src/reel/reel.css">
+<style>
+  /* No banner under the opening line. */
+  body.hooked #banner { visibility: hidden; }
+  /* The title's logo, on the card. */
+  #card .logo { display: grid; gap: 0; justify-items: center; margin-bottom: 0; }
+  #card .logo .top { font-size: 92px; }
+  #card .logo .bottom { font-size: 48px; }
+  #card .logo .presents { font-size: 13px; letter-spacing: 0.4em; }
+  #card .logo .tag { font-size: 14px; letter-spacing: 0.3em; }
+</style>
+</head>
+<body>
+<div id="view"></div>
+<div id="vignette" aria-hidden="true"></div>
+<div id="strobe" aria-hidden="true"></div>
+<div id="ui"></div>
+<pre id="error" hidden></pre>
+<script type="module" src="/src/reel/recorder.js"></script>
+</body>
+</html>

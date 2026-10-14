@@ -460,11 +460,14 @@ export function createGame({ stage, hud, input, audio, storage }) {
       accumulator = Math.min(accumulator + dt, STEP * 12);
       while (accumulator >= STEP) {
         accumulator -= STEP;
-        const out = stepGig(gig, state === 'play' ? push : [0, 0], STEP, {
+        // Steered by the autopilot (the reels), if one is aboard; by the controls if not.
+        const auto = state === 'play' && debug.pilot ? debug.pilot.next() : null;
+        const out = stepGig(gig, state === 'play' ? auto?.push ?? push : [0, 0], STEP, {
           live: state === 'play',
           moving: mace.group.visible && !(state === 'lost' && lostHow !== 'fell'),
-          rev: state === 'play' && revHeld,
+          rev: state === 'play' && (auto ? auto.rev : revHeld),
         });
+        if (auto) debug.pilot.saw(out);
         handle(out);
         if (state !== 'play' && state !== 'ready' && state !== 'title') { accumulator = 0; break; }
       }
@@ -537,9 +540,13 @@ export function createGame({ stage, hud, input, audio, storage }) {
     target.z += (b.z - target.z) * k;
   }
 
-  /** For tests and the console: the venue, Metroll, and a camera override (`look`). */
+  /**
+   * For tests and the console: the venue, Metroll, a camera override (`look`),
+   * and `pilot`, an autopilot at the wheel instead of the controls (the reels
+   * put one there: see test/helpers/autopilot.js, createPilot).
+   */
   const debug = {
-    stage, look: null,
+    stage, look: null, pilot: null,
     get gig() { return gig; },
     get ball() { return gig.ball; },
     get state() { return state; },

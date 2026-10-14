@@ -242,6 +242,7 @@ Other things in the box:
 node scripts/map.js 9            # a track as text (they count from 1); --overlaps shows two pieces dug over each other
 node scripts/drive.js 9          # put the autopilot through a track and say how it went
 node scripts/bake.js             # bake every model and say what came out
+node scripts/reel.js             # the social reels (scripts/reels.js), upright, played by the autopilot, into reels/
 ```
 
 `models.html` is a turntable for the cast (`?m=count,doomlord`, and
