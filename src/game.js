@@ -89,6 +89,8 @@ export function createGame({ stage, hud, input, audio, storage }) {
     group.add(meshes.group, props.group, show.group, gig.actors.group);
     if (exit) group.add(exit.group);
     scene.add(group);
+    // Everything that moves goes where it starts now, not on the first live frame: a track begun while the game is still paused used to leave its lift, and everyone else, at the origin, far below the floor.
+    gig.actors.sync(0, gig.time, { focus: gig.ball });
     stage.setVenue(venue);
     effects.setVenue(venue);
     accumulator = 0;
@@ -163,6 +165,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
     setVenue(index);
     playTime = 0;
     lastCombo = 0;
+    paused = false;
     hud.paused(false);
     if (state === 'title') view.aim.zoom = playZoom.value;
     storage.reached(index);
