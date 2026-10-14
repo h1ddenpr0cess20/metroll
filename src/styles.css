@@ -343,6 +343,8 @@ kbd {
 }
 #rev-button:active, #rev-button.held { transform: scale(0.94); filter: brightness(1.25); }
 @media (pointer: coarse) { #rev-button.available { display: grid; } }
+/* Not over the title, the tracklist, the pause card or a review: only while a track is on with nothing in front of it. */
+#ui:has(> .screen:not([hidden])) #rev-button { display: none; }
 
 /* ———————————————————————————————————— motion */
 
