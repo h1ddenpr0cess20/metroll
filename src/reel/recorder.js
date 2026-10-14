@@ -21,7 +21,7 @@ import { createRecorder } from './core.js';
 /**
  * Metroll, for the reels (reel.html; the filming is core.js): the game built
  * as main.js builds it, with nobody's hands on it and the tests' autopilot
- * at the wheel, raging (the RAGE button held) when it charges.
+ * at the wheel, hunting (raging at whoever is in reach, the RAGE button held).
  */
 
 /** The bosses' hit points, as they were last frame: a blow landed on one is a moment worth seeing. */
@@ -72,7 +72,8 @@ createRecorder({
     game.debug.pilot = null;
     game.startVenue(level);
   },
-  pilot: (game) => createPilot(game.debug.gig),
+  // Hunting: it plays to be watched, at a good lick and raging at whoever is in reach.
+  pilot: (game) => createPilot(game.debug.gig, { hunt: true }),
   attach: (game, pilot) => { game.debug.pilot = pilot; },
   ball: (game) => game.debug.ball,
   name: (game) => game.debug.gig.venue.name,

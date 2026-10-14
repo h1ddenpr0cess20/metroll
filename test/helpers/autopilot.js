@@ -240,16 +240,21 @@ function waypoints(gig, moves, from) {
 }
 
 /**
+/** Hunting: how much faster it takes the plain stretches, how near somebody has to be for a run at them, and how long it gives a run. */
+const HUNT = Object.freeze({ pace: 1.6, reach: 7, give: 2.5 });
+
 /**
  * The autopilot at the wheel of `gig`, a step at a time: `next()` says how
  * to push (`{ push: [x, z], rev }`, and `skipped`, the waypoints it passed
  * without a step), `saw(out)` tells it what that step did, and `stuck` says
  * why it gave up, if it has. It picks up the passes and demo tapes on the
  * way to the stage door (with `everything`, every last thing), and duels the
- * bosses. Whoever puts Metroll back after a loss has it plan again from there.
+ * bosses. With `hunt` it plays to be watched (the reels): it rolls along at a
+ * good lick, and anyone in the way on open floor nearby it rages at, to smash
+ * them, before it carries on. Whoever puts Metroll back after a loss has it plan again from there.
  * `drive()` runs it for the tests; the reels put it in the game (`debug.pilot`).
  */
-export function createPilot(gig, { demos = true, duel = true, everything = false } = {}) {
+export function createPilot(gig, { demos = true, duel = true, everything = false, hunt = false } = {}) {
   const venue = gig.venue;
   const net = graph(venue);
   openFloor = (x, z) => venue.cell(x, z)?.kind === 'floor';
@@ -302,6 +307,28 @@ export function createPilot(gig, { demos = true, duel = true, everything = false
   let waiting = false;
   let boss = null;
 
+  // ——— hunting (`hunt`): who it is going for, until when, and who it has let be for now.
+  let prey = null;
+  const spared = new Map();
+  /** Floor to charge across: plain, and nothing on it or beside it to fall into, burn on, stick to or slide on. */
+  const runway = (x, z) => {
+    const c = venue.cell(x, z);
+    return c?.kind === 'floor' && !c.trap && !c.crush && !c.door && c.fx !== 'sticky' && c.fx !== 'ice' && !edgy(venue, x, z);
+  };
+  /** Runway all the way from `a` to `c`, and `beyond` tiles on past it, for where the charge carries it. */
+  const clearRun = (a, c, beyond) => {
+    const dx = c.x - a.x, dz = c.z - a.z, l = Math.hypot(dx, dz) || 1;
+    for (let t = 0.5; t <= l + beyond; t += 0.5) if (!runway(Math.floor(a.x + (dx / l) * t), Math.floor(a.z + (dz / l) * t))) return false;
+    return true;
+  };
+  /** The nearest somebody worth a run at: close, on the same floor, and a clear run at them. */
+  const quarry = () => gig.actors.foes
+    .filter((f) => !f.dead && !f.stats.boss && (spared.get(f) ?? 0) <= gig.time && Math.abs(f.y - (b.y - b.r)) < 0.5)
+    .map((f) => ({ f, d: Math.hypot(f.x - b.x, f.z - b.z) }))
+    .filter(({ f, d }) => d > 1.2 && d < HUNT.reach && clearRun(b, f, 2.5))
+    .sort((p, q) => p.d - q.d)[0]?.f ?? null;
+  const letBe = (seconds) => { spared.set(prey.foe, gig.time + seconds); prey = null; replan(); };
+
   return {
     get stuck() { return stuck; },
     /** How far along its route it is. */
@@ -334,7 +361,8 @@ export function createPilot(gig, { demos = true, duel = true, everything = false
         break;
       }
 
-      const speed = w.speed ?? 3.8;
+      // Hunting, it gets on with it between the hazards: the plain stretches at a good lick.
+      const speed = (w.speed ?? 3.8) * (hunt && w.speed === 3.8 && !w.stop && !w.until ? HUNT.pace : 1);
       const want = waiting || w.stop ? Math.min(speed, d * 2.5) : speed;
       const vx = d > 1e-3 ? (dx / d) * want : 0;
       const vz = d > 1e-3 ? (dz / d) * want : 0;
@@ -369,6 +397,21 @@ export function createPilot(gig, { demos = true, duel = true, everything = false
         fight = null;
         replan();
       }
+      // Hunting: somebody near, on open floor, between the hazards: rage at them.
+      if (hunt && !boss) {
+        if (prey && (prey.foe.dead || gig.time > prey.until || !clearRun(b, prey.foe, 1))) letBe(3);
+        const calm = !waiting && !w.until && w.on === undefined && !w.charge && runway(...here());
+        if (!prey && calm) {
+          const f = quarry();
+          if (f) prey = { foe: f, until: gig.time + HUNT.give };
+        }
+        if (prey) {
+          const f = prey.foe, fd = Math.hypot(f.x - b.x, f.z - b.z) || 1;
+          px = (f.x - b.x) / fd;
+          pz = (f.z - b.z) / fd;
+          rev = true;
+        }
+      }
       const l = Math.hypot(px, pz);
       if (l > 1) { px /= l; pz /= l; }
       return { push: [px, pz], rev, skipped };
@@ -376,6 +419,8 @@ export function createPilot(gig, { demos = true, duel = true, everything = false
 
     saw(out) {
       if (boss && fight && out.hits.some((h) => h.foe === boss)) fight.mode = 'back';
+      // Whoever it was hunting, hit: down, or left a moment before another go.
+      if (prey && out.hits.some((h) => h.foe === prey.foe)) letBe(1.5);
       if (Math.hypot(b.vx, b.vz) < 0.05 && !waiting) still += STEP; else still = 0;
       if (still > 20) stuck = { at: here(), wp, of: route.length, goal: target };
       for (const p of out.picked) if (p.kind === 'pass') replan();
@@ -390,7 +435,7 @@ export function createPilot(gig, { demos = true, duel = true, everything = false
  * long it took, every way Metroll was lost or hurt, the people it ran into, and
  * the gig as it came out.
  */
-export function drive(index, { limit = 1200, sample = null, demos = true, duel = true, from = null, everything = false } = {}) {
+export function drive(index, { limit = 1200, sample = null, demos = true, duel = true, from = null, everything = false, hunt = false } = {}) {
   const gig = createGig(GFX, index);
   const venue = gig.venue;
   if (from) {
@@ -401,7 +446,7 @@ export function drive(index, { limit = 1200, sample = null, demos = true, duel =
   }
   const b = gig.ball;
   const losses = [], harms = [], hits = [];
-  const pilot = createPilot(gig, { demos, duel, everything });
+  const pilot = createPilot(gig, { demos, duel, everything, hunt });
   let t = 0;
   const result = (finished, extra = {}) => ({ finished, time: t, losses, harms, hits, gig, ...extra });
   if (pilot.stuck) return result(false, { stuck: pilot.stuck });

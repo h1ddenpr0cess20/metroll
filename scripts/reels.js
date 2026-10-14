@@ -12,6 +12,15 @@ const HARDCORE = { args: ['nyc', 190, 12], tempo: 190, lead: 0.15 };
 const HAIR = { args: ['strip', 126, 12], tempo: 126, lead: 0.15 };
 const THRASH = { args: ['bay', 168, 12], tempo: 168, lead: 0.15 };
 
+/**
+ * For a reel that is all action: only a real smash counts (an obliteration most), and a bounce off
+ * somebody counts against it; finds and doors hardly at all.
+ */
+const SMASHING = {
+  smash: (grade) => ({ crit: 34, smash: 20, bonk: -8, tap: -10 })[grade] ?? 0,
+  demo: 2, pass: 1, gate: 1, panel: 4, pick: 0.5, whetstone: 1, lighter: 1,
+};
+
 export const REELS = {
   rock: {
     hook: ['Smash every poser in metal', 'then fight the boulder who started it'],
@@ -24,6 +33,17 @@ export const REELS = {
       { level: 4, bars: 3 },
       { level: 10, bars: 3 },
       { level: 11, bars: 11 },
+    ],
+  },
+  // Three eras of 1986–1991, the best three smashing stretches of each, short cuts to the thrash.
+  eras: {
+    hook: ['Three eras. One spiked ball.', 'hair metal · thrash · death metal'],
+    music: THRASH,
+    worth: SMASHING,
+    clips: [
+      { level: 1, count: 3, bars: 2 },
+      { level: 2, count: 3, bars: 2 },
+      { level: 5, count: 3, bars: 2 },
     ],
   },
   // The best four stretches of the Sunset Strip, in the order they happened, to its own anthem.

@@ -130,7 +130,12 @@ async function choose(reel) {
   if (Array.isArray(c)) {
     const out = [];
     // A clip at a mark (a moment the adapter names) needs no scouting: it starts when that moment comes.
-    for (const clip of c) out.push(clip.mark ? { ...clip } : { ...clip, s: best(await run(clip.level), Math.round(lengthOf(clip, bar)), [], reel.worth).s });
+    // One with a `count` is that many stretches of its level, the best that don't overlap, in the order they happened.
+    for (const clip of c) {
+      if (clip.mark) out.push({ ...clip });
+      else if (clip.count) out.push(...stretches(await run(clip.level), clip, bar, reel.worth));
+      else out.push({ ...clip, s: best(await run(clip.level), Math.round(lengthOf(clip, bar)), [], reel.worth).s });
+    }
     return out;
   }
   if (c.from) {
@@ -143,12 +148,16 @@ async function choose(reel) {
     const rest = each.filter((x) => !keep.includes(x)).sort((a, b) => b.score - a.score).slice(0, c.take - keep.length);
     return [...rest, ...keep].sort((a, b) => a.level - b.level);
   }
-  // Several stretches of one level, the best that don't overlap, in the order they happened.
-  const r = await run(c.level);
+  // Several stretches of one level.
+  return stretches(await run(c.level), c, bar, reel.worth);
+}
+
+/** `c.count` stretches of `run`, `c.bars` bars each, the best that don't overlap, in the order they happened. */
+function stretches(run, c, bar, own) {
   const taken = [], out = [];
   for (let i = 0; i < c.count; i++) {
     const len = Math.round(c.bars * bar);
-    const top = best(r, len, taken, reel.worth);
+    const top = best(run, len, taken, own);
     if (!top) break;
     taken.push([top.s - FPS, top.s + len + FPS]);
     out.push({ level: c.level, bars: c.bars, s: top.s });
