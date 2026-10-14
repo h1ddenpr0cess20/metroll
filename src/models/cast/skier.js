@@ -17,12 +17,12 @@ export default person({
   b: 1.06,
   shape: { legs: 1.02, girth: 1.06 },
   skin: '#f0c0a0',
-  look: { torso: ANORAK, sleeve: ANORAK, cuff: ANORAK, hand: '#1a1a1e', legs: SALOPETTES, boot: '#f0f0f4', sole: '#1a1a1e' },
+  look: { torso: ANORAK, sleeve: ANORAK, cuff: ANORAK, hand: '#1a1a1e', legs: SALOPETTES, boot: '#f0f0f4', sole: '#1a1a1e', boots: 0.12 },
   mats: { hand: 'leather', boot: 'plastic' },
   face: { eyeColor: '#3a6a9a', brow: '#c8a060', blush: 0.9 },
   hair: { color: cloth('#e8c878', '#c8a050'), locks: [[[0.07, 0.68, -0.05], [0.09, 0.6, -0.08], 0.028], [[-0.07, 0.68, -0.05], [-0.09, 0.6, -0.08], 0.028]] },
   style: {
-    attack: 'thrust', twist: 0,
+    attack: 'thrust',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;

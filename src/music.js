@@ -109,8 +109,9 @@ const STRUMS = {
  * The themes, by name (a track's `look.theme`): key (MIDI of the tonic, low),
  * scale for the lead, a progression (a chord a bar, as semitones above the
  * key), drums, how the `rhythm` part is played (`rhythm`: 'drive', 'clean',
- * 'brass', 'organ', 'strings', 'piano' or 'none') and its `strum` (`mono`
- * keeps the guitars to one side, to leave the drums their room), the `bass` line
+ * 'brass', 'organ', 'strings', 'piano' or 'none') and its `strum`
+ * (`guitars` brings distorted guitars in under another rhythm part in the
+ * big sections, `horns` a brass section over the guitars), the `bass` line
  * ('eighths', 'drive', 'octave', 'walk', 'boom', 'bossa' or 'pedal') and its
  * `tone` ('electric' or 'synth'), the lead's riff (steps and scale degrees
  * over two bars) and its voice, how much the off-beats lag (`swing`, 0
@@ -138,61 +139,61 @@ export const THEMES = {
   },
   // The Bay Area, 1986: flat out, palm-muted, chromatic, the snare on the off-beat.
   bay: {
-    key: 40, scale: 'phrygian', prog: [0, 0, 1, 0, 0, 0, 3, 1], drums: 'thrash', rhythm: 'drive', strum: 'palm', mono: true, bass: 'drive', tone: 'electric',
+    key: 40, scale: 'phrygian', prog: [0, 0, 1, 0, 0, 0, 3, 1], drums: 'thrash', rhythm: 'drive', strum: 'palm', bass: 'drive', tone: 'electric',
     riff: [[0, 0, 1], [1, 0, 1], [2, 1, 1], [3, 0, 1], [4, 3, 2], [6, 2, 1], [7, 1, 1], [8, 0, 1], [9, 0, 1], [10, 1, 1], [11, 0, 1], [12, 4, 2], [14, 3, 2], [16, 0, 1], [17, 1, 1], [18, 2, 1], [19, 3, 1], [20, 4, 1], [21, 3, 1], [22, 2, 1], [23, 1, 1], [24, 0, 4], [28, 1, 2], [30, 0, 2]],
     lead: 'shred', gain: 1,
   },
   // Whitby, 1988: a clean guitar going round, strings and an organ under it, a theremin keening over the top.
   abbey: {
-    key: 45, scale: 'harmonic', prog: [0, 0, 8, 8, 5, 5, 7, 7], drums: 'goth', rhythm: 'clean', strum: 'sparse', bass: 'octave', tone: 'electric', pad: true, arp: true,
+    key: 45, scale: 'harmonic', prog: [0, 0, 8, 8, 5, 5, 7, 7], drums: 'goth', rhythm: 'clean', strum: 'sparse', bass: 'octave', tone: 'electric', pad: true, arp: true, guitars: true,
     riff: [[0, 4, 4], [4, 5, 2], [6, 4, 2], [8, 2, 6], [14, 3, 2], [16, 4, 4], [20, 6, 2], [22, 5, 2], [24, 4, 6], [30, 2, 2]],
     lead: 'theremin', gain: 1, drumLevel: 1.2,
   },
   // New York, 1989: a d-beat, power chords, a raw square lead, over before you noticed.
   nyc: {
-    key: 38, scale: 'minor', prog: [0, 0, 3, 3, 5, 5, 3, 7], drums: 'dbeat', rhythm: 'drive', strum: 'eighths', mono: true, bass: 'drive', tone: 'electric',
+    key: 38, scale: 'minor', prog: [0, 0, 3, 3, 5, 5, 3, 7], drums: 'dbeat', rhythm: 'drive', strum: 'eighths', bass: 'drive', tone: 'electric',
     riff: [[0, 4, 2], [2, 4, 1], [3, 3, 1], [4, 2, 2], [6, 0, 2], [8, 4, 2], [10, 4, 1], [11, 5, 1], [12, 4, 2], [14, 2, 2], [16, 0, 4], [20, 0, 2], [22, 2, 2], [24, 4, 4], [28, 2, 2], [30, 0, 2]],
     lead: 'square', gain: 1,
   },
   // Tampa, 1991: blast beats, the lowest guitars there are, the riff as chromatic as a bad dream.
   swamp: {
-    key: 36, scale: 'phrygian', prog: [0, 0, 1, 1, 0, 0, 6, 1], drums: 'blast', rhythm: 'drive', strum: 'palm', mono: true, bass: 'drive', tone: 'electric',
+    key: 36, scale: 'phrygian', prog: [0, 0, 1, 1, 0, 0, 6, 1], drums: 'blast', rhythm: 'drive', strum: 'palm', bass: 'drive', tone: 'electric',
     riff: [[0, 0, 2], [2, 1, 1], [3, 0, 1], [4, 3, 2], [6, 2, 2], [8, 0, 2], [10, 1, 1], [11, 2, 1], [12, 3, 2], [14, 4, 2], [16, 0, 4], [20, 1, 2], [22, 0, 2], [24, 3, 2], [26, 2, 2], [28, 1, 2], [30, 0, 2]],
     lead: 'growl', gain: 1.1,
   },
   // Norway, 1993: tremolo-picked, high and cold, the blast beat under it and a pad like snow.
   fjord: {
-    key: 33, scale: 'harmonic', prog: [0, 0, 3, 3, 5, 5, 7, 7], drums: 'blast', rhythm: 'drive', strum: 'hold', mono: true, bass: 'pedal', tone: 'electric', pad: true,
+    key: 33, scale: 'harmonic', prog: [0, 0, 3, 3, 5, 5, 7, 7], drums: 'blast', rhythm: 'drive', strum: 'hold', bass: 'pedal', tone: 'electric', pad: true,
     riff: [[0, 4, 1], [1, 4, 1], [2, 4, 1], [3, 4, 1], [4, 5, 1], [5, 5, 1], [6, 5, 1], [7, 5, 1], [8, 6, 1], [9, 6, 1], [10, 6, 1], [11, 6, 1], [12, 5, 1], [13, 5, 1], [14, 4, 1], [15, 4, 1], [16, 4, 1], [17, 4, 1], [18, 4, 1], [19, 4, 1], [20, 3, 2], [22, 2, 2], [24, 4, 1], [25, 4, 1], [26, 4, 1], [27, 4, 1], [28, 2, 2], [30, 1, 2]],
     lead: 'saw', gain: 1,
   },
-  // New Orleans, 1991: a funeral, the brass band's dirge with the guitars coming in underneath it, one riff, very slowly.
+  // New Orleans, 1991: a funeral, the guitars tuned down and left to ring, one riff, very slowly, and the brass band's dirge over the top.
   bayou: {
-    key: 33, scale: 'blues', prog: [0, 0, 0, 0, 3, 3, 5, 5], drums: 'doom', rhythm: 'brass', strum: 'hold', bass: 'pedal', tone: 'electric', guitars: true, pad: true,
+    key: 33, scale: 'blues', prog: [0, 0, 0, 0, 3, 3, 5, 5], drums: 'doom', rhythm: 'drive', strum: 'hold', bass: 'pedal', tone: 'electric', horns: true, pad: true,
     riff: [[0, 3, 8], [8, 2, 6], [14, 1, 2], [16, 0, 10], [26, 1, 2], [28, 2, 4]],
     lead: 'muted', gain: 1.1, drumLevel: 1.1,
   },
   // Berlin, 1995: four on the floor, a synth bass ticking over, an arpeggio like a machine, a hard square lead.
   powerplant: {
-    key: 35, scale: 'phrygian', prog: [0, 0, 0, 0, 1, 1, 0, 6], drums: 'industrial', rhythm: 'drive', strum: 'stabs', mono: true, bass: 'octave', tone: 'synth', arp: true, pad: true,
+    key: 35, scale: 'phrygian', prog: [0, 0, 0, 0, 1, 1, 0, 6], drums: 'industrial', rhythm: 'drive', strum: 'stabs', bass: 'octave', tone: 'synth', arp: true, pad: true,
     riff: [[0, 0, 1], [2, 0, 1], [4, 1, 1], [6, 0, 1], [8, 3, 2], [10, 2, 2], [12, 1, 2], [14, 0, 2], [16, 0, 1], [18, 0, 1], [20, 1, 1], [22, 0, 1], [24, 4, 2], [26, 3, 2], [28, 1, 2], [30, 0, 2]],
     lead: 'square', gain: 1,
   },
   // Woodstock, 1999: a syncopated stutter of a riff, the bass up front, the lead sparse and sour.
   airfield: {
-    key: 38, scale: 'minor', prog: [0, 0, 0, 3, 0, 0, 5, 3], drums: 'numetal', rhythm: 'drive', strum: 'djent', mono: true, bass: 'eighths', tone: 'electric',
+    key: 38, scale: 'minor', prog: [0, 0, 0, 3, 0, 0, 5, 3], drums: 'numetal', rhythm: 'drive', strum: 'djent', bass: 'eighths', tone: 'electric',
     riff: [[0, 0, 2], [3, 0, 1], [5, 2, 1], [8, 0, 2], [11, 3, 1], [13, 2, 1], [16, 0, 2], [19, 0, 1], [21, 3, 1], [24, 4, 3], [28, 3, 2], [30, 2, 2]],
     lead: 'tube', gain: 1,
   },
   // Warped Tour, 2005: a sing-along over fast power chords, the bridge a breakdown.
   fairground: {
-    key: 36, scale: 'major', prog: [9, 9, 5, 5, 0, 0, 7, 7], drums: 'drive', rhythm: 'drive', strum: 'eighths', mono: true, bass: 'drive', tone: 'electric', guitars: true,
+    key: 36, scale: 'major', prog: [9, 9, 5, 5, 0, 0, 7, 7], drums: 'drive', rhythm: 'drive', strum: 'eighths', bass: 'drive', tone: 'electric',
     riff: [[0, 4, 2], [2, 5, 2], [4, 4, 4], [8, 2, 2], [10, 3, 2], [12, 2, 4], [16, 4, 2], [18, 5, 2], [20, 6, 4], [24, 5, 2], [26, 4, 2], [28, 2, 4]],
     lead: 'tube', gain: 1,
   },
-  // Wacken: the last night, all of them at once: double bass drums, a gallop, brass and a keyboard pad, a shredder over the top.
+  // Wacken: the last night, all of them at once: double bass drums, the guitars galloping, brass and a keyboard pad over them, a shredder over the top.
   festival: {
-    key: 38, scale: 'dorian', prog: [0, 0, 7, 7, 9, 9, 5, 7], drums: 'power', rhythm: 'brass', strum: 'stabs', bass: 'drive', tone: 'electric', guitars: true, pad: true,
+    key: 38, scale: 'dorian', prog: [0, 0, 7, 7, 9, 9, 5, 7], drums: 'power', rhythm: 'drive', strum: 'gallop', bass: 'drive', tone: 'electric', horns: true, pad: true,
     riff: [[0, 4, 2], [2, 5, 2], [4, 6, 4], [8, 5, 2], [10, 4, 2], [12, 2, 4], [16, 3, 2], [18, 4, 2], [20, 5, 4], [24, 6, 2], [26, 7, 2], [28, 5, 4]],
     lead: 'shred', gain: 1.05,
   },
@@ -281,8 +282,8 @@ export function createBand(ctx, out, noise) {
   bus.connect(verb).connect(wet).connect(glue);
   glue.connect(limiter).connect(out);
 
-  const curve = distortion(46);
-  const curveLead = distortion(22);
+  const curve = distortion(110);
+  const curveLead = distortion(60);
 
   let target = bus;
   /** How loud the drums are against everything else, for this song. */
@@ -352,20 +353,20 @@ export function createBand(ctx, out, noise) {
   function kick(when, level = 1) {
     level *= drumLevel;
     const g = voice();
-    const end = env(g, when, 1.0 * level, 0.002, 0.03, 0.28);
-    const o = osc('sine', 150, when, end, g);
-    o.frequency.exponentialRampToValueAtTime(48, when + 0.09);
-    // The beater's click on top (not for a blast beat).
-    if (!lean) noiseHit(when, { freq: 3000, type: 'highpass', q: 0.7, level: 0.12 * level / drumLevel, length: 0.012 });
+    const end = env(g, when, 1.15 * level, 0.001, 0.025, lean ? 0.16 : 0.24);
+    const o = osc('sine', 175, when, end, g);
+    o.frequency.exponentialRampToValueAtTime(46, when + 0.06);
+    // The beater's click on top, a metal kick's: it is what cuts through the guitars.
+    noiseHit(when, { freq: 3500, type: 'highpass', q: 0.7, level: (lean ? 0.2 : 0.26) * level / drumLevel, length: 0.01 });
   }
   function snare(when, level = 1) {
-    noiseHit(when, { freq: 1800, type: 'bandpass', q: 0.7, level: 0.55 * level, length: 0.17 });
+    noiseHit(when, { freq: 1900, type: 'bandpass', q: 0.6, level: 0.7 * level, length: lean ? 0.12 : 0.2 });
     // The wires, under the crack.
-    if (!lean) noiseHit(when, { freq: 4500, type: 'highpass', q: 0.7, level: 0.18 * level, length: 0.13 });
+    if (!lean) noiseHit(when, { freq: 4500, type: 'highpass', q: 0.7, level: 0.22 * level, length: 0.15 });
     const g = voice();
-    const end = env(g, when, 0.42 * level * drumLevel, 0.001, 0.01, 0.11);
-    const o = osc('triangle', 230, when, end, g);
-    o.frequency.exponentialRampToValueAtTime(150, when + 0.09);
+    const end = env(g, when, 0.55 * level * drumLevel, 0.001, 0.012, 0.12);
+    const o = osc('triangle', 240, when, end, g);
+    o.frequency.exponentialRampToValueAtTime(165, when + 0.08);
   }
   /** Brushes on the snare: a soft swish, a little slap. */
   function brush(when, level = 1) {
@@ -401,28 +402,51 @@ export function createBand(ctx, out, noise) {
 
   // ——— the rhythm section.
   /**
-   * The guitar rigs, built once a song: each a distortion into a cabinet (a
-   * high pass, a mid push, a low pass) and panned to its side, and a clean
-   * rig beside it (a high pass and a low pass, a touch of tremolo). A strum
-   * only adds its oscillators and their envelope; the rig is shared, so a
-   * busy bar costs a few oscillators, not a few dozen filters.
+   * The guitar rigs, built once a song, one hard left and one hard right
+   * (every chord goes into both, the right a few milliseconds late and voiced
+   * a little differently, so one guitar plays as a wall of two): a high-gain
+   * amp (the lows trimmed and the mids pushed into it, so it clips tight
+   * and not into mud, then driven hard into the clipper), and a cabinet
+   * after it (the lows put back for the chug, the mids scooped, a bite of
+   * presence, the fizz rolled off). A palm mute goes in through `muted`,
+   * darkened first, so it thuds where an open chord rings. Beside it, a
+   * clean rig (a high pass and a low pass). A strum only adds its
+   * oscillators and their envelope; the rig is shared, so a busy bar costs a
+   * few oscillators, not a few dozen filters.
    */
-  const rig = (pan) => {
+  const rig = (pan, late = 0) => {
     const input = ctx.createGain();
+    const muted = ctx.createBiquadFilter();
+    muted.type = 'lowpass'; muted.frequency.value = 700; muted.Q.value = 0.9;
+    muted.connect(input);
+    const tight = ctx.createBiquadFilter();
+    tight.type = 'highpass'; tight.frequency.value = 110;
+    const push = ctx.createBiquadFilter();
+    push.type = 'peaking'; push.frequency.value = 760 + late * 20000; push.gain.value = 7; push.Q.value = 0.7;
+    const drive = ctx.createGain();
+    drive.gain.value = 7;
     const shape = ctx.createWaveShaper();
     shape.curve = curve;
-    shape.oversample = '2x';
-    const hp = ctx.createBiquadFilter();
-    hp.type = 'highpass'; hp.frequency.value = 90;
-    const mid = ctx.createBiquadFilter();
-    mid.type = 'peaking'; mid.frequency.value = 900; mid.gain.value = 4; mid.Q.value = 0.8;
-    const lp = ctx.createBiquadFilter();
-    lp.type = 'lowpass'; lp.frequency.value = 3800; lp.Q.value = 0.5;
+    shape.oversample = '4x';
+    const thump = ctx.createBiquadFilter();
+    thump.type = 'lowshelf'; thump.frequency.value = 140; thump.gain.value = 5;
+    const scoop = ctx.createBiquadFilter();
+    scoop.type = 'peaking'; scoop.frequency.value = 480; scoop.gain.value = -6; scoop.Q.value = 0.9;
+    const bite = ctx.createBiquadFilter();
+    bite.type = 'peaking'; bite.frequency.value = 2400; bite.gain.value = 3; bite.Q.value = 1;
+    const cab = ctx.createBiquadFilter();
+    cab.type = 'lowpass'; cab.frequency.value = 4800 - late * 30000; cab.Q.value = 0.8;
     const p = ctx.createStereoPanner();
     p.pan.value = pan;
     const out = ctx.createGain();
-    out.gain.value = 0.17;
-    input.connect(shape).connect(hp).connect(mid).connect(lp).connect(p).connect(out).connect(target);
+    out.gain.value = 0.11;
+    let head = input;
+    if (late) {
+      const d = ctx.createDelay(0.05);
+      d.delayTime.value = late;
+      head = input.connect(d);
+    }
+    head.connect(tight).connect(push).connect(drive).connect(shape).connect(thump).connect(scoop).connect(bite).connect(cab).connect(p).connect(out).connect(target);
     // The clean side: no distortion, a brighter top, and a slow tremolo on the level.
     const clean = ctx.createGain();
     const chp = ctx.createBiquadFilter();
@@ -434,20 +458,24 @@ export function createBand(ctx, out, noise) {
     const cout = ctx.createGain();
     cout.gain.value = 0.3;
     clean.connect(chp).connect(clp).connect(cp).connect(cout).connect(target);
-    return { input, out, clean, cout };
+    return { input, muted, out, clean, cout };
   };
   /** The rigs of the song now playing (see `fresh`). */
   let rigs = null;
 
-  /** A guitar through the distortion: a power chord (root, fifth, octave) of detuned saws, into one of the rigs. */
-  function guitar(when, root, length, { open = false, side = 0, level = 1 } = {}) {
+  /**
+   * A guitar through the distortion: a power chord (root, fifth, octave) of
+   * detuned saws, into both rigs, left and right; open, it rings, and
+   * otherwise it is palm-muted, a short dark chug.
+   */
+  function guitar(when, root, length, { open = false, level = 1 } = {}) {
     const gain = ctx.createGain();
-    gain.connect(rigs[side].input);
-    const hold = open ? Math.max(0.1, length - 0.05) : 0.03;
-    const end = env(gain, when, level, 0.003, hold, open ? 0.35 : 0.05);
+    for (const r of rigs) gain.connect(open ? r.input : r.muted);
+    const hold = open ? Math.max(0.1, length - 0.05) : 0.035;
+    const end = env(gain, when, level * (open ? 1 : 1.6), 0.002, hold, open ? 0.3 : 0.045);
     [root, root + 7, root + 12].forEach((n, i) => {
-      osc('sawtooth', NOTE(n), when, end, gain, i % 2 ? 5 : -5);
-      if (i === 0) osc('sawtooth', NOTE(n), when, end, gain, side ? 9 : -9);
+      osc('sawtooth', NOTE(n), when, end, gain, i % 2 ? 6 : -6);
+      if (i === 0) osc('sawtooth', NOTE(n), when, end, gain, 11);
     });
   }
 
@@ -543,8 +571,8 @@ export function createBand(ctx, out, noise) {
       f.frequency.setValueAtTime(1600, when);
       f.frequency.exponentialRampToValueAtTime(180, when + 0.16);
     } else {
-      f.frequency.setValueAtTime(900, when);
-      f.frequency.exponentialRampToValueAtTime(260, when + 0.18);
+      f.frequency.setValueAtTime(1400, when);
+      f.frequency.exponentialRampToValueAtTime(320, when + 0.18);
     }
     const g = voice(0.72 * level);
     f.connect(g);
@@ -558,13 +586,16 @@ export function createBand(ctx, out, noise) {
   const makeLeadRig = () => {
     const input = ctx.createGain();
     const clean = ctx.createGain();
+    const drive = ctx.createGain();
+    drive.gain.value = 3;
     const shape = ctx.createWaveShaper();
     shape.curve = curveLead;
+    shape.oversample = '2x';
     const lp = ctx.createBiquadFilter();
     lp.type = 'lowpass'; lp.frequency.value = 3200;
     const out = ctx.createGain();
-    out.gain.value = 0.2;
-    input.connect(shape).connect(lp).connect(out);
+    out.gain.value = 0.17;
+    input.connect(drive).connect(shape).connect(lp).connect(out);
     clean.connect(lp);
     const echo = ctx.createDelay(1);
     echo.delayTime.value = 0.3;
@@ -587,7 +618,7 @@ export function createBand(ctx, out, noise) {
     target = ctx.createGain();
     target.connect(bus);
     filters = new Map();
-    rigs = [rig(-0.6), rig(0.6)];
+    rigs = [rig(-0.9), rig(0.9, 0.011)];
     leadRig = makeLeadRig();
     return target;
   };
@@ -774,8 +805,9 @@ export function createBand(ctx, out, noise) {
     if (of === 0 && name !== 'intro') crash(when, (loud ? 1 : 0.8) * soft);
     if (bar % FORM_LENGTH === 0) crash(when, 0.6 * soft);
 
-    // ——— bass.
-    const bassNote = root + 12;
+    // ——— bass, doubling the guitars' root: low E for a song in E, down a tuning for the low keys.
+    const low = root + (theme.key < 35 ? 12 : 0);
+    const bassNote = low;
     const tone = theme.tone ?? 'electric';
     if (name === 'intro' && of < length / 2) {
       // Not yet.
@@ -809,8 +841,7 @@ export function createBand(ctx, out, noise) {
     const voicing = chord.map((n) => root + 12 + n);
     const comp = (t, len, open, g) => {
       if (kind === 'drive') {
-        guitar(t, root + 12, len, { open, side: 0, level: level * g * (theme.mono ? 1.3 : 1) });
-        if (!theme.mono) guitar(t + 0.007, root + 12, len, { open, side: 1, level: level * g });
+        guitar(t, low, len, { open, level: level * g });
       } else if (kind === 'clean' || kind === 'twang') {
         cleanGuitar(t, voicing, len, { open, side: 0, level: level * g, twang: kind === 'twang' });
         if (kind === 'twang') cleanGuitar(t + 0.009, voicing, len, { open, side: 1, level: level * g * 0.6, twang: true });
@@ -836,12 +867,13 @@ export function createBand(ctx, out, noise) {
         comp(at(i), len, hit === 2, g);
       }
     }
-    // The main title's guitars, over the piano, from the first chorus on.
+    // Distorted guitars under a song played by something else (goth's clean guitar), from the first chorus on.
     if (theme.guitars && loud) {
-      for (let i = 0; i < 16; i += theme.mono ? 4 : 2) {
-        guitar(at(i), root + 12, step * 1.8, { open: i % 8 === 0, side: 0, level: level * 0.55 });
-        guitar(at(i) + 0.007, root + 12, step * 1.8, { open: i % 8 === 0, side: 1, level: level * 0.55 });
-      }
+      for (let i = 0; i < 16; i += 2) guitar(at(i), low, step * 1.8, { open: i % 8 === 0, level: level * 0.8 });
+    }
+    // Horns over the guitars: the brass band's chords, held, in the big sections.
+    if (theme.horns && (loud || name === 'break')) {
+      for (const i of [0, 8]) brass(at(i), voicing.map((n) => n + 12), beat * 1.9, level * 0.9);
     }
 
     // ——— the lead.

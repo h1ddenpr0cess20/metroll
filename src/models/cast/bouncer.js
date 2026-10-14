@@ -1,4 +1,4 @@
-import { cloth, person } from './person.js';
+import { cloth, hold, person } from './person.js';
 
 /**
  * The Bouncer: huge, in a black suit that has given up, a white shirt, a
@@ -18,15 +18,13 @@ export default person({
   mats: { torso: 'cloth', sleeve: 'cloth', cuff: 'cloth', legs: 'cloth', boot: 'leather' },
   face: { eyeColor: '#2a1a10', brow: '#160d07', mood: 1, jaw: 1.25, ears: true },
   style: {
-    attack: 'punch', heavy: 1, twist: 0,
+    attack: 'punch', heavy: 1,
     after(k, { clip, time, seed }) {
       if (clip !== 'idle' && clip !== 'walk') return;
       const T = time + seed;
-      // Arms folded across the chest.
-      k.turn('armR', -0.9, -0.2, 0.55);
-      k.turn('foreR', -2.0, 0.4, 0);
-      k.turn('armL', -0.9, 0.2, -0.55);
-      k.turn('foreL', -2.0, -0.4, 0);
+      // Too broad to fold his arms: the fists on the belt instead, elbows out, filling the door.
+      hold(k, 'armR', -0.2, 0, -0.55); hold(k, 'foreR', -1.1, 0.9, 0);
+      hold(k, 'armL', -0.2, 0, 0.55); hold(k, 'foreL', -1.1, -0.9, 0);
       k.turn('head', 0, Math.sin(T * 0.4) * 0.25, 0);
     },
   },

@@ -1,4 +1,4 @@
-import { cloth, person } from './person.js';
+import { cloth, hold, person } from './person.js';
 import { battleVest, spikedCuffs } from './metalwear.js';
 import { bandana, beard } from './wardrobe.js';
 import { chestPrint } from './metalwear.js';
@@ -24,13 +24,13 @@ export default person({
   face: { eyeColor: '#3a2a1e', brow: '#5a5048', mood: 1, jaw: 1.1 },
   hair: { color: cloth('#4a4640', '#2a2824'), locks: [[[0, 0.77, -0.05], [0, 0.45, -0.14], 0.055, 0.5], [[0.06, 0.76, -0.04], [0.09, 0.46, -0.12], 0.045, 0.5], [[-0.06, 0.76, -0.04], [-0.09, 0.46, -0.12], 0.045, 0.5], [[0.09, 0.72, 0.0], [0.11, 0.55, -0.04], 0.035, 0.5], [[-0.09, 0.72, 0.0], [-0.11, 0.55, -0.04], 0.035, 0.5]] },
   style: {
-    attack: 'punch', heavy: 0.9, twist: 0,
+    attack: 'punch', heavy: 0.9,
     after(k, { clip, time, seed }) {
       if (clip !== 'idle' && clip !== 'walk') return;
       const T = time + seed;
       // Arms folded, and a slow shake of the head: no. Not real metal.
-      k.turn('armR', -0.9, -0.2, 0.55); k.turn('foreR', -2.0, 0.4, 0);
-      k.turn('armL', -0.9, 0.2, -0.55); k.turn('foreL', -2.0, -0.4, 0);
+      hold(k, 'armR', -0.95, 0, -0.15); hold(k, 'foreR', -0.95, 1.4, 0);
+      hold(k, 'armL', -0.9, 0, 0.15); hold(k, 'foreL', -1.0, -1.4, 0);
       k.turn('head', 0.05, Math.sin(T * 1.4) * 0.35, 0);
     },
   },

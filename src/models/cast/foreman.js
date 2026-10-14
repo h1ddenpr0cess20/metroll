@@ -22,17 +22,17 @@ export default person({
   face: { eyeColor: '#3a2a1e', brow: '#4a4a4a', mood: 1 },
   hair: { color: cloth('#6a6a6a', '#3a3a3a'), locks: [[[0.09, 0.7, -0.02], [0.11, 0.64, -0.06], 0.026], [[-0.09, 0.7, -0.02], [-0.11, 0.64, -0.06], 0.026]], cap: [0.104, 0.075, 0.104] },
   style: {
-    attack: 'smite', heavy: 0.4, twist: 0,
+    attack: 'smite', heavy: 0.4,
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // The clipboard held up in front of him, the pencil going: how long have you been on your break.
-      hold(k, 'armL', -1.1, 0, 0.3); hold(k, 'foreL', -1.2, 0, 0);
-      hold(k, 'armR', -0.9, 0, -0.2); hold(k, 'foreR', -1.5 + Math.sin(T * 5) * 0.08, 0, 0);
+      hold(k, 'armL', -0.55, -0.6, 0); hold(k, 'foreL', -0.8, 0, 0);
+      hold(k, 'armR', -1, 0.8, -0.05); hold(k, 'foreR', -0.35 + Math.sin(T * 5) * 0.06, 0, 0);
       k.turn('head', 0.1, Math.sin(T * 0.5) * 0.25, 0);
     },
   },
-  extras(s, J) {
+  extras(s) {
     moustache(s, { color: '#5a5a5a', wide: 1.1 });
     s.part('kit', () => {
       // The flat cap: a soft wide crown and a short stiff peak.
@@ -42,9 +42,10 @@ export default person({
       s.limb([0.1, 0.69, 0.0], [0.108, 0.74, 0.02], 0.004, 0.004, { color: '#e8c030', mat: 'plastic', bone: 'head', k: 0.001 });
       // Big pockets on the coat, and the clipboard.
       for (const m of [1, -1]) s.box([m * 0.06, 0.35, 0.068], [0.025, 0.028, 0.008], 0.004, { color: '#6a563a', mat: 'cloth', bone: 'spine', k: 0.002 });
-      const l = J.handL;
-      s.box([l[0], l[1] + 0.03, l[2] + 0.04], [0.04, 0.055, 0.005], 0.003, { color: '#8a6a3a', mat: 'leather', bone: 'handL', k: 0.002, rot: [-0.25, 0, 0] });
-      s.box([l[0], l[1] + 0.03, l[2] + 0.046], [0.034, 0.046, 0.003], 0.002, { color: '#f4f0e6', mat: 'paper', bone: 'handL', k: 0.001, rot: [-0.25, 0, 0] });
+      // The clipboard, held up in front of him in the left hand, tipped back to write on.
+      s.box([0.04, 0.43, 0.165], [0.045, 0.06, 0.005], 0.003, { color: '#8a6a3a', mat: 'leather', bone: 'chest', k: 0.002, rot: [-0.5, 0, 0] });
+      s.box([0.04, 0.432, 0.171], [0.038, 0.05, 0.002], 0.002, { color: '#f4f0e6', mat: 'paper', bone: 'chest', k: 0.001, rot: [-0.5, 0, 0] });
+      s.box([0.04, 0.483, 0.198], [0.014, 0.005, 0.004], 0.002, { color: '#c8ccd4', mat: 'metal', bone: 'chest', k: 0.001, rot: [-0.5, 0, 0] });
     });
   },
 });

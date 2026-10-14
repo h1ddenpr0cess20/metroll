@@ -38,7 +38,8 @@ export function longHair(color, { length = 1, fringe = false, thick = 1 } = {}) 
 /** Hair teased up and out: a cloud of it round the head, as wide as `size` times the head. */
 export function bigHair(s, color, { size = 1.5, drop = 0.1 } = {}) {
   s.part('hair', () => {
-    const H = { color, mat: 'hair', bone: 'head', k: 0.05 };
+    // Lumpy all over, so it reads as teased curls and not as a helmet.
+    const H = { color, mat: 'hair', bone: 'head', k: 0.05, bump: [0.007, 48] };
     s.ellipsoid([0, 0.75, -0.02], [0.12 * size, 0.1 * size, 0.12 * size], H);
     for (const m of [1, -1]) {
       s.ellipsoid([m * 0.1 * size, 0.72, -0.03], [0.07 * size, 0.09 * size, 0.08 * size], H);
@@ -269,9 +270,11 @@ export function hood(s, { color = '#1a1418', lining = '#0a0608' } = {}) {
 
 /** A long robe from the hips to the ground, flared at the hem, with a band of `trim` round it. */
 export function robe(s, { color = '#1a1418', trim = null, flare = 1 } = {}) {
+  // A cone from up under the chest (hidden in it) to a flat hem on the floor.
+  const hem = 0.15 + 0.03 * flare, top = 0.62, foot = 0.015;
   s.part('kit', () => {
-    s.limb([0, 0.31, 0], [0, 0.045, 0], 0.088, 0.088 + 0.07 * flare, { color, mat: 'cloth', bone: 'hips', k: 0.015 });
-    if (trim) s.torus([0, 0.06, 0], 0.088 + 0.07 * flare, 0.012, { color: trim, mat: 'cloth', bone: 'hips', k: 0.004 });
+    s.cone([0, top, 0], hem, top - foot, { color, mat: 'cloth', bone: 'hips', k: 0.015 });
+    if (trim) s.torus([0, 0.04, 0], hem * (top - 0.04) / (top - foot) + 0.002, 0.01, { color: trim, mat: 'cloth', bone: 'hips', k: 0.004 });
   });
 }
 

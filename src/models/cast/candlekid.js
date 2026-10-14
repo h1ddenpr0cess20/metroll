@@ -27,13 +27,13 @@ export default person({
   face: { eyeColor: '#4a8a6a', brow: '#8a6a38', mood: 1, blush: 0.9 },
   hair: longHair(cloth('#a8884a', '#7a5e30'), { length: 0.9, fringe: true }),
   style: {
-    attack: 'smite', twist: 0,
+    attack: 'smite',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // Both hands up in front holding the candle, the face tilted to it, a slow sway, eyes closed in spirit.
-      hold(k, 'armR', -1.2, 0.3, -0.3); hold(k, 'foreR', -1.5, 0.3, 0);
-      hold(k, 'armL', -1.2, -0.3, 0.3); hold(k, 'foreL', -1.5, -0.3, 0);
+      hold(k, 'armR', -1.0, 0, -0.15); hold(k, 'foreR', -1.4, 0.9, 0);
+      hold(k, 'armL', -1.0, 0, 0.15); hold(k, 'foreL', -1.4, -0.9, 0);
       k.turn('hips', 0, 0, Math.sin(T * 0.8) * 0.05);
       k.turn('head', 0.18, Math.sin(T * 0.5) * 0.1, Math.sin(T * 0.8) * 0.05);
     },
@@ -44,8 +44,8 @@ export default person({
       // The peace sign on a thong, and the candle between the hands, and its flame.
       s.limb([0.0, 0.56, 0.06], [0, 0.46, 0.085], 0.003, 0.003, { color: '#6a4a2a', mat: 'leather', bone: 'chest', k: 0.001 });
       s.torus([0, 0.45, 0.09], 0.016, 0.003, { color: '#d6d9e0', mat: 'metal', bone: 'chest', k: 0.001 });
-      s.cylinder([0, 0.5, 0.15], 0.014, 0.05, { color: '#f4ecd0', mat: 'cloth', bone: 'chest', k: 0.003, round: 0.003 });
-      s.sphere([0, 0.56, 0.15], 0.012, { color: '#ffb02a', mat: 'glow', bone: 'chest', k: 0.002 });
+      s.cylinder([0, 0.53, 0.168], 0.013, 0.05, { color: '#f4ecd0', mat: 'cloth', bone: 'chest', k: 0.003, round: 0.003 });
+      s.limb([0, 0.585, 0.168], [0, 0.615, 0.168], 0.01, 0.002, { color: '#ffb02a', mat: 'glow', bone: 'chest', k: 0.002 });
     });
   },
 });

@@ -21,7 +21,7 @@ export default person({
   mats: { torso: 'cloth', sleeve: 'cloth', cuff: 'cloth', legs: 'cloth', boot: 'leather' },
   face: { eyeColor: '#3a5a8a', brow: '#6a3a1a', mood: 1, jaw: 1.15, blush: 0.7 },
   style: {
-    attack: 'smite', twist: 0,
+    attack: 'smite',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;

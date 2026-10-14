@@ -19,13 +19,13 @@ export default person({
   face: { eyeColor: '#4a6a3a', brow: '#4a3a22', mood: 0, blush: 0.5 },
   hair: longHair(cloth('#6a4a28', '#44301a'), { length: 0.9, fringe: true }),
   style: {
-    attack: 'shove', twist: 0,
+    attack: 'shove',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // The shoebox held out, jiggled: want to trade?
-      hold(k, 'armR', -1.35, 0, -0.1); hold(k, 'foreR', -0.8, 0, 0);
-      hold(k, 'armL', -1.35, 0, 0.1); hold(k, 'foreL', -0.8, 0, 0);
+      hold(k, 'armR', -0.15, 0, 0.25); hold(k, 'foreR', -1.1, 0, 0);
+      hold(k, 'armL', -0.15, 0, -0.25); hold(k, 'foreL', -1.1, 0, 0);
       k.turn('head', 0.05, Math.sin(T * 0.7) * 0.3, 0);
       k.move('hips', 0, Math.abs(Math.sin(T * 4)) * 0.004, 0);
     },
@@ -34,8 +34,8 @@ export default person({
     const TAPES = ['#d81c2a', '#101014', '#f4f0e8', '#2a8ae8', '#f0c040'];
     s.part('kit', () => {
       // The shoebox in front, and the cassettes standing in it on their edges.
-      s.box([0, 0.34, 0.14], [0.085, 0.03, 0.06], 0.006, { color: '#c8a870', mat: 'paper', bone: 'chest', k: 0.003 });
-      for (let i = 0; i < 6; i++) s.box([-0.065 + i * 0.026, 0.385, 0.14], [0.008, 0.026, 0.05], 0.002, { color: TAPES[i % TAPES.length], mat: 'plastic', bone: 'chest', k: 0.001 });
+      s.box([0, 0.36, 0.13], [0.098, 0.03, 0.06], 0.006, { color: '#c8a870', mat: 'paper', bone: 'chest', k: 0.003 });
+      for (let i = 0; i < 7; i++) s.box([-0.072 + i * 0.024, 0.398, 0.13], [0.008, 0.026, 0.045], 0.002, { color: TAPES[i % TAPES.length], mat: 'plastic', bone: 'chest', k: 0.001 });
       // The rucksack, stuffed, a cassette hanging off the strap.
       s.box([0, 0.43, -0.09], [0.07, 0.08, 0.04], 0.02, { color: '#6a3a22', mat: 'cloth', bone: 'chest', k: 0.006 });
       for (const m of [1, -1]) s.limb([m * 0.05, 0.51, -0.05], [m * 0.06, 0.4, 0.06], 0.007, 0.007, { color: '#2a1a10', mat: 'cloth', bone: 'chest', k: 0.003 });

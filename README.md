@@ -156,16 +156,21 @@ down to a glow.
 Played live in Web Audio (`src/music.js`), with no audio files: a theme for
 every track, each with its own drums, bass line, rhythm part and lead, and a
 tempo that goes from a funeral march (New Orleans, 64) to a blast beat
-(Norway, 198). The main title is a heavy anthem with the guitars wide open.
-A slow, heavy tritone riff for Birmingham; a major-key anthem with a
-keyboard pad for the Strip; palm-muted, chromatic thrash for the Bay Area; a
-clean guitar and a theremin for Whitby; a d-beat for New York; blast beats
-and the lowest guitars there are for Tampa; tremolo-picked and cold for
-Norway; a brass band's dirge with the guitars coming in underneath for New
-Orleans; a four-on-the-floor machine for Berlin; a syncopated stutter for
-Woodstock; a sing-along with a breakdown for the Warped Tour; and for
-Wacken, all of it at once, double bass drums, a gallop, brass and a shredder
-over the top. The beat clock drives the hazards and the lights.
+(Norway, 198). The guitars go through a high-gain amp (the mids pushed into
+a hard clipper, then scooped, the lows put back for the chug) and are
+double-tracked hard left and right; palm mutes thud, open chords ring, and
+the bass doubles them down low under a kick with a click on it. The main
+title is a heavy anthem with the guitars wide open. A slow, heavy tritone
+riff for Birmingham; a major-key anthem with a keyboard pad for the Strip;
+palm-muted, chromatic thrash for the Bay Area; a clean guitar and a theremin
+for Whitby, the distortion coming in for the choruses; a d-beat for New
+York; blast beats and the lowest guitars there are for Tampa;
+tremolo-picked and cold for Norway; a dirge for New Orleans, the guitars
+down-tuned and ringing and a brass band over them; a four-on-the-floor
+machine for Berlin; a syncopated stutter for Woodstock; a sing-along with a
+breakdown for the Warped Tour; and for Wacken, all of it at once, double
+bass drums, the guitars galloping, brass and a shredder over the top. The
+beat clock drives the hazards and the lights.
 
 ## The cast
 

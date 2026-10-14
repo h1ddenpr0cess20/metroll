@@ -19,13 +19,13 @@ export default person({
   face: { eyeColor: '#3a3a5a', brow: '#14101a', mood: 0, blush: 0.15 },
   hair: longHair(cloth('#1a1418', '#0e0a0e'), { length: 0.85, fringe: true }),
   style: {
-    attack: 'thrust', twist: 0,
+    attack: 'thrust',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // Declaiming: one arm out, flung, the scroll held in the other; the head thrown back at the sky.
-      hold(k, 'armR', -1.8 + Math.sin(T * 1.4) * 0.2, 0, -0.9); hold(k, 'foreR', -0.3, 0, 0);
-      hold(k, 'armL', -1.2, 0, 0.3); hold(k, 'foreL', -0.9, 0, 0);
+      hold(k, 'armR', -0.35, 0, -2.0 + Math.sin(T * 1.4) * 0.15); hold(k, 'foreR', -0.25, 0, 0);
+      hold(k, 'armL', -0.25, -0.8, 0.35); hold(k, 'foreL', -1.6, 0, 0);
       k.turn('head', -0.35, Math.sin(T * 0.6) * 0.3, 0.1);
       k.turn('chest', -0.1, 0, 0);
     },
@@ -43,8 +43,10 @@ export default person({
       }
       s.flake([-0.09, 0.53, -0.02], [-0.14, 0.18, -0.1], [0, 0, -1], 0.04, 0.07, 0.16, { color: '#2a1a36', mat: 'cloth', bone: 'chest', k: 0.01 });
       // The scroll and the quill.
-      const l = J.handL, r = J.handR;
-      s.cylinder([l[0], l[1] + 0.04, l[2] + 0.03], 0.012, 0.045, { color: '#e8dcb8', mat: 'paper', bone: 'handL', k: 0.003, rot: [0, 0, Math.PI / 2 + 0.3] });
+      const r = J.handR;
+      // Unrolled in front of him, read from: a sheet between two rolls, where the left fist is.
+      s.box([0.03, 0.452, 0.17], [0.046, 0.036, 0.002], 0.001, { color: '#ecdfbc', mat: 'paper', bone: 'chest', k: 0.001, rot: [-0.6, 0, 0] });
+      for (const m of [1, -1]) s.cylinder([0.03 + m * 0.048, 0.452, 0.17], 0.008, 0.04, { color: '#d8c898', mat: 'paper', bone: 'chest', k: 0.002, round: 0.003, rot: [-0.6, 0, 0] });
       s.limb([r[0], r[1] - 0.01, r[2]], [r[0] + 0.04, r[1] + 0.12, r[2] + 0.02], 0.003, 0.001, { color: '#f4f0e8', mat: 'cloth', bone: 'handR', k: 0.001 });
     });
   },

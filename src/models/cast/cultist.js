@@ -21,28 +21,30 @@ export default person({
   mats: { torso: 'cloth', sleeve: 'cloth', cuff: 'cloth', legs: 'cloth', boot: 'leather' },
   face: { eyeColor: '#c8a040', brow: '#1a1218', mood: -1 },
   style: {
-    attack: 'smite', twist: 0,
+    attack: 'smite',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // A candle held up and a book held open, the head bowed and nodding, a slow sway: the chant.
-      hold(k, 'armR', -1.3, 0.2, -0.3); hold(k, 'foreR', -1.2, 0, 0);
-      hold(k, 'armL', -0.9, -0.2, 0.3); hold(k, 'foreL', -1.5, 0, 0);
+      hold(k, 'armR', -0.55, 0, 0.15); hold(k, 'foreR', -1.55, 0, 0);
+      hold(k, 'armL', -0.5, -0.6, -0.05); hold(k, 'foreL', -1.15, 0, 0);
       k.turn('head', 0.3 + Math.sin(T * 1.3) * 0.08, 0, 0);
       k.turn('hips', 0, Math.sin(T * 0.6) * 0.06, 0);
     },
   },
-  extras(s, J) {
+  extras(s) {
     robe(s, { color: '#3a1a3a', trim: '#c8a040', flare: 1.1 });
     hood(s, { color: '#3a1a3a', lining: '#12081a' });
     s.part('kit', () => {
       // The candle, and its flame.
-      const r = J.handR;
-      s.cylinder([r[0], r[1] + 0.04, r[2] + 0.01], 0.011, 0.045, { color: '#f0e8d0', mat: 'cloth', bone: 'handR', k: 0.003, round: 0.003 });
-      s.sphere([r[0], r[1] + 0.1, r[2] + 0.01], 0.01, { color: '#ffb02a', mat: 'glow', bone: 'handR', k: 0.002 });
-      // The book: a dark slab with a pentagram that is not quite right.
-      const l = J.handL;
-      s.box([l[0], l[1] + 0.03, l[2] + 0.04], [0.04, 0.005, 0.05], 0.003, { color: '#2a0e0e', mat: 'leather', bone: 'handL', k: 0.002 });
+      // Held where the posed fists are, on the chest, so they stand upright.
+      s.cylinder([-0.158, 0.53, 0.155], 0.011, 0.045, { color: '#f0e8d0', mat: 'cloth', bone: 'chest', k: 0.003, round: 0.003 });
+      s.limb([-0.158, 0.585, 0.155], [-0.158, 0.612, 0.155], 0.009, 0.002, { color: '#ffb02a', mat: 'glow', bone: 'chest', k: 0.002 });
+      // The book, open on the left hand: two dark covers in a shallow V, pages on them.
+      for (const m of [1, -1]) {
+        s.box([0.05 + m * 0.034, 0.462, 0.178], [0.034, 0.004, 0.046], 0.003, { color: '#2a0e0e', mat: 'leather', bone: 'chest', k: 0.002, rot: [0.55, 0, m * -0.25] });
+        s.box([0.05 + m * 0.032, 0.467, 0.178], [0.03, 0.003, 0.042], 0.002, { color: '#e8dcc0', mat: 'paper', bone: 'chest', k: 0.001, rot: [0.55, 0, m * -0.25] });
+      }
     });
   },
 });

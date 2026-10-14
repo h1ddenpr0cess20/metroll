@@ -99,7 +99,7 @@ export default {
   },
   animate(k, state) {
     moveHumanoid(k, { ...state, speed: (state.speed ?? 1) * 0.7 }, {
-      attack: 'smite', heavy: 0.8, twist: 0,
+      attack: 'smite', heavy: 0.8,
       after(kk, { clip, time, seed }) {
         if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
         const T = time + seed;

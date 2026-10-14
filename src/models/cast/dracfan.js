@@ -20,13 +20,13 @@ export default person({
   face: { eyeColor: '#6a1a1a', brow: '#101014', mood: 1, blush: 0.1 },
   hair: { color: cloth('#101014', '#08080a'), locks: [[[0, 0.78, 0.0], [0, 0.7, -0.14], 0.055, 0.5], [[0.07, 0.76, 0.0], [0.1, 0.68, -0.1], 0.035, 0.5], [[-0.07, 0.76, 0.0], [-0.1, 0.68, -0.1], 0.035, 0.5]], cap: [0.108, 0.1, 0.108], front: 0.0 },
   style: {
-    attack: 'hug', twist: 0,
+    attack: 'hug',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // The flag held up in one fist; the other arm swept across the face behind the cape's edge: I vant to...
       hold(k, 'armR', -2.5, 0, -0.1); hold(k, 'foreR', -0.3, 0, 0);
-      hold(k, 'armL', -1.3, 0, 0.9); hold(k, 'foreL', -2.0, 0.3, 0);
+      hold(k, 'armL', -2.25, -0.4, 0.25); hold(k, 'foreL', -0.55, 0, 0);
       k.turn('head', -0.1, Math.sin(T * 0.8) * 0.3, 0);
     },
   },
@@ -35,13 +35,14 @@ export default person({
     fangs(s);
     s.part('kit', () => {
       // The ruffle: bumps of white down the shirt front. The waistcoat: black either side of it.
-      for (let i = 0; i < 4; i++) s.ellipsoid([0, 0.5 - i * 0.03, 0.076], [0.022, 0.012, 0.008], { color: '#f4f0e8', mat: 'cloth', bone: 'chest', k: 0.004 });
-      for (const m of [1, -1]) s.box([m * 0.06, 0.43, 0.072], [0.03, 0.065, 0.008], 0.004, { color: '#16121a', mat: 'cloth', bone: 'chest', k: 0.002 });
+      for (let i = 0; i < 4; i++) s.ellipsoid([0, 0.505 - i * 0.026, 0.074 + Math.min(i, 2) * 0.003], [0.016 - i * 0.002, 0.009, 0.007], { color: '#f4f0e8', mat: 'cloth', bone: 'chest', k: 0.004 });
+      s.paint((p) => Math.max(0.026 - Math.abs(p[0]), Math.abs(p[0]) - 0.1, Math.abs(p[1] - 0.43) - 0.08 + Math.abs(p[0]) * 0.4, 0.02 - p[2]), '#16121a', 0.003);
       // The flag: a pole, a rectangle of cloth, a bat on it.
       const h = J.handR;
-      s.limb([h[0], h[1] - 0.1, h[2]], [h[0], h[1] + 0.32, h[2]], 0.005, 0.005, { color: '#5a3a1e', mat: 'leather', bone: 'handR', k: 0.002 });
-      s.box([h[0] + 0.06, h[1] + 0.26, h[2]], [0.06, 0.04, 0.004], 0.002, { color: '#c8102e', mat: 'cloth', bone: 'handR', k: 0.002 });
-      s.paint((p) => Math.max(Math.hypot((p[0] - h[0] - 0.06) * 1.2, p[1] - h[1] - 0.26) - 0.018, Math.abs(p[2] - h[2]) - 0.01), '#101014', 0.002);
+      // Held up overhead, so it is sculpted pointing down the hanging arm.
+      s.limb([h[0], h[1] + 0.06, h[2]], [h[0], h[1] - 0.34, h[2]], 0.005, 0.005, { color: '#5a3a1e', mat: 'leather', bone: 'handR', k: 0.002 });
+      s.box([h[0] + 0.065, h[1] - 0.28, h[2]], [0.06, 0.04, 0.004], 0.002, { color: '#c8102e', mat: 'cloth', bone: 'handR', k: 0.002 });
+      s.paint((p) => Math.max(Math.hypot((p[0] - h[0] - 0.065) * 1.2, p[1] - h[1] + 0.28) - 0.018, Math.abs(p[2] - h[2]) - 0.01), '#101014', 0.002);
     });
   },
 });

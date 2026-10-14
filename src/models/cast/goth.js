@@ -21,11 +21,11 @@ export default person({
   b: 0.98,
   shape: { legs: 1.1, girth: 0.88, head: 1.0 },
   skin: '#f0eaf0',
-  look: { torso: cloth('#14101a', '#0a080e'), sleeve: LACE, cuff: LACE, legs: cloth('#14101a'), boot: '#0a080e', sole: '#2a2630', belt: '#2a2630', buckle: '#c8ccd4' },
+  look: { torso: cloth('#14101a', '#0a080e'), sleeve: LACE, cuff: LACE, legs: cloth('#14101a'), boot: '#0a080e', sole: '#2a2630', belt: '#2a2630', buckle: '#c8ccd4', boots: 0.13 },
   mats: { torso: 'cloth', sleeve: 'cloth', cuff: 'cloth', legs: 'cloth', boot: 'leather' },
   face: { eyeColor: '#6a2a8a', brow: '#0a080e', mood: 1, blush: 0 },
   style: {
-    attack: 'smite', twist: 0,
+    attack: 'smite',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
@@ -37,7 +37,7 @@ export default person({
     },
   },
   extras(s, J) {
-    bigHair(s, '#0c0a12', { size: 1.55, drop: 0.14 });
+    bigHair(s, '#0c0a12', { size: 1.32, drop: 0.14 });
     s.part('kit', () => {
       // Heavy dark rings round the eyes and the dark lips: painted, not sculpted.
       for (const m of [1, -1]) {
@@ -45,7 +45,7 @@ export default person({
       }
       s.limb([-0.022, 0.611, 0.104], [0.022, 0.611, 0.104], 0.004, 0.004, { color: '#5a0a2a', mat: 'cloth', bone: 'head', k: 0.001 });
       // Tulle skirt: a short bell of layers over the hips; fishnet bars on the legs.
-      s.cone([0, 0.37, 0.0], 0.15, 0.17, { color: '#14101a', mat: 'cloth', bone: 'hips', k: 0.012, rot: [Math.PI, 0, 0] });
+      s.cone([0, 0.4, 0.0], 0.14, 0.17, { color: '#14101a', mat: 'cloth', bone: 'hips', k: 0.012 });
       for (const m of [1, -1]) {
         const S = m > 0 ? 'L' : 'R';
         for (let i = 0; i < 5; i++) s.torus([m * 0.058, 0.07 + i * 0.045, 0.0], 0.034, 0.002, { color: '#2a2630', mat: 'cloth', bone: `shin${S}`, k: 0.0008, rot: [0.3 * (i % 2 ? 1 : -1), 0, 0] });

@@ -21,13 +21,13 @@ export default person({
   face: { eyeColor: '#4a3a2a', brow: '#2a1c12', mood: 0, blush: 0.4 },
   hair: { color: cloth('#2a1c12', '#160e08'), locks: [], cap: [0.108, 0.098, 0.108] },
   style: {
-    attack: 'shove', twist: 0,
+    attack: 'shove',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // The stack held out in front, offered, bobbing a little: buy one.
-      hold(k, 'armR', -1.3, 0, -0.1); hold(k, 'foreR', -0.7, 0, 0);
-      hold(k, 'armL', -1.3, 0, 0.1); hold(k, 'foreL', -0.7, 0, 0);
+      hold(k, 'armR', -0.15, 0, 0.25); hold(k, 'foreR', -1.1, 0, 0);
+      hold(k, 'armL', -0.15, 0, -0.25); hold(k, 'foreL', -1.1, 0, 0);
       k.turn('head', Math.sin(T * 0.7) * 0.05, Math.sin(T * 0.4) * 0.2, 0);
       k.move('hips', 0, Math.abs(Math.sin(T * 3)) * 0.004, 0);
     },
@@ -36,7 +36,7 @@ export default person({
     baseballCap(s, { color: '#101014' });
     s.part('kit', () => {
       // The T-shirts, folded and stacked in front of him on both forearms.
-      SHIRTS.forEach((c, i) => s.box([0, 0.36 + i * 0.02, 0.13], [0.095, 0.011, 0.07], 0.004, { color: c, mat: 'cloth', bone: 'chest', k: 0.002 }));
+      SHIRTS.forEach((c, i) => s.box([0, 0.39 + i * 0.019, 0.135], [0.085 - (i % 2) * 0.004, 0.0095, 0.06], 0.005, { color: c, mat: 'cloth', bone: 'chest', k: 0.002 }));
       // The lanyard, and the laminated card.
       s.limb([-0.03, 0.54, 0.04], [0, 0.44, 0.08], 0.004, 0.004, { color: '#e8202a', mat: 'cloth', bone: 'chest', k: 0.002 });
       s.limb([0.03, 0.54, 0.04], [0, 0.44, 0.08], 0.004, 0.004, { color: '#e8202a', mat: 'cloth', bone: 'chest', k: 0.002 });

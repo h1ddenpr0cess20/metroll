@@ -21,7 +21,7 @@ export default person({
   face: { eyeColor: '#2a2a2a', brow: '#14100c', mood: 1, blush: 0.6 },
   hair: longHair(cloth('#14100c', '#08060a'), { length: 0.5, thick: 1.2 }),
   style: {
-    attack: 'flail', twist: 0,
+    attack: 'flail',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;

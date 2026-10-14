@@ -20,13 +20,13 @@ export default person({
   face: { eyeColor: '#3a3a4a', brow: '#6a6a6a', mood: 1, blush: 0 },
   hair: { color: cloth('#8a8a92', '#5a5a62'), locks: [[[0.09, 0.7, 0.0], [0.11, 0.64, -0.05], 0.028, 0.5], [[-0.09, 0.7, 0.0], [-0.11, 0.64, -0.05], 0.028, 0.5]], cap: [0.104, 0.082, 0.104] },
   style: {
-    attack: 'smite', heavy: 0.5, twist: 0,
+    attack: 'smite', heavy: 0.5,
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // The handkerchief to the face; the umbrella up in the other hand; a slow, wounded sway.
-      hold(k, 'armL', -2.0, 0.2, 0.2); hold(k, 'foreL', -2.2, 0, 0);
-      hold(k, 'armR', -1.0, 0, -0.5); hold(k, 'foreR', -0.8, 0, 0);
+      hold(k, 'armL', -2.05, 0, 0.85); hold(k, 'foreL', -0.65, 0, 0);
+      hold(k, 'armR', -0.65, 0, -0.05); hold(k, 'foreR', -1.7, 0, 0);
       k.turn('head', 0.22, Math.sin(T * 0.5) * 0.2, 0);
       k.turn('hips', 0, 0, Math.sin(T * 0.8) * 0.04);
     },
@@ -34,16 +34,18 @@ export default person({
   extras(s, J) {
     s.part('kit', () => {
       // The skirt, down to the floor: a wide cone.
-      s.cone([0, 0.38, 0.0], 0.18, 0.4, { color: '#101014', mat: 'cloth', bone: 'hips', k: 0.015, rot: [Math.PI, 0, 0] });
+      s.cone([0, 0.4, 0.0], 0.17, 0.4, { color: '#101014', mat: 'cloth', bone: 'hips', k: 0.015 });
       // A bonnet, a veil of black net down from it, and jet beads.
       s.ellipsoid([0, 0.755, 0.0], [0.1, 0.045, 0.1], { color: '#101014', mat: 'cloth', bone: 'head', k: 0.01 });
       s.flake([0, 0.74, 0.08], [0, 0.6, 0.12], [0, 0, 1], 0.07, 0.07, 0.1, { color: '#2a2a32', mat: 'cloth', bone: 'head', k: 0.003 });
       s.torus([0, 0.51, 0.04], 0.052, 0.006, { color: '#2a2a32', mat: 'plastic', bone: 'neck', k: 0.002, rot: [0.4, 0, 0] });
       // The handkerchief: a white square in the left fist. The umbrella: a pole and a black dome in the right.
-      const l = J.handL, r = J.handR;
+      const l = J.handL;
       s.box([l[0], l[1] + 0.03, l[2] + 0.02], [0.022, 0.02, 0.003], 0.002, { color: '#f4f0e8', mat: 'cloth', bone: 'handL', k: 0.002 });
-      s.limb([r[0], r[1] - 0.14, r[2]], [r[0], r[1] + 0.3, r[2]], 0.005, 0.005, { color: '#2a2a32', mat: 'metal', bone: 'handR', k: 0.002 });
-      s.cone([r[0], r[1] + 0.36, r[2]], 0.22, 0.1, { color: '#101014', mat: 'cloth', bone: 'handR', k: 0.01, rot: [Math.PI, 0, 0] });
+      // The umbrella stands straight up out of the raised fist, so it goes with the chest, where the fist is.
+      s.limb([-0.155, 0.44, 0.125], [-0.155, 0.9, 0.125], 0.005, 0.005, { color: '#2a2a32', mat: 'metal', bone: 'chest', k: 0.002 });
+      s.cone([-0.155, 0.94, 0.125], 0.22, 0.1, { color: '#101014', mat: 'cloth', bone: 'chest', k: 0.01 });
+      s.limb([-0.155, 0.44, 0.125], [-0.17, 0.42, 0.13], 0.006, 0.006, { color: '#2a2a32', mat: 'metal', bone: 'chest', k: 0.002 });
     });
   },
 });

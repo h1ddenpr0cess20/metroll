@@ -74,8 +74,9 @@ function limo(GFX, { w, d, thickness, lift }) {
   const top = thickness / 2;
   const pink = new GFX.MeshPhysicalMaterial({ color: new GFX.Color('#ff3a9a'), roughness: 0.2, clearcoat: 1 });
   const chrome = mat(GFX, '#e8eaf0', { metalness: 1, roughness: 0.18 });
+  // Its top a little under the seat's, so the two don't fight over the same plane.
   const body = new GFX.Mesh(new GFX.BoxGeometry(L * 1.04, 0.5, S * 0.96), pink);
-  body.position.y = top - 0.25;
+  body.position.y = top - 0.27;
   holder.add(shadow(body));
   const seat = new GFX.Mesh(new GFX.BoxGeometry(L * 0.96, thickness, S * 0.86), mat(GFX, '#f4f0e8', { roughness: 0.5 }));
   holder.add(shadow(seat));
@@ -98,7 +99,7 @@ function limo(GFX, { w, d, thickness, lift }) {
     holder.add(lamp, tail);
   }
   wheelsUnder(GFX, holder, { L, S, top: top + 0.1, r: 0.18 });
-  return { group, live(time) { group.position.y = Math.sin(time * 4.2) * 0.012; } };
+  return { group, live(time) { holder.position.y = Math.sin(time * 4.2) * 0.012; } };
 }
 
 // ———————————————————————————————————————————————— Whitby
