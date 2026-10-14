@@ -99,14 +99,21 @@ export function skinTone(hex = '#e9b48f') {
  * hex) of `skin`, `torso`, `sleeve` (upper arm), `cuff` (forearm), `hand`,
  * `legs`, `boot`, and if they have them a `belt` (and its `buckle`) and a
  * `sole` under the shoes; and `mats` the materials of the same (default
- * 'cloth', 'skin' for skin). `b` is the breadth; `belly` (0 to 2 or so)
- * how far a belly sticks out.
+ * 'cloth', 'skin' for skin). The calf is the trousers (`legs`) down to the
+ * shoe unless `shin` says otherwise (a colour, or 'skin' under shorts or a
+ * skirt); `boots` pulls a boot (in `boot`) up over it, to just under the
+ * knee or to the height given; `shoeless` ('L' or 'R') leaves a foot bare
+ * of its shoe. `b` is the breadth; `belly` (0 to 2 or so) how far a belly
+ * sticks out.
  */
 export function body(s, { look, mats = {}, b = 1, k = 0.03, belly = 0 }) {
   const J = joints(b);
   const m = (part) => mats[part] ?? (part === 'skin' || part === 'hand' ? 'skin' : 'cloth');
   const c = (part) => look[part] ?? look.torso;
   const T = { color: c('torso'), mat: m('torso') };
+  // The calf: trousers to the shoe, a boot to the knee, or bare.
+  const shin = look.shin ?? c('legs');
+  const shinMat = mats.shin ?? (look.shin === undefined ? m('legs') : look.shin === look.skin ? 'skin' : 'cloth');
   // Pelvis, a waist narrower than the chest, the chest, and the slope of the shoulders up to the neck.
   s.ellipsoid([0, 0.318, 0], [0.083 * b, 0.056, 0.06], { color: c('legs'), mat: m('legs'), bone: 'hips', k });
   s.limb([0, 0.33, 0.002], [0, 0.42, 0.004], 0.066 * b, 0.074 * b, { ...T, bone: 'spine', k: 0.04 });
@@ -136,12 +143,24 @@ export function body(s, { look, mats = {}, b = 1, k = 0.03, belly = 0 }) {
     // Legs: a thigh, a knee, a calf that swells and narrows to the ankle.
     s.limb(J[`hip${S}`], J[`knee${S}`], 0.047 * Math.sqrt(b), 0.034, { color: c('legs'), mat: m('legs'), bone: `thigh${S}`, k: 0.02 });
     const kn = J[`knee${S}`], a = J[`ankle${S}`];
-    s.limb(kn, [a[0], a[1] + 0.06, a[2] - 0.004], 0.033, 0.031, { color: c('boot'), mat: m('boot'), bone: `shin${S}`, k: 0.014 });
-    s.limb([a[0], a[1] + 0.06, a[2] - 0.004], a, 0.031, 0.025, { color: c('boot'), mat: m('boot'), bone: `shin${S}`, k: 0.012 });
-    // A shoe: heel, the foot, a rounded toe, and a sole under it.
-    s.ellipsoid([a[0], 0.032, a[2] + 0.024], [0.032, 0.03, 0.05], { color: c('boot'), mat: m('boot'), bone: `foot${S}`, k: 0.02 });
-    s.ellipsoid([a[0], 0.024, a[2] + 0.062], [0.03, 0.022, 0.03], { color: c('boot'), mat: m('boot'), bone: `foot${S}`, k: 0.015 });
-    if (look.sole) s.box([a[0], 0.006, a[2] + 0.034], [0.031, 0.006, 0.064], 0.005, { color: look.sole, mat: 'rubber', bone: `foot${S}`, k: 0.006 });
+    const calf = { color: shin, mat: shinMat, bone: `shin${S}` };
+    s.limb(kn, [a[0], a[1] + 0.06, a[2] - 0.004], 0.033, 0.031, { ...calf, k: 0.014 });
+    s.limb([a[0], a[1] + 0.06, a[2] - 0.004], [a[0], a[1] + 0.012, a[2]], 0.031, 0.026, { ...calf, k: 0.012 });
+    if (look.shoeless === S) continue;
+    // A shoe, a mesh of its own so the trousers go into it on a clean edge: flat underneath, round at the heel and the toe, and a sole just proud of it.
+    s.part('shoes', () => {
+      const F = { color: c('boot'), mat: m('boot'), bone: `foot${S}` };
+      // A boot's leg over the calf, the trousers tucked in, and a band round its top.
+      if (look.boots) {
+        const top = look.boots === true ? 0.15 : look.boots;
+        s.limb([a[0], 0.05, a[2]], [a[0], top, a[2] - 0.004], 0.03, 0.036, { ...F, bone: `shin${S}`, k: 0.012 });
+        s.torus([a[0], top, a[2] - 0.004], 0.035, 0.006, { ...F, bone: `shin${S}`, k: 0.004 });
+      }
+      s.box([a[0], 0.03, a[2] + 0.022], [0.029, 0.026, 0.05], 0.02, { ...F, k: 0.016 });
+      s.ellipsoid([a[0], 0.028, a[2] + 0.06], [0.029, 0.024, 0.034], { ...F, k: 0.016 });
+      s.ellipsoid([a[0], 0.055, a[2] + 0.004], [0.03, 0.028, 0.032], { ...F, k: 0.014 });
+    });
+    if (look.sole) s.part('soles', () => s.box([a[0], 0.007, a[2] + 0.031], [0.029, 0.007, 0.058], 0.007, { color: look.sole, mat: 'rubber', bone: `foot${S}`, k: 0 }));
   }
   // Neck.
   s.limb([0, 0.51, 0], [0, 0.585, 0.008], 0.03, 0.028, { color: c('skin'), mat: m('skin'), bone: 'neck', k: 0.02 });
@@ -233,8 +252,8 @@ export function moveHumanoid(k, { clip = 'idle', t = 0, time = 0, seed = 0, spee
   k.scale('chest', 1 + breathe * 0.012, 1 + breathe * 0.018, 1 + breathe * 0.012);
   k.turn('armL', 0, 0, 0.05 + breathe * 0.015);
   k.turn('armR', 0, 0, -0.05 - breathe * 0.015);
-  k.turn('foreL', -0.15, 0, 0);
-  k.turn('foreR', -0.25, 0, 0);
+  k.turn('foreL', -0.2, 0, 0);
+  k.turn('foreR', -0.2, 0, 0);
 
   if (clip === 'idle') {
     k.turn('hips', 0, Math.sin(T * 0.7) * 0.04, Math.sin(T * 0.9) * 0.015);
@@ -242,11 +261,8 @@ export function moveHumanoid(k, { clip = 'idle', t = 0, time = 0, seed = 0, spee
     k.move('hips', 0, breathe * 0.002 - 0.004, 0);
     k.turn('thighL', 0.04, 0, 0.02); k.turn('shinL', 0.08, 0, 0);
     k.turn('thighR', 0.04, 0, -0.02); k.turn('shinR', 0.08, 0, 0);
-    // The weapon held ready.
-    k.turn('armR', -0.35, 0, -0.1);
-    k.turn('foreR', -0.75, 0, 0);
-    // Twisted so a blade shows its face, not its edge.
-    k.turn('handR', 0, 0, style.twist ?? -0.9);
+    // The hands hanging easy, a little in front.
+    k.turn('armL', -0.06, 0, 0.04); k.turn('armR', -0.06, 0, -0.04);
   } else if (clip === 'walk') {
     const ph = T * (9 - heavy * 2) * Math.max(0.5, speed), g = Math.sin(ph);
     k.move('hips', 0, Math.abs(Math.cos(ph)) * 0.012 - 0.004, 0);
@@ -254,9 +270,11 @@ export function moveHumanoid(k, { clip = 'idle', t = 0, time = 0, seed = 0, spee
     k.turn('chest', 0.06, -g * 0.16, 0);
     k.turn('thighL', -g * 0.55, 0, 0); k.turn('shinL', Math.max(0, g) * 0.8, 0, 0); k.turn('footL', -g * 0.2, 0, 0);
     k.turn('thighR', g * 0.55, 0, 0); k.turn('shinR', Math.max(0, -g) * 0.8, 0, 0); k.turn('footR', g * 0.2, 0, 0);
-    k.turn('armL', g * 0.45, 0, 0);
-    k.turn('armR', -0.35 - g * 0.2, 0, -0.1);
-    k.turn('foreR', -0.6, 0, 0);
+    // The arms swinging against the legs.
+    k.turn('armL', g * 0.4, 0, 0.04);
+    k.turn('armR', -g * 0.4, 0, -0.04);
+    k.turn('foreL', -0.2 + Math.min(0, g) * 0.3, 0, 0);
+    k.turn('foreR', -0.2 - Math.max(0, g) * 0.3, 0, 0);
   } else if (clip === 'attack') {
     attack(k, t, style);
   } else if (clip === 'cast') {

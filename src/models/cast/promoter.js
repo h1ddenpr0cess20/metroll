@@ -21,7 +21,7 @@ export default person({
   face: { eyeColor: '#3a2a1e', brow: '#101014', mood: 0, blush: 0.2 },
   hair: { color: cloth('#101014', '#08080a'), locks: [[[0, 0.78, -0.04], [0, 0.7, -0.12], 0.05, 0.5], [[0.07, 0.76, 0.0], [0.1, 0.68, -0.06], 0.035, 0.5], [[-0.07, 0.76, 0.0], [-0.1, 0.68, -0.06], 0.035, 0.5]], cap: [0.108, 0.102, 0.108] },
   style: {
-    attack: 'thrust', twist: 0,
+    attack: 'thrust',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;

@@ -22,13 +22,13 @@ export default person({
   face: { eyeColor: '#5a7a4a', brow: '#6a4a2a', mood: 0, blush: 0.35 },
   hair: longHair('#8a6a40', { length: 0.7 }),
   style: {
-    attack: 'thrust', twist: 0,
+    attack: 'thrust',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // One finger in the ear, wincing; the other hand still on the guitar.
-      hold(k, 'armR', -2.0, 0, -0.6); hold(k, 'foreR', -2.2, 0, 0);
-      hold(k, 'armL', -1.0, 0, 0.5); hold(k, 'foreL', -0.5, 0, 0);
+      hold(k, 'armR', -2.3, 0, -0.25); hold(k, 'foreR', -1.15, 0, 0);
+      hold(k, 'armL', -0.3, -0.2, -0.15); hold(k, 'foreL', -1.7, 0, 0);
       k.turn('head', 0.05, 0.1, 0.18 + Math.sin(T * 0.7) * 0.03);
     },
   },
@@ -37,7 +37,7 @@ export default person({
     guitar(s, { style: 'acoustic' });
     s.part('kit', () => {
       // Sandals' straps over white socks.
-      for (const m of [1, -1]) s.box([m * 0.06, 0.03, 0.05], [0.032, 0.006, 0.07], 0.004, { color: '#8a5a32', mat: 'leather', bone: m > 0 ? 'footL' : 'footR', k: 0.002 });
+      for (const m of [1, -1]) for (const z of [0.035, 0.075]) s.box([m * 0.06, 0.043 - (z - 0.035) * 0.3, z], [0.032, 0.006, 0.008], 0.004, { color: '#8a5a32', mat: 'leather', bone: m > 0 ? 'footL' : 'footR', k: 0.002 });
     });
   },
 });

@@ -27,7 +27,7 @@ export default person({
   face: { eyeColor: '#3a6a4a', brow: '#6a4a2a', mood: 0, blush: 0.4 },
   hair: longHair('#7a5a34', { length: 1.25 }),
   style: {
-    attack: 'flail', twist: 0,
+    attack: 'flail',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
@@ -43,7 +43,7 @@ export default person({
     glasses(s, { rim: '#e86aa0', round: true, dark: true, size: 0.022 });
     s.part('kit', () => {
       // Flared jeans: a flare at each ankle.
-      for (const m of [1, -1]) s.cone([m * 0.06, 0.1, 0.0], 0.052, 0.1, { color: '#2c5a8a', mat: 'denim', bone: m > 0 ? 'shinL' : 'shinR', k: 0.01, rot: [0, 0, Math.PI] });
+      for (const m of [1, -1]) s.cone([m * 0.06, 0.2, 0.0], 0.05, 0.16, { color: '#2c5a8a', mat: 'denim', bone: m > 0 ? 'shinL' : 'shinR', k: 0.01 });
       // The peace sign on its cord.
       s.limb([-0.03, 0.55, 0.04], [0, 0.43, 0.082], 0.003, 0.003, { color: '#8a5a32', mat: 'leather', bone: 'chest', k: 0.001 });
       s.torus([0, 0.42, 0.086], 0.016, 0.003, { color: '#d6d9e0', mat: 'metal', bone: 'chest', k: 0.001, rot: [Math.PI / 2, 0, 0] });

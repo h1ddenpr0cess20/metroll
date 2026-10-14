@@ -21,13 +21,13 @@ export default person({
   face: { eyeColor: '#3a2a1e', brow: '#2a1c12', mood: 1, blush: 0.2 },
   hair: longHair(cloth('#1c1410', '#0e0a08'), { length: 1.1, thick: 1.15 }),
   style: {
-    attack: 'chop', twist: 0,
+    attack: 'chop',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // Soloing: the left hand racing up the neck, the right a blur, the head thrown back.
-      hold(k, 'armL', -1.45 + Math.sin(T * 3) * 0.25, 0, 0.6); hold(k, 'foreL', -0.5, 0, 0);
-      hold(k, 'armR', -0.7, 0, -0.2); hold(k, 'foreR', -0.9 + Math.sin(T * 18) * 0.3, 0, 0);
+      hold(k, 'armL', -0.15 + Math.sin(T * 3) * 0.06, -0.2, -0.1); hold(k, 'foreL', -1.85, 0, 0);
+      hold(k, 'armR', -0.4, 0.8, 0.1); hold(k, 'foreR', -0.35 + Math.sin(T * 18) * 0.1, 0, 0);
       k.turn('head', -0.35 + Math.sin(T * 1.7) * 0.1, 0.2, 0);
       k.turn('thighL', -0.4, 0, 0.12); k.turn('shinL', 0.5, 0, 0);
       k.turn('chest', -0.12, 0, 0);

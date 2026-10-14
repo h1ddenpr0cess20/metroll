@@ -17,11 +17,11 @@ export default person({
   b: 1.08,
   shape: { legs: 1.0, torso: 1.12, girth: 1.14 },
   skin: '#b8bcc4',
-  look: { torso: cloth('#e8e4e0', '#c0bcb8'), sleeve: STEEL, cuff: '#8a909a', hand: '#8a909a', legs: STEEL, boot: '#8a909a', sole: '#2a2a30' },
+  look: { torso: cloth('#e8e4e0', '#c0bcb8'), sleeve: STEEL, cuff: '#8a909a', hand: '#8a909a', legs: STEEL, boot: '#8a909a', sole: '#2a2a30', boots: true },
   mats: { torso: 'cloth', sleeve: 'metal', cuff: 'metal', hand: 'metal', legs: 'metal', boot: 'metal' },
   face: { eyeColor: '#2a2a30', brow: '#2a2a30', mood: 0 },
   style: {
-    attack: 'slash', twist: 0,
+    attack: 'slash',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;

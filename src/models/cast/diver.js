@@ -17,7 +17,7 @@ export default person({
   face: { eyeColor: '#3a2a1e', brow: '#2a1c12', mood: 0, blush: 0.5 },
   hair: { color: cloth('#2a1c12', '#160e08'), locks: [[[0.09, 0.7, 0.0], [0.11, 0.62, -0.05], 0.03], [[-0.09, 0.7, 0.0], [-0.11, 0.62, -0.05], 0.03]], cap: [0.108, 0.098, 0.108] },
   style: {
-    attack: 'flail', twist: 0,
+    attack: 'flail',
     after(k, { clip, time, seed }) {
       if (clip === 'ko') return;
       const T = time + seed;

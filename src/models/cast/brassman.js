@@ -21,19 +21,19 @@ export default person({
   mats: { torso: 'cloth', sleeve: 'cloth', cuff: 'skin', legs: 'cloth', boot: 'leather' },
   face: { eyeColor: '#2a1a10', brow: '#0a0806', mood: 1 },
   style: {
-    attack: 'swing', twist: 0,
+    attack: 'swing',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       const b = Math.abs(Math.sin(T * 4));
       // Blowing: the trumpet up at the mouth, bobbing on the beat, the free hand off to one side; a bounce in the knees.
-      hold(k, 'armR', -1.7 + b * 0.1, 0.4, -0.3); hold(k, 'foreR', -1.9, 0, 0);
+      hold(k, 'armR', -1.5, 0.6, -0.4); hold(k, 'foreR', -0.65, 0, 0);
       hold(k, 'armL', -0.9, 0, 0.8); hold(k, 'foreL', -0.4, 0, 0);
       k.move('root', 0, b * 0.012, 0);
       k.turn('head', -0.1 + b * 0.1, Math.sin(T * 2) * 0.15, 0);
     },
   },
-  extras(s, J) {
+  extras(s) {
     s.part('kit', () => {
       // A bowler: a round crown and a short brim, with a band.
       s.ellipsoid([0, 0.745, -0.005], [0.1, 0.06, 0.105], { color: '#1a1214', mat: 'cloth', bone: 'head', k: 0.01 });
@@ -41,10 +41,16 @@ export default person({
       // Braces over the white shirt.
       for (const m of [1, -1]) s.limb([m * 0.035, 0.53, 0.06], [m * 0.045, 0.36, 0.066], 0.008, 0.008, { color: '#14141a', mat: 'cloth', bone: 'chest', k: 0.002 });
       // The trumpet: a tube, a flared bell, a mouthpiece, brass.
-      const h = J.handR;
-      const brass = { color: '#e0b440', mat: 'metal', bone: 'handR', k: 0.003 };
-      s.limb([h[0] - 0.02, h[1] + 0.02, h[2] - 0.04], [h[0] - 0.02, h[1] + 0.03, h[2] + 0.11], 0.009, 0.009, brass);
-      s.cone([h[0] - 0.02, h[1] + 0.03, h[2] + 0.14], 0.036, 0.07, { ...brass, rot: [Math.PI / 2, 0, 0] });
+      // At the lips (on the head, so it goes where the mouth goes), the right fist under the valves.
+      const brass = { color: '#e0b440', mat: 'metal', bone: 'head', k: 0.003 };
+      s.limb([0, 0.609, 0.102], [0, 0.6, 0.15], 0.006, 0.008, brass);
+      s.limb([0, 0.6, 0.15], [0, 0.585, 0.26], 0.009, 0.009, brass);
+      // The bell: flaring out, a rim round it, and hollow.
+      s.limb([0, 0.585, 0.25], [0, 0.582, 0.288], 0.011, 0.034, brass);
+      s.torus([0, 0.582, 0.292], 0.035, 0.004, { ...brass, rot: [Math.PI / 2, 0, 0] });
+      s.ellipsoid([0, 0.582, 0.31], [0.031, 0.031, 0.024], { op: 'sub', k: 0.004 });
+      s.limb([0, 0.565, 0.16], [0, 0.565, 0.24], 0.008, 0.008, brass);
+      for (const z of [0.18, 0.2, 0.22]) s.limb([0, 0.565, z], [0, 0.61, z], 0.005, 0.005, brass);
     });
   },
 });

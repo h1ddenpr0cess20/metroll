@@ -18,12 +18,12 @@ export default person({
   b: 1.0,
   shape: { legs: 0.98, girth: 0.94, head: 1.04 },
   skin: flesh,
-  look: { torso: shirt, sleeve: shirt, cuff: flesh, legs: slacks, boot: '#2a2420' },
+  look: { torso: shirt, sleeve: shirt, cuff: flesh, legs: slacks, boot: '#2a2420', shoeless: 'L' },
   mats: { torso: 'cloth', sleeve: 'cloth', cuff: 'skin', legs: 'cloth', boot: 'leather' },
   face: { eyeColor: '#c8c070', brow: '#3a3a30', mood: 1, blush: 0, jaw: 1.1 },
   hair: { color: cloth('#4a4436', '#2a261c'), cap: [0.1, 0.09, 0.104], locks: [[[0.06, 0.76, 0.02], [0.1, 0.68, 0.06], 0.022], [[-0.07, 0.74, -0.03], [-0.1, 0.64, -0.06], 0.022], [[0.02, 0.78, -0.07], [0.04, 0.66, -0.11], 0.025]] },
   style: {
-    attack: 'hug', heavy: 0.5, twist: 0,
+    attack: 'hug', heavy: 0.5,
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;

@@ -26,7 +26,7 @@ export default person({
   mats: { torso: 'cloth', sleeve: 'cloth', cuff: 'cloth', hand: 'skin', legs: 'cloth', boot: 'leather' },
   face: { eyeColor: '#2a3a4a', brow: '#3a2a18', mood: -1 },
   style: {
-    attack: 'smash', twist: 0,
+    attack: 'smash',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
@@ -47,8 +47,11 @@ export default person({
       s.ellipsoid([0, 0.6, 0.075], [0.075, 0.055, 0.05], { color: '#3a2a18', mat: 'hair', bone: 'head', k: 0.02 });
       // The wrench: a long steel shaft and an open jaw at the end, over the shoulder.
       const r = J.handR;
-      s.limb([r[0], r[1] - 0.08, r[2]], [r[0], r[1] + 0.2, r[2] - 0.01], 0.012, 0.016, { color: '#9aa0aa', mat: 'metal', bone: 'handR', k: 0.004 });
-      s.torus([r[0], r[1] + 0.22, r[2] - 0.01], 0.03, 0.01, { color: '#9aa0aa', mat: 'metal', bone: 'handR', k: 0.003, rot: [Math.PI / 2, 0, 0] });
+      // Sculpted along `up`, straight up once the arm is raised: the jaw at the top.
+      const up = [-0.296, -0.954, -0.056], at = (t) => [r[0] + up[0] * t, r[1] + up[1] * t, r[2] + up[2] * t];
+      s.limb(at(-0.07), at(0.19), 0.012, 0.015, { color: '#9aa0aa', mat: 'metal', bone: 'handR', k: 0.004 });
+      s.torus(at(0.22), 0.03, 0.01, { color: '#9aa0aa', mat: 'metal', bone: 'handR', k: 0.003, rot: [Math.PI / 2, 0, 0] });
+      s.box(at(0.25), [0.012, 0.016, 0.014], 0.003, { op: 'sub', k: 0.002 });
       // The clipboard.
       const l = J.handL;
       s.box([l[0] + 0.01, l[1] + 0.03, l[2] + 0.05], [0.045, 0.005, 0.06], 0.003, { color: '#8a6a3a', mat: 'leather', bone: 'handL', k: 0.002 });

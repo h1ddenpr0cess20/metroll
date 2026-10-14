@@ -17,7 +17,7 @@ export default person({
   mats: { torso: 'cloth', sleeve: 'cloth', cuff: 'cloth', legs: 'cloth', boot: 'leather' },
   face: { eyeColor: '#2a1a10', brow: '#160d07', mood: 1, jaw: 1.18 },
   style: {
-    attack: 'punch', heavy: 0.8, twist: 0,
+    attack: 'punch', heavy: 0.8,
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;

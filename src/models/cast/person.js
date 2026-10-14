@@ -50,7 +50,8 @@ export function hold(k, name, x = 0, y = 0, z = 0) {
 
 /**
  * `look` has `skin`, `torso`, `sleeve`, `cuff`, `hand`, `legs`, `boot` (each a
- * colour or a colour function); `mats` the material of each (default cloth,
+ * colour or a colour function), and `boots` or `shin` for the calf (see
+ * humanoid.js `body`); `mats` the material of each (default cloth,
  * skin for skin and hands); `face` is for `head()` (skin, brow, eyeColor,
  * ears, jaw, mood, blush) and `hair` for `hair()`; `b` the breadth. `shape`
  * is their build (humanoid.js `build`: legs, torso, head, girth, hips), so
@@ -62,6 +63,8 @@ export function person({
 }) {
   const tone = typeof skin === 'string' ? skinTone(skin) : skin;
   const full = { skin: tone, hand: tone, ...look };
+  // 'skin' for a bare calf, under shorts or a skirt.
+  if (look.shin === 'skin') full.shin = tone;
   const warp = build(shape);
   return {
     name,
@@ -70,6 +73,8 @@ export function person({
     cells: { eyes: 0.0026, irises: 0.0017, pupils: 0.0011, brows: 0.003, hair: 0.0045, kit: 0.0042, fine: 0.0028, ...cells },
     budget,
     bones: bones(b, warp),
+    /** Their build, to take a posed point back to where it was sculpted. */
+    warp,
     materials: MATERIALS,
     sculpt(s) {
       s.setWarp(warp);

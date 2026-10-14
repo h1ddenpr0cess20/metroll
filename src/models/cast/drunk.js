@@ -23,7 +23,7 @@ export default person({
   face: { eyeColor: '#3a5a3a', brow: '#5a3a1e', blush: 1.0, jaw: 1.08 },
   hair: { color: cloth('#6a4a2e', '#3a2810'), locks: [[[0.08, 0.7, -0.02], [0.11, 0.64, -0.06], 0.025], [[-0.08, 0.7, -0.02], [-0.11, 0.64, -0.06], 0.025]] },
   style: {
-    attack: 'smite', heavy: 0.2, twist: 0,
+    attack: 'smite', heavy: 0.2,
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit') return;
       const T = time + seed;
@@ -46,7 +46,14 @@ export default person({
       // The scarf, red and white, round the neck and down one side.
       s.torus([0, 0.53, 0.0], 0.062, 0.02, { color: '#d81c2a', mat: 'cloth', bone: 'neck', k: 0.008, rot: [0.1, 0, 0] });
       s.limb([0.03, 0.52, 0.06], [0.06, 0.38, 0.08], 0.02, 0.022, { color: '#d81c2a', mat: 'cloth', bone: 'chest', k: 0.008 });
-      s.paint((p) => Math.max(Math.abs(Math.sin(p[1] * 90)) - 0.5, p[2] - 0.05, 0.36 - p[1]), '#f4f0e8', 0.003);
+      // White bands across it: only on the scarf, round the neck and down the front.
+      const onScarf = (p) => {
+        const ring = Math.hypot(Math.hypot(p[0], p[2]) - 0.062, p[1] - 0.53) - 0.026;
+        const t = Math.max(0, Math.min(1, ((p[0] - 0.03) * 0.03 + (p[1] - 0.52) * -0.14 + (p[2] - 0.06) * 0.02) / (0.03 * 0.03 + 0.14 * 0.14 + 0.02 * 0.02)));
+        const tail = Math.hypot(p[0] - 0.03 - 0.03 * t, p[1] - 0.52 + 0.14 * t, p[2] - 0.06 - 0.02 * t) - 0.028;
+        return Math.min(ring, tail);
+      };
+      s.paint((p) => Math.max(Math.abs(Math.sin(p[1] * 90)) - 0.5, onScarf(p)), '#f4f0e8', 0.003);
       // The pint: a glass, the beer in it, the head on it.
       const h = J.handR;
       s.cylinder([h[0], h[1] + 0.045, h[2] + 0.012], 0.024, 0.05, { color: '#d89a28', mat: 'glass', bone: 'handR', k: 0.006, round: 0.006 });

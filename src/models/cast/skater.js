@@ -19,13 +19,13 @@ export default person({
   face: { eyeColor: '#3a2a1e', brow: '#3a2a1e', mood: 0, blush: 0.4 },
   hair: { color: cloth('#2a1c12', '#160e08'), locks: [[[0.09, 0.7, 0.0], [0.11, 0.62, -0.04], 0.03], [[-0.09, 0.7, 0.0], [-0.11, 0.62, -0.04], 0.03]], cap: [0.108, 0.098, 0.108] },
   style: {
-    attack: 'smite', twist: 0,
+    attack: 'smite',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // Bobbing, the board under one arm, the other hand out for balance; a look that says: whatever.
       k.turn('hips', 0.08, Math.sin(T * 1.3) * 0.1, 0);
-      hold(k, 'armL', -0.2, 0, 0.9); hold(k, 'foreL', -0.2, 0, 0);
+      hold(k, 'armL', 0.05, 0, 0.42); hold(k, 'foreL', -0.55, 0, 0);
       hold(k, 'armR', 0.1, 0, -0.1);
       k.turn('head', 0.1, Math.sin(T * 0.8) * 0.25, 0.1);
     },
@@ -34,8 +34,12 @@ export default person({
     baseballCap(s, { color: '#1a1a1e', back: true });
     s.part('kit', () => {
       // The board: a long rounded deck with its wheels, held up under the left arm.
-      s.box([0.17, 0.4, 0.02], [0.095, 0.014, 0.28], 0.012, { color: '#e8c030', mat: 'plastic', bone: 'armL', k: 0.004, rot: [0.2, 0, -0.3] });
-      for (const z of [-0.18, 0.2]) for (const x of [0.13, 0.21]) s.cylinder([x, 0.375, z], 0.022, 0.014, { color: '#f4f2ee', mat: 'rubber', bone: 'armL', k: 0.002, rot: [0, 0, Math.PI / 2] });
+      // Tucked under the left arm on its edge, the long way front to back, the fist over its top edge, the wheels outwards.
+      s.box([0.2, 0.3, 0.03], [0.007, 0.045, 0.15], 0.006, { color: '#e8c030', mat: 'plastic', bone: 'chest', k: 0.003 });
+      for (const z of [-0.08, 0.14]) {
+        s.box([0.214, 0.3, z], [0.008, 0.03, 0.008], 0.003, { color: '#9aa0aa', mat: 'metal', bone: 'chest', k: 0.002 });
+        for (const y of [0.27, 0.33]) s.cylinder([0.226, y, z], 0.014, 0.008, { color: '#f4f2ee', mat: 'rubber', bone: 'chest', k: 0.002, round: 0.003 });
+      }
     });
   },
 });

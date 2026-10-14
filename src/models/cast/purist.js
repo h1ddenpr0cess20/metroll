@@ -23,13 +23,13 @@ export default person({
   face: { eyeColor: '#3a3a3a', brow: '#3a3a3a', mood: -1, blush: 0.1 },
   hair: longHair(cloth('#8a8a8a', '#5a5a5a'), { length: 1.1 }),
   style: {
-    attack: 'flail', twist: 0,
+    attack: 'flail',
     after(k, { clip, time, seed }) {
       if (clip === 'ko' || clip === 'hit' || clip === 'attack') return;
       const T = time + seed;
       // Arms folded tight across the chest; a very slow, very disapproving head shake, side to side.
-      hold(k, 'armR', -0.35, -0.5, -0.5); hold(k, 'foreR', -2.1, 0.5, 0);
-      hold(k, 'armL', -0.35, 0.5, 0.5); hold(k, 'foreL', -2.1, -0.5, 0);
+      hold(k, 'armR', -0.95, 0, -0.15); hold(k, 'foreR', -0.95, 1.4, 0);
+      hold(k, 'armL', -0.9, 0, 0.15); hold(k, 'foreL', -1.0, -1.4, 0);
       k.turn('head', 0.05, Math.sin(T * 0.8) * 0.2, 0);
     },
   },
