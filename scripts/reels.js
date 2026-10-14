@@ -8,6 +8,9 @@
 
 /** New York's hardcore, a d-beat at 190, from the top of the first chorus (bar 12), so it is flat out from the first frame. */
 const HARDCORE = { args: ['nyc', 190, 12], tempo: 190, lead: 0.15 };
+/** The Strip's hair-metal anthem, at 126, and the Bay Area's thrash, at 168: each from its first chorus too. */
+const HAIR = { args: ['strip', 126, 12], tempo: 126, lead: 0.15 };
+const THRASH = { args: ['bay', 168, 12], tempo: 168, lead: 0.15 };
 
 export const REELS = {
   rock: {
@@ -22,6 +25,18 @@ export const REELS = {
       { level: 10, bars: 3 },
       { level: 11, bars: 11 },
     ],
+  },
+  // The best four stretches of the Sunset Strip, in the order they happened, to its own anthem.
+  hair: {
+    hook: ['Hair metal had it coming', 'the Sunset Strip, 1986'],
+    music: HAIR,
+    clips: { level: 1, count: 4, bars: 3 },
+  },
+  // The best four stretches of the Bay Area, to its own thrash.
+  thrash: {
+    hook: ['Faster. Faster. Flat out.', 'the Bay Area, 1986 · thrash'],
+    music: THRASH,
+    clips: { level: 2, count: 4, bars: 4 },
   },
 };
 
