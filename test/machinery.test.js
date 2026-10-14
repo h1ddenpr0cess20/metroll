@@ -4,6 +4,8 @@ import { test } from 'node:test';
 import * as GFX from '../src/vendor/gfx/index.js';
 import { createBumperMesh, createDropMesh, createLiftMesh, createPyroMesh } from '../src/machinery.js';
 import { BUMPERS, BURSTS, DROPS, RIDES } from '../src/travel/index.js';
+import { createGig } from '../src/gig.js';
+import { VENUES } from '../src/venues/index.js';
 
 const SIZE = (obj) => {
   obj.updateMatrixWorld(true);
@@ -35,6 +37,25 @@ test('every ride is built, rocks gently, and has a deck to roll on that fills it
       assert.doesNotThrow(() => made.update(3.7), `${style} moves`);
       const box = SIZE(made.group);
       assert.ok(box.max.y >= 0.1, `${style}: a top at ${box.max.y.toFixed(2)}`);
+      // It rocks inside its group: where the track put the group stays put.
+      made.group.position.set(5, 38, -7);
+      for (const t of [0, 0.4, 1.9, 3.7]) made.update(t);
+      assert.deepEqual(made.group.position.toArray(), [5, 38, -7], `${style}: left where it was put`);
+    }
+  }
+});
+
+test('on every track, every ride is drawn where its deck is, all the way across', () => {
+  for (const [i] of VENUES.entries()) {
+    const gig = createGig(GFX, i);
+    for (const time of [0, 1.3, 2.9, 4.4, 7.1]) {
+      gig.actors.step(0, time);
+      gig.actors.sync(0, time);
+      for (const l of gig.actors.lifts) {
+        const mid = [0, 1, 2].map((a) => (l.box.min[a] + l.box.max[a]) / 2);
+        const at = l.mesh.position.toArray();
+        assert.ok(at.every((v, a) => Math.abs(v - mid[a]) < 0.05), `track ${i + 1}, ${l.style ?? gig.venue.look.lift} at ${time}: drawn at ${at.map((v) => v.toFixed(2))}, its deck at ${mid.map((v) => v.toFixed(2))}`);
+      }
     }
   }
 });
