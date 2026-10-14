@@ -367,7 +367,14 @@ kbd {
   .plate .act { font-size: 10px; letter-spacing: 0.18em; }
   .plate .name { font-size: 16px; }
   .hype { top: calc(58px + var(--safe-t)); }
+  /* The demos and passes in a column under the track's plate, off the cred. */
+  .carried { left: calc(18px + var(--safe-l)); right: auto; top: calc(72px + var(--safe-t)); flex-direction: column; align-items: flex-start; gap: 0; }
+  .carried .chip { font-size: 18px; }
+  /* What Metroll says, up over the meters, the corner buttons and the RAGE button rather than under them. */
+  #say { bottom: calc(178px + var(--safe-b)); max-width: 86vw; }
 }
+/* No keyboard on a phone: the rage meter doesn't say Space. */
+@media (pointer: coarse) { .meters .label kbd { display: none; } }
 
 /* ———————————————————————————————————— the light of each stop */
 
