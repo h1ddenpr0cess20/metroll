@@ -95,7 +95,6 @@ export const FOES = Object.freeze({
   raver: { name: 'Raver', blurb: 'Dancing since Friday. It is Monday. Does not intend to be told.', move: 'walk', toughness: 3, power: 3, hype: 50, radius: 0.35, speed: 4.2, shout: 'WHOOO!' },
   clubber: { name: 'Clubber', blurb: 'In a queue since Thursday. Sunglasses. Indoors. At night. Black.', move: 'walk', toughness: 5, power: 5, hype: 70, radius: 0.37, speed: 2.6 },
   robot: { name: 'Line Robot', blurb: 'One job. Has done it since 1974. You are the job.', move: 'walk', toughness: 6, power: 6, hype: 100, radius: 0.42, speed: 2.0, shout: 'BEEP.' },
-  drone: { name: 'Camera Drone', blurb: 'Hired for the crowd shot. Now very interested in you. The red light means recording.', move: 'fly', toughness: 2, power: 3, hype: 50, radius: 0.32, speed: 3.4 },
   // Woodstock '99.
   nuguy: { name: 'Nu Guy', blurb: 'Wants to break stuff. Would like to be asked what. Has a lot of feelings, mostly about you.', move: 'walk', toughness: 6, power: 7, hype: 90, radius: 0.43, speed: 3.4, shout: 'BREAK STUFF!' },
   dj: { name: 'DJ', blurb: 'Was booked for a metal show. Is playing what they like. It is going about as well as you would expect.', move: 'walk', toughness: 3, power: 3, hype: 50, radius: 0.37, speed: 3.0, shout: 'KEEP ROLLIN\'!' },

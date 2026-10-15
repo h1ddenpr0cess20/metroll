@@ -19,7 +19,6 @@ import diver from './diver.js';
 import dj from './dj.js';
 import doomlord from './doomlord.js';
 import dracfan from './dracfan.js';
-import drone from './drone.js';
 import drunk from './drunk.js';
 import emo from './emo.js';
 import engineer from './engineer.js';
@@ -73,7 +72,7 @@ import zombie from './zombie.js';
 /** Everyone sculpted, by name (see foes.js for who they are). */
 export const CAST = {
   bat, beerguy, blackcat, blader, bobby, bouncer, brassman, candlekid, clubber, cop, coroner,
-  corpsepaint, count, critic, crow, crowdsurfer, cultist, diver, dj, doomlord, dracfan, drone,
+  corpsepaint, count, critic, crow, crowdsurfer, cultist, diver, dj, doomlord, dracfan,
   drunk, emo, engineer, floridaman, folkie, foreman, frontman, gatekeeper, gator, goth, headbanger,
   hippie, hxckid, knight, limodriver, medic, merchguy, mosher, mourner, nuguy, pallbearer, pigeon,
   poet, poser, promoter, punk, purist, rat, raver, roadie, robot, scenekid, screamer,

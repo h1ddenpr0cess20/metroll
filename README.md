@@ -119,7 +119,7 @@ music.
 | 6 | **Tampa, 1991** · Death metal | A car park behind a strip mall, a boardwalk over the swamp with the gators under it and the green gas coming up, a churchyard with the headstones on chains, an airboat across the bayou, a morgue with a steel door, and a recording studio where somebody is doing the vocals through a bucket. Blast beats, the lowest guitars there are. |
 | 7 | **Norway, 1993** · Black metal | A car park outside a very old wooden church (it is fine; do not ask), a forest road in the snow, black ice, a mountain pass with snowballs coming down on the beat, a longship over the fjord, a toll booth with **a troll** in it who does not take cards, and a hall where nobody is smiling. Tremolo-picked, high and cold. |
 | 8 | **New Orleans, 1991** · Doom | A courtyard off Bourbon Street, a second line with the brass out, a cemetery where everyone is buried above the ground, a funeral bell coming down on the beat, a skiff across the bayou, a plantation gate, and **the Doomlord**, who has been playing the same chord since Tuesday. A funeral with a riff. |
-| 9 | **Berlin, 1995** · Industrial | A power station nobody has switched off: an assembly line with the presses coming down and the welders not looking up, a conveyor, a flatcar over the cooling pond, a tunnel full of drones, a queue that has been there since Thursday outside a door with a policy (the policy is no), and the club, a concrete room with a strobe in it. Four on the floor. |
+| 9 | **Berlin, 1995** · Industrial | A power station nobody has switched off: an assembly line with the presses coming down and the welders not looking up, a conveyor, a flatcar over the cooling pond, a tiled tunnel, a queue that has been there since Thursday outside a door with a policy (the policy is no), and the club, a concrete room with a strobe in it. Four on the floor. |
 | 10 | **Woodstock '99** · Nu metal | A decommissioned air base in a heat wave: the tent village, the runway with the trusses coming down and the bins on fire, the mud, a hay wagon across the trench, and the main stage field with ten thousand people breaking stuff, and a sign by the trench that says KEEP ROLLIN', which is the job description. Water is four dollars. A syncopated stutter, the bass up front. |
 | 11 | **Warped Tour, 2005** · Screamo | A car park in July: the vendor midway where everybody is giving away a sticker, the energy drinks coming down, a skate park, a van across the storm drain, and a field full of kids in black, crying, having the best day of their lives. A sing-along over fast power chords, with a breakdown in it. |
 | 12 | **Wacken, 2008** · Everything | The whole history of the record, in a field, in the rain, in horned helmets: the camp road with the kegs coming down, the mud, a mud trailer across the trench, the medieval village (knights, wizards, a very tall man in a horned helmet), the gate, and the main stage, where somebody has been waiting in the middle of the floor since 1971. **Rock.** |
@@ -191,7 +191,7 @@ sound guys, cops.
 The animals share a skeleton (`quadruped.js`): a Tampa gator, a wolf out of
 the Norwegian spruce, a black cat who crosses the path on purpose and a subway
 rat with a slice of pizza bigger than itself; and on their own, bats, crows,
-pigeons, the camera drones and the line robots.
+pigeons and the line robots.
 
 And three bosses, each fought differently: **the Count**, who lunges and then
 has to get his breath back; **the Doomlord**, who stops and stamps so the floor
@@ -256,6 +256,6 @@ boulder. The engine is [Rock 'n' Roller](https://github.com/h1ddenpr0cess20/rock
 from [dungeon-roller](https://github.com/h1ddenpr0cess20/dungeon-roller), by
 way of [Rock 'n' Roller II](https://github.com/h1ddenpr0cess20/rocknroller-ii)
 and [III](https://github.com/h1ddenpr0cess20/rocknroller-iii); a few of the
-cast (the bat, the zombie, the robot, the drone, the crow) started life in theirs. Type is Metal Mania,
+cast (the bat, the zombie, the robot, the crow) started life in theirs. Type is Metal Mania,
 Pirata One, Anton and Barlow Condensed, from [Fontsource](https://fontsource.org).
 See also [other games](docs/other-games.md).

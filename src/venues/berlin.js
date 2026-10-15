@@ -1,13 +1,13 @@
 import { digger } from '../dig.js';
 import { Venue } from '../venue.js';
-import { across, backTile, barred, branch, flat, loop, wallTile, wash } from './helpers.js';
+import { across, backTile, barred, branch, flat, wallTile, wash } from './helpers.js';
 
 /**
  * Track 9: Berlin, 1995. Industrial: a power station that nobody has
  * switched off, with a club in the cellar of it. A yard; an assembly line
  * where the hydraulic presses come down on the beat, the welders do not
  * look up and a conveyor belt is going the way it is going; a cooling
- * pond crossed on a flatcar; a tiled tunnel with the drones in it; a queue
+ * pond crossed on a flatcar; a tiled tunnel with the engineers in it; a queue
  * that has been there since Thursday, outside a door with a policy. The
  * policy is no. The policy has been no since 1989. The club is a concrete
  * room the size of a hangar with a strobe in it, and it is, by the
@@ -83,11 +83,10 @@ export function berlin() {
   d.turn('+z', STEEL);
   d.hall(3, STEEL);
 
-  // The cooling pond: black water under the pipes, a flatcar that goes across it at the pace of one, the drone that is already over it.
+  // The cooling pond: black water under the pipes, a flatcar that goes across it at the pace of one.
   const quay = d.hall(8, { width: 3, ...STEEL });
   g.foe('welder', ...quay.tile(4, 0), { range: 3 });
   g.pick(...quay.tile(1, 0), 5).pick(...quay.tile(6, 1), 5);
-  g.foe('drone', ...quay.tile(5, 0), { path: loop(quay, 1) });
   lamppost(quay, 2);
   d.ferry(15, { size: 3, period: 9 });
   const bank = d.hall(9, { width: 5, ...STEEL });
@@ -98,20 +97,18 @@ export function berlin() {
   // A plank out across the pond to the pump house: the second demo tape.
   const pump = branch(d, bank, 4, 'front', 3);
   pump.hall(2, { wall: 'corrugated' });
-  const walk = pump.bridge(7, { floor: 'plate' });
-  g.foe('drone', ...walk.tile(3, 0), { path: [walk.tile(1, 0), walk.tile(5, 0)] });
+  pump.bridge(7, { floor: 'plate' });
   const house = pump.room(5, 5, { wall: 'corrugated', floor: 'concrete' });
   g.demo(...house.tile(2, 0));
   d.turn('+x', STEEL);
   d.hall(3, STEEL);
 
-  // The tunnel: white tile and a yellow stripe, a press that has been left on, the drones in a row, the engineers with their torches.
+  // The tunnel: white tile and a yellow stripe, a press that has been left on, the engineers with their torches.
   const tunnel = d.hall(15, { width: 5, ...TILE });
   g.drop(...across(tunnel, 5, { beats: 4 }));
   g.pick(...tunnel.tile(1, 0), 5).pick(...tunnel.tile(3, 1), 5).pick(...tunnel.tile(7, 0), 10).pick(...tunnel.tile(12, 1), 5).pick(...tunnel.tile(13, 0), 10);
   g.pyro(...across(tunnel, 10, { beats: 4, offset: 0.5 }));
   g.foe('engineer', ...tunnel.tile(3, -1), { range: 4 }).foe('welder', ...tunnel.tile(8, 1), { range: 4 });
-  g.foe('drone', ...tunnel.tile(12, 0), { path: loop(tunnel, 1, 8, 15) });
   g.whetstone(...tunnel.tile(14, -1));
   lamppost(tunnel, 2);
   sign(tunnel, 3, 'ACHTUNG', NEON[1], 0.45, 1.7);
@@ -133,7 +130,6 @@ export function berlin() {
   for (const [a, b] of [[7, -6], [7, 6], [14, -6], [14, 6]]) g.pillar(...club.tile(a, b), 1.0, { prop: 'speaker' });
   g.foe('raver', ...club.tile(8, 0), { range: 5 }).foe('raver', ...club.tile(13, 3), { range: 5 }).foe('clubber', ...club.tile(11, -3), { range: 5 });
   g.foe('welder', ...club.tile(18, 0), { range: 4 });
-  g.foe('drone', ...club.tile(12, 0), { path: loop(club, 2, 6, 19) });
   g.pick(...club.tile(2, 0), 10).pick(...club.tile(6, -3), 10).pick(...club.tile(6, 3), 10).pick(...club.tile(10, 5), 10).pick(...club.tile(15, -5), 10).pick(...club.tile(19, 3), 10);
   g.whetstone(...club.tile(2, -7)).whetstone(...club.tile(2, 7));
   wash(g, club, [NEON[0], NEON[1], NEON[2]], { cans: 4, program: 'chase', every: 2, strobe: true });

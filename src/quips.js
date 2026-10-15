@@ -136,7 +136,7 @@ const DOOM = Object.freeze({
   whetstone: ['A whetstone. Slowly. Slooowly.'],
   demo: ['A demo. Forty minutes. One song.'],
   ready: ['New Orleans. Humid. A funeral. A riff. One riff. Forever.', 'Okay. Turn it down a bit. No. Down. Tune lower.'],
-  clear: ['It\'s over. Was it? Hard to tell. Everything is a drone.'],
+  clear: ['It\'s over. Was it? Hard to tell. Everything is concrete.'],
 });
 
 /** Industrial, Berlin: a factory, and cold feelings. */
