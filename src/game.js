@@ -2,11 +2,11 @@ import { createEffects } from './effects.js';
 import { createGig, PROP_HYPE, putBack, resultOf, STEP, stepGig, toGround } from './gig.js';
 import { comboAt, earn, windowLeft } from './hype.js';
 import { HARM } from './integrity.js';
-import { createLightshow } from './lightshow.js';
+import { createLightshow } from 'madness-engine/scenery/lightshow';
 import { createProps } from './decor.js';
 import { readyAll } from './models/library.js';
 import { stars } from './rating.js';
-import { createMace } from './mace.js';
+import { createMace } from 'madness-engine/heroes/mace';
 import { BALL_RADIUS } from './roll.js';
 import { createExit, createVenueMeshes } from './scenery.js';
 import { GRADES } from './smash.js';
@@ -91,8 +91,7 @@ export function createGame({ stage, hud, input, audio, storage }) {
     scene.add(group);
     // Everything that moves goes where it starts now, not on the first live frame: a track begun while the game is still paused used to leave its lift, and everyone else, at the origin, far below the floor.
     gig.actors.sync(0, gig.time, { focus: gig.ball });
-    stage.setVenue(venue);
-    effects.setVenue(venue);
+    effects.setVenue(venue, stage.setVenue(index));
     accumulator = 0;
     mace.group.visible = true;
     const b = gig.ball;

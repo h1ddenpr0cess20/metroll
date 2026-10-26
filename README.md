@@ -16,8 +16,9 @@ It is sarcastic, it is smug, and it trolls: the posers, the bands, the fans,
 the genres, and above all you.
 
 A spinoff of the [Rock 'n' Roller](https://github.com/h1ddenpr0cess20/rocknroller)
-games, on the engine of [Rock 'n' Roller III](https://github.com/h1ddenpr0cess20/rocknroller-iii)
-(the renderer, physics, tiled venues and camera), with the tracks, cast,
+games, on the engine of [Rock 'n' Roller III](https://github.com/h1ddenpr0cess20/rocknroller-iii),
+now the [Madness Engine](https://github.com/h1ddenpr0cess20/madness-engine)
+(the renderer, physics, camera, stage and sound), with the tracks, cast,
 props, machinery, score and voice all redone. Rock himself, the boulder from
 the first game, turns up at the end as the last boss. He was here first, and
 has opinions about the spikes.
@@ -145,48 +146,47 @@ a bayou, a power plant, an air base, a fairground or a festival, and the weather
 on it: rain in Birmingham and at Wacken, snow in Norway, dust blowing at
 Woodstock.
 
-The rig (`src/lightshow.js`) keeps the beat of the music: pars, spots,
-strobes, lasers, neon signs, chandeliers, festoons, searchlights and
+The rig (the engine's `scenery/lightshow`) keeps the beat of the music: pars,
+spots, strobes, lasers, neon signs, chandeliers, festoons, searchlights and
 street lamps. Strobes and lightning never flash more than three times in any
 second, and **Settings → Flashing lights** turns them, and the flashbulbs,
 down to a glow.
 
 ## The music
 
-Played live in Web Audio (`src/music.js`), with no audio files: a theme for
-every track, each with its own drums, bass line, rhythm part and lead, and a
-tempo that goes from a funeral march (New Orleans, 64) to a blast beat
-(Norway, 198). The guitars go through a high-gain amp (the mids pushed into
-a hard clipper, then scooped, the lows put back for the chug) and are
-double-tracked hard left and right; palm mutes thud, open chords ring, and
-the bass doubles them down low under a kick with a click on it. The main
-title is a heavy anthem with the guitars wide open. A slow, heavy tritone
-riff for Birmingham; a major-key anthem with a keyboard pad for the Strip;
-palm-muted, chromatic thrash for the Bay Area; a clean guitar and a theremin
-for Whitby, the distortion coming in for the choruses; a d-beat for New
-York; blast beats and the lowest guitars there are for Tampa;
-tremolo-picked and cold for Norway; a dirge for New Orleans, the guitars
-down-tuned and ringing and a brass band over them; a four-on-the-floor
-machine for Berlin; a syncopated stutter for Woodstock; a sing-along with a
-breakdown for the Warped Tour; and for Wacken, all of it at once, double
-bass drums, the guitars galloping, brass and a shredder over the top. The
-beat clock drives the hazards and the lights.
+Played live in Web Audio (the engine's `music/band`), with no audio files: a
+theme for every track, each with its own drums, bass line, rhythm part and
+lead, and a tempo that goes from a funeral march (New Orleans, 64) to a blast
+beat (Norway, 198). The guitars go through a high-gain amp (the mids pushed
+into a hard clipper, then scooped, the lows put back for the chug) and are
+double-tracked hard left and right; palm mutes thud, open chords ring, and the
+bass doubles them down low under a kick with a click on it. The main title is
+a heavy anthem with the guitars wide open. A slow, heavy tritone riff for
+Birmingham; a major-key anthem with a keyboard pad for the Strip; palm-muted,
+chromatic thrash for the Bay Area; a clean guitar and a theremin for Whitby,
+the distortion coming in for the choruses; a d-beat for New York; blast beats
+and the lowest guitars there are for Tampa; tremolo-picked and cold for
+Norway; a dirge for New Orleans, the guitars down-tuned and ringing and a
+brass band over them; a four-on-the-floor machine for Berlin; a syncopated
+stutter for Woodstock; a sing-along with a breakdown for the Warped Tour; and
+for Wacken, all of it at once, double bass drums, the guitars galloping, brass
+and a shredder over the top. The beat clock drives the hazards and the lights.
 
 ## The cast
 
-Sculpted in code (`src/models/cast/`) and baked in background workers while
-the page loads. Seventy-odd of them, and who is in the way depends on what
-year it is. A poser in a band T-shirt, a hippie, a foreman, a roadie, a
-merch guy, a critic; a frontman who has used a can of hairspray, a shredder,
-a promoter, a limo driver; a mosher, a skater, a tape trader and a crowd
-surfer; a goth, a Dracula fan, a poet and a mourner; a straight-edge kid, a
-tough guy, a zine kid and a stage diver; a headbanger, a zombie, a Florida
-Man and a coroner; corpse paint, a troll and a skier; a stoner, a pallbearer,
-a brass man and a cultist; a welder, an engineer, a raver and a clubber; a
-nu guy, a DJ, a candle kid and a medic; a scene kid, an emo, a street team
-and a screamer; a viking, a wizard, a knight, a beer guy and a purist. And
-the ones who work every show: doormen, bouncers, gatekeepers, security,
-sound guys, cops.
+Sculpted in code (the engine's `characters/`, listed in `src/models/cast/`)
+and baked in background workers while the page loads. Seventy-odd of them, and
+who is in the way depends on what year it is. A poser in a band T-shirt, a
+hippie, a foreman, a roadie, a merch guy, a critic; a frontman who has used a
+can of hairspray, a shredder, a promoter, a limo driver; a mosher, a skater, a
+tape trader and a crowd surfer; a goth, a Dracula fan, a poet and a mourner; a
+straight-edge kid, a tough guy, a zine kid and a stage diver; a headbanger, a
+zombie, a Florida Man and a coroner; corpse paint, a troll and a skier; a
+stoner, a pallbearer, a brass man and a cultist; a welder, an engineer, a
+raver and a clubber; a nu guy, a DJ, a candle kid and a medic; a scene kid, an
+emo, a street team and a screamer; a viking, a wizard, a knight, a beer guy
+and a purist. And the ones who work every show: doormen, bouncers,
+gatekeepers, security, sound guys, cops.
 
 The animals share a skeleton (`quadruped.js`): a Tampa gator, a wolf out of
 the Norwegian spruce, a black cat who crosses the path on purpose and a subway
@@ -194,13 +194,13 @@ rat with a slice of pizza bigger than itself; and on their own, bats, crows,
 pigeons and the line robots.
 
 And three bosses, each fought differently: **the Count**, who lunges and then
-has to get his breath back; **the Doomlord**, who stops and stamps so the floor
-throws Metroll back; and **Rock**, who moves only on the beat. Rock is the
-original: the granite boulder from the first game, not drawn again but the
-very same file (`src/boulder.js`, untouched), at the size of a boss, rolling
-when he goes, hopping when somebody is in reach, and sitting in the middle of
-the last stage as if he had been there since 1971. He has opinions about the
-spikes.
+has to get his breath back; **the Doomlord**, who stops and stamps so the
+floor throws Metroll back; and **Rock**, who moves only on the beat. Rock is
+the original: the granite boulder from the first game, not drawn again but the
+very same file (the engine's `heroes/boulder`, untouched), at the size of a
+boss, rolling when he goes, hopping when somebody is in reach, and sitting in
+the middle of the last stage as if he had been there since 1971. He has
+opinions about the spikes.
 
 ![The Doomlord, in New Orleans](docs/screenshots/boss-doomlord.jpg)
 
@@ -216,6 +216,24 @@ times: chrome and red, blackletter for the banners, hazard stripes round the
 review.
 
 ![The review](docs/screenshots/review.jpg)
+
+## On the engine
+
+The game runs on the
+[Madness Engine](https://github.com/h1ddenpr0cess20/madness-engine), which
+`npm install` fetches from GitHub. The renderer (WebGPU, or WebGL 2), the
+physics, the controls, the arcade camera, the stage, the film, the sound, the
+flying bits and the weather, the save slot and the sculpting kit are the
+engine's, and so are Metroll (`heroes/mace` and `heroes/morningstar`), Rock
+(`heroes/boulder`), the rig (`scenery/lightshow`), the music (`music/band`),
+the tracks' textures (`textures/venue`), the cast and props (`characters/…`,
+`props/…`) and each track's mood (`moods/birmingham` and the rest: its light,
+sky, reflections, grade and weather), all from the engine's library. What is
+left here is the game: the tracks, the rules, the machinery, the props and
+the HUD, and the game's own sounds and bits on the engine's (`audio.js`,
+`effects.js`). The rosters (`src/models/cast/index.js`,
+`src/models/props/index.js`) say who is in the game and take each one from
+the library.
 
 ## Develop
 
@@ -252,8 +270,9 @@ browser console `metroll.debug.venue(i)` jumps to a track and
 ## Credits
 
 Metroll is a spiked ball. Rock is [Rock](https://github.com/h1ddenpr0cess20/rock)'s
-boulder. The engine is [Rock 'n' Roller](https://github.com/h1ddenpr0cess20/rocknroller)'s,
-from [dungeon-roller](https://github.com/h1ddenpr0cess20/dungeon-roller), by
+boulder. The engine is the [Madness Engine](https://github.com/h1ddenpr0cess20/madness-engine),
+which grew out of [Rock 'n' Roller](https://github.com/h1ddenpr0cess20/rocknroller)'s
+and [dungeon-roller](https://github.com/h1ddenpr0cess20/dungeon-roller), by
 way of [Rock 'n' Roller II](https://github.com/h1ddenpr0cess20/rocknroller-ii)
 and [III](https://github.com/h1ddenpr0cess20/rocknroller-iii); a few of the
 cast (the bat, the zombie, the robot, the crow) started life in theirs. Type is Metal Mania,

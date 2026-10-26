@@ -1,8 +1,8 @@
-import { createRock } from './boulder.js';
+import { createRock } from 'madness-engine/heroes/boulder';
 
 /**
  * Rock, the final boss at Wacken. Not sculpted, not re-drawn, not dressed:
- * the boulder from the first game (`boulder.js`, the same file, untouched),
+ * the boulder from the first game (the engine's `heroes/boulder`, untouched),
  * at the size the boss is, rolling when it goes, hopping when somebody is in
  * reach and tipping over when it is beaten. It stands on (0, 0, 0), as every
  * foe does, with its middle one radius up, which is where the games always

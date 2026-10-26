@@ -1,6 +1,6 @@
 import { createFoeMesh, FLIGHT, FOES, KNOCKED_OUT } from './foes.js';
 import { createBumperMesh, createDropMesh, createGateMesh, createLiftMesh, createPanelMesh, createPickupMesh, createPyroMesh } from './machinery.js';
-import { collideBalls, createBall, PUSH, stepBall } from './physics.js';
+import { collideBalls, createBall, PUSH, stepBall } from 'madness-engine/physics';
 
 /**
  * Everything on a set that moves or can be taken, and isn't Metroll: the
