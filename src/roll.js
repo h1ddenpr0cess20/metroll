@@ -1,4 +1,4 @@
-import { rollSpin, turn } from './physics.js';
+import { rollSpin, turn } from 'madness-engine/physics';
 
 /**
  * How Metroll is turned as it rolls: a ball, rolling without slipping, so the

@@ -1,5 +1,5 @@
 import { BELT } from './gig.js';
-import { canvas, texture, beltTexture, cached, floorTexture, wallTexture } from './textures.js';
+import { canvas, texture, beltTexture, cached, floorTexture, wallTexture } from 'madness-engine/textures/venue';
 import { createZapMaterial } from './zap.js';
 
 /**
@@ -8,7 +8,7 @@ import { createZapMaterial } from './zap.js';
  * away into the dark, belts with their chevrons running, the electrified
  * floor (zap.js), and Metroll's mark at the end — a frame with a lit sign over
  * it, CUT (or THE END, at the last), and a ring on the floor to hit. Every texture is painted on a canvas
- * at startup (textures.js); under node (the tests) there is no canvas and the
+ * at startup (the engine's `textures/venue`); under node (the tests) there is no canvas and the
  * meshes go without.
  */
 

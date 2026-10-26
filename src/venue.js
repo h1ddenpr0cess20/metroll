@@ -1,4 +1,4 @@
-import { World } from './physics.js';
+import { World } from 'madness-engine/physics';
 
 /**
  * A venue is a grid of tiles, as a Madness course is: each tile has its own
@@ -32,7 +32,7 @@ export const CAP = -1;
 /** Corner order: (x, z), (x + 1, z), (x, z + 1), (x + 1, z + 1). */
 const H00 = 0, H10 = 1, H01 = 2, H11 = 3;
 
-/** The lights of the rig that stand on a post (lightshow.js). */
+/** The lights of the rig that stand on a post (the engine's `scenery/lightshow`). */
 const POSTED = new Set(['bulb', 'par', 'spot', 'strobe', 'laser', 'klieg', 'streetlamp']);
 
 /** Props that are part of the building, not furniture: they don't break. */
@@ -363,7 +363,7 @@ export class Venue {
   }
 
   /**
-   * One of the light rig (lightshow.js), set over tile (x, z): `kind` is
+   * One of the light rig (the engine's `scenery/lightshow`), set over tile (x, z): `kind` is
    * 'par', 'spot', 'strobe', 'ball', 'laser', 'neon', 'bulb', 'chandelier',
    * 'festoon', 'klieg', 'blinds', 'marquee' or 'streetlamp'. `colors` are
    * what it cycles through; `reach` how far it is baked into the stone;
@@ -548,7 +548,7 @@ export const HEADING = Object.freeze({ '+x': [1, 0], '-x': [-1, 0], '+z': [0, 1]
  * The light baked into the floor and walls: a dim wash everywhere, and a
  * glow round every lamp, every fixture of the light rig, every electrified
  * tile and Metroll's mark. The fixtures nearest Metroll also get real lights
- * when it is drawn (`stage.js`, `lightshow.js`); this is what keeps the rest
+ * when it is drawn (`stage.js`, the engine's `scenery/lightshow`); this is what keeps the rest
  * of the venue from being black, and what gives each one its colour.
  */
 export function bakeLight(venue) {

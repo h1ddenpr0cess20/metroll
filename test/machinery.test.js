@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import * as GFX from '../src/vendor/gfx/index.js';
+import * as GFX from 'madness-engine/gfx';
 import { createBumperMesh, createDropMesh, createLiftMesh, createPyroMesh } from '../src/machinery.js';
 import { BUMPERS, BURSTS, DROPS, RIDES } from '../src/travel/index.js';
 import { createGig } from '../src/gig.js';

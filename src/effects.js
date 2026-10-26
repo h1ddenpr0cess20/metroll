@@ -7,35 +7,20 @@
  * rain, falling round Metroll in streaks and splashing where it lands; a
  * sandstorm, blowing across in streaks; snow, drifting down in flakes; or
  * cherry blossom, its petals turning over as they fall.
+ *
+ * They are the engine's (`madness-engine/effects`): it throws them, lands
+ * them and fades them, and makes the rings and the weather; what is thrown
+ * is the game's.
  */
 
-const GRAVITY = 18;
+import { createEffects as createBits, outward } from 'madness-engine/effects';
 
 const CONFETTI = ['#ffd23a', '#f5f0e6', '#d81c2a', '#ffb02a', '#ffffff', '#c8a050', '#2de2ff'];
 const PICKS = ['#ff3a8a', '#2ad0ff', '#ffd23a', '#8a4be8', '#3ae88a', '#ff7a1a', '#f5f0e6'];
 
-/** The rain: how many streaks, how far round Metroll they fall, how long each is and how fast it falls. */
-const RAIN = Object.freeze({ drops: 900, reach: 11, height: 9, length: 0.5, speed: 16 });
-
-/**
- * Weather in streaks (rain, and sand blowing across) and in flakes (snow,
- * petals): colour, how see-through, which way and how fast it goes
- * ([x, y, z] tiles a second), how long a streak is along that way, or how
- * big a flake is and how much it wanders and turns, and whether it splashes.
- */
-const WEATHER = Object.freeze({
-  rain: { streaks: true, color: '#c8d4e4', opacity: 0.45, velocity: [1.3, -16, 0], length: 0.5, splash: true },
-  sand: { streaks: true, color: '#e0c088', opacity: 0.4, velocity: [9, -0.6, 2.5], length: 0.7, splash: false },
-  snow: { flakes: 800, color: '#f0f4ff', opacity: 0.8, velocity: [0.3, -1.4, 0.1], size: 0.03, wander: 0.5, turn: 1 },
-  petals: { flakes: 380, color: '#ffb8d4', opacity: 0.95, velocity: [0.6, -0.9, 0.2], size: 0.1, wander: 0.9, turn: 4 },
-});
-
 export function createEffects(GFX, scene) {
-  const group = new GFX.Group();
-  group.name = 'effects';
-  scene.add(group);
-  let venue = null;
-  const bits = [];
+  const effects = createBits(GFX, scene);
+  const { spawn } = effects;
 
   const puff = new GFX.SphereGeometry(0.16, 12, 8);
   const smoke = new GFX.MeshStandardMaterial({ name: 'smoke', color: new GFX.Color('#c9c4d4'), roughness: 1, transparent: true, opacity: 0.55, depthWrite: false });
@@ -57,178 +42,20 @@ export function createEffects(GFX, scene) {
   const paperMats = CONFETTI.map((c) => new GFX.MeshBasicMaterial({ name: 'confetti', color: new GFX.Color(c), side: GFX.DoubleSide, toneMapped: false }));
   const star = new GFX.IcosahedronGeometry(0.06, 0);
 
-  function spawn(mesh, { x, y, z, vx, vy, vz, life, spin = 6, drag = 0, floaty = 1, bounce = 0.35, grow = 0 }) {
-    mesh.position.set(x, y, z);
-    mesh.rotation.set(Math.random() * 6, Math.random() * 6, Math.random() * 6);
-    group.add(mesh);
-    bits.push({
-      mesh, vx, vy, vz, life, age: 0, drag, floaty, bounce, grow,
-      spin: [(Math.random() - 0.5) * spin, (Math.random() - 0.5) * spin, (Math.random() - 0.5) * spin],
-      scale: mesh.scale.x,
-    });
-  }
-
-  const outward = (speed, up) => {
-    const a = Math.random() * Math.PI * 2;
-    const s = speed * (0.4 + Math.random() * 0.6);
-    return [Math.cos(a) * s, up * (0.5 + Math.random()), Math.sin(a) * s];
-  };
-
-  /** An expanding ring on the floor: the thump of a hit going out. */
-  const rings = [];
-  const ringMaterial = (colour) => new GFX.MeshBasicMaterial({ name: 'ring', color: new GFX.Color(colour), transparent: true, opacity: 0.9, depthWrite: false, toneMapped: false, blending: GFX.AdditiveBlending });
-
-  // The rain (and the sand): one set of line segments, every streak a pair of points, moved each frame.
-  const rain = (() => {
-    const positions = new Float32Array(RAIN.drops * 6);
-    const geometry = new GFX.BufferGeometry();
-    const attribute = new GFX.BufferAttribute(positions, 3);
-    geometry.setAttribute('position', attribute);
-    const material = new GFX.LineBasicMaterial({ name: 'rain', color: new GFX.Color('#c8d4e4'), transparent: true, opacity: 0.45, depthWrite: false });
-    const lines = new GFX.LineSegments(geometry, material);
-    lines.frustumCulled = false;
-    lines.visible = false;
-    group.add(lines);
-    const drops = Array.from({ length: RAIN.drops }, () => ({ x: 0, y: 0, z: 0 }));
-    return { lines, material, drops, positions, attribute, on: false, seeded: false, kind: null };
-  })();
-  // Snow and petals: one mesh of little quads, two triangles each, turned and moved each frame.
-  const flakes = (() => {
-    const most = Math.max(...Object.values(WEATHER).map((w) => w.flakes ?? 0));
-    const positions = new Float32Array(most * 18);
-    const geometry = new GFX.BufferGeometry();
-    const attribute = new GFX.BufferAttribute(positions, 3);
-    geometry.setAttribute('position', attribute);
-    const material = new GFX.MeshBasicMaterial({ name: 'flakes', color: new GFX.Color('#ffffff'), transparent: true, opacity: 0.9, side: GFX.DoubleSide, depthWrite: false, toneMapped: false });
-    const mesh = new GFX.Mesh(geometry, material);
-    mesh.frustumCulled = false;
-    mesh.visible = false;
-    group.add(mesh);
-    const list = Array.from({ length: most }, () => ({ x: 0, y: 0, z: 0, a: 0, b: 0, s: 1, p: Math.random() * 7 }));
-    return { mesh, material, list, positions, attribute, on: false, seeded: false, kind: null, n: 0, time: 0 };
-  })();
-  const splashes = [];
-  const splashGeometry = new GFX.TorusGeometry(1, 0.04, 4, 16);
-  const splashMat = new GFX.MeshBasicMaterial({ name: 'splash', color: new GFX.Color('#d0dce8'), transparent: true, opacity: 0.5, depthWrite: false });
-
-  /** A fresh drop somewhere round (x, z), `height` of the way up its fall. */
-  const reseed = (d, x, y, z, height = Math.random()) => {
-    const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * RAIN.reach;
-    d.x = x + Math.cos(a) * r;
-    d.z = z + Math.sin(a) * r;
-    d.y = y + height * RAIN.height;
-  };
-
-  /** Snow or petals round (x, y, z), once a frame: each drifts down, wanders and turns over, and comes round again past Metroll. */
-  function drift(dt, x, y, z) {
-    const { list, positions, kind, n } = flakes;
-    flakes.time += dt;
-    const t = flakes.time;
-    const [vx, vy, vz] = kind.velocity;
-    if (!flakes.seeded) {
-      for (let i = 0; i < n; i++) reseed(list[i], x, y - 2, z);
-      flakes.seeded = true;
-    }
-    for (let i = 0; i < n; i++) {
-      const f = list[i];
-      f.x += (vx + Math.sin(t * 0.9 + f.p) * kind.wander) * dt;
-      f.y += vy * dt;
-      f.z += (vz + Math.cos(t * 0.7 + f.p * 1.3) * kind.wander) * dt;
-      const ground = venue?.heightAt(f.x, f.z);
-      if (f.y < (ground ?? y - 8)) reseed(f, x, y - 2, z, 1);
-      if (Math.abs(f.x - x) > RAIN.reach || Math.abs(f.z - z) > RAIN.reach) reseed(f, x, y - 2, z);
-      // A little square, turned over about two axes as it goes.
-      const a = t * kind.turn + f.p, b = t * kind.turn * 0.7 + f.p * 2;
-      const s = kind.size * (0.7 + (f.p % 1) * 0.6);
-      const ux = Math.cos(a) * s, uy = Math.sin(a) * Math.sin(b) * s, uz = Math.sin(a) * Math.cos(b) * s;
-      const wx = -Math.sin(b) * s * 0.3, wy = Math.cos(b) * s, wz = Math.sin(b) * s * 0.7;
-      const k = i * 18;
-      const put = (o, px, py, pz) => { positions[k + o] = px; positions[k + o + 1] = py; positions[k + o + 2] = pz; };
-      put(0, f.x - ux - wx, f.y - uy - wy, f.z - uz - wz);
-      put(3, f.x + ux - wx, f.y + uy - wy, f.z + uz - wz);
-      put(6, f.x + ux + wx, f.y + uy + wy, f.z + uz + wz);
-      put(9, f.x - ux - wx, f.y - uy - wy, f.z - uz - wz);
-      put(12, f.x + ux + wx, f.y + uy + wy, f.z + uz + wz);
-      put(15, f.x - ux + wx, f.y - uy + wy, f.z - uz + wz);
-    }
-    flakes.attribute.needsUpdate = true;
-  }
-
   return {
-    setVenue(v) {
-      venue = v;
-      for (const b of bits) group.remove(b.mesh);
-      bits.length = 0;
-      for (const r of rings) group.remove(r.mesh);
-      rings.length = 0;
-      for (const sp of splashes) group.remove(sp.mesh);
-      splashes.length = 0;
-      const w = WEATHER[v.look?.weather];
-      rain.on = Boolean(w?.streaks);
-      rain.kind = w?.streaks ? w : null;
-      rain.lines.visible = rain.on;
-      rain.seeded = false;
-      if (rain.kind) { rain.material.color.set(rain.kind.color); rain.material.opacity = rain.kind.opacity; }
-      flakes.on = Boolean(w?.flakes);
-      flakes.kind = w?.flakes ? w : null;
-      flakes.mesh.visible = flakes.on;
-      flakes.seeded = false;
-      if (flakes.kind) {
-        flakes.n = flakes.kind.flakes;
-        flakes.material.color.set(flakes.kind.color);
-        flakes.material.opacity = flakes.kind.opacity;
-        // Nothing drawn past the flakes this weather has.
-        flakes.positions.fill(0);
-        flakes.mesh.geometry.setDrawRange?.(0, flakes.n * 6);
-      }
+    /** A new venue: nothing left flying, the bits landing on its floor, and its weather (`mood.weather`). */
+    setVenue(venue, mood) {
+      effects.clear();
+      effects.setGround(venue);
+      effects.setWeather(mood?.weather ?? null);
     },
 
-    /**
-     * The rain, once a frame, round (x, y, z) — Metroll — falling past it to
-     * the floor and splashing there, or on down into the dark.
-     */
-    weather(dt, x, y, z) {
-      if (flakes.on) drift(dt, x, y, z);
-      if (!rain.on) return;
-      const { drops, positions } = rain;
-      const { velocity: [vx, vy, vz], length, splash } = rain.kind;
-      const speed = Math.hypot(vx, vy, vz);
-      const [lx, ly, lz] = [-vx / speed * length, -vy / speed * length, -vz / speed * length];
-      if (!rain.seeded) {
-        for (const d of drops) reseed(d, x, y - 2, z);
-        rain.seeded = true;
-      }
-      for (let i = 0; i < drops.length; i++) {
-        const d = drops[i];
-        d.y += vy * dt;
-        d.x += vx * dt;
-        d.z += vz * dt;
-        const ground = venue?.heightAt(d.x, d.z);
-        const floor = ground ?? y - 8;
-        if (d.y < floor) {
-          if (splash && ground != null && splashes.length < 40 && Math.abs(d.x - x) < 7 && Math.abs(d.z - z) < 7 && Math.random() < 0.25) {
-            const mesh = new GFX.Mesh(splashGeometry, splashMat);
-            mesh.rotation.x = -Math.PI / 2;
-            mesh.position.set(d.x, ground + 0.02, d.z);
-            mesh.scale.setScalar(0.02);
-            group.add(mesh);
-            splashes.push({ mesh, age: 0 });
-          }
-          reseed(d, x, y - 2, z, 1);
-        }
-        // Too far behind as Metroll goes on: round in front of it again.
-        if (Math.abs(d.x - x) > RAIN.reach || Math.abs(d.z - z) > RAIN.reach) reseed(d, x, y - 2, z);
-        const k = i * 6;
-        positions[k] = d.x; positions[k + 1] = d.y; positions[k + 2] = d.z;
-        positions[k + 3] = d.x + lx; positions[k + 4] = d.y + ly; positions[k + 5] = d.z + lz;
-      }
-      rain.attribute.needsUpdate = true;
-      for (let i = splashes.length - 1; i >= 0; i--) {
-        const sp = splashes[i];
-        sp.age += dt;
-        if (sp.age > 0.35) { group.remove(sp.mesh); splashes.splice(i, 1); continue; }
-        sp.mesh.scale.setScalar(0.04 + sp.age * 0.6);
-      }
+    /** The weather, once a frame, round (x, y, z): Rock. */
+    weather: effects.weather,
+
+    /** A ring on the floor that goes out and fades. */
+    ring(x, y, z, colour = '#ffffff', reach = 2) {
+      effects.ring(x, y, z, { colour, reach });
     },
 
     /** Somebody smashed: a cloud, a spray of stars and paper, and a ring going out. */
@@ -246,16 +73,6 @@ export function createEffects(GFX, scene) {
       }
       this.confetti(x, y + 0.2, z, crit ? 36 : 18);
       this.ring(x, y, z, crit ? '#ffd23a' : '#ffffff', crit ? 3 : 2);
-    },
-
-    /** A ring on the floor that goes out and fades. */
-    ring(x, y, z, colour = '#ffffff', reach = 2) {
-      const mesh = new GFX.Mesh(new GFX.TorusGeometry(1, 0.035, 6, 44), ringMaterial(colour));
-      mesh.rotation.x = -Math.PI / 2;
-      mesh.position.set(x, (venue?.heightAt(x, z) ?? y) + 0.05, z);
-      mesh.frustumCulled = false;
-      group.add(mesh);
-      rings.push({ mesh, age: 0, life: 0.5, reach });
     },
 
     /** Picks, flung up: what a pile or a record of them gives. */
@@ -337,43 +154,6 @@ export function createEffects(GFX, scene) {
       }
     },
 
-    update(dt) {
-      for (let i = rings.length - 1; i >= 0; i--) {
-        const r = rings[i];
-        r.age += dt;
-        const u = r.age / r.life;
-        if (u >= 1) { group.remove(r.mesh); rings.splice(i, 1); continue; }
-        r.mesh.scale.setScalar(0.2 + r.reach * (1 - (1 - u) ** 2));
-        r.mesh.material.opacity = 0.9 * (1 - u);
-      }
-      for (let i = bits.length - 1; i >= 0; i--) {
-        const b = bits[i];
-        b.age += dt;
-        if (b.age >= b.life) {
-          group.remove(b.mesh);
-          bits.splice(i, 1);
-          continue;
-        }
-        const m = b.mesh;
-        b.vy -= GRAVITY * b.floaty * dt;
-        const k = Math.max(0, 1 - b.drag * dt);
-        b.vx *= k; b.vy *= b.drag ? Math.max(0, 1 - b.drag * 0.5 * dt) : 1; b.vz *= k;
-        m.position.x += b.vx * dt;
-        m.position.y += b.vy * dt;
-        m.position.z += b.vz * dt;
-        const ground = venue?.heightAt(m.position.x, m.position.z);
-        if (ground != null && b.bounce > 0 && m.position.y < ground + 0.03 && m.position.y > ground - 0.4 && b.vy < 0) {
-          m.position.y = ground + 0.03;
-          b.vy *= -b.bounce;
-          b.vx *= 0.55; b.vz *= 0.55;
-          b.spin = b.spin.map((s) => s * 0.5);
-        }
-        m.rotation.x += b.spin[0] * dt;
-        m.rotation.y += b.spin[1] * dt;
-        m.rotation.z += b.spin[2] * dt;
-        const fade = Math.min(1, (b.life - b.age) / 0.4);
-        m.scale.setScalar(b.scale * fade * (1 + b.grow * (b.age / b.life)));
-      }
-    },
+    update: effects.update,
   };
 }

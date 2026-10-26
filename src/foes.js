@@ -1,7 +1,7 @@
 import { CAST } from './models/cast/index.js';
 import { createRockMesh } from './rockboss.js';
 import { isBaked, ready } from './models/library.js';
-import { createModel } from './models/model.js';
+import { createModel } from 'madness-engine/models/model';
 
 /**
  * Who is in the way: the annoying people of fifty years of metal, the posers

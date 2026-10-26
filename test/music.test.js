@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { chordOf, createBand, LOOKAHEAD, THEMES } from '../src/music.js';
+import { chordOf, createBand, LOOKAHEAD, THEMES } from 'madness-engine/music/band';
 
 /**
  * An AudioContext that plays nothing: every node takes connections and
