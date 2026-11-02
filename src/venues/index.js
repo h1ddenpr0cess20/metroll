@@ -19,5 +19,6 @@ import { woodstock } from './woodstock.js';
 export const VENUES = [birmingham, strip, bay, whitby, nyc, tampa, norway, nola, berlin, woodstock, warped, wacken];
 
 export function loadVenue(index) {
-  return VENUES[index]();
+  // The rig's lights on posts stood where nothing walks or rolls into them.
+  return VENUES[index]().settleRig();
 }
