@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import * as GFX from 'madness-engine/gfx';
-import { createBumperMesh, createDropMesh, createLiftMesh, createPyroMesh } from '../src/machinery.js';
-import { BUMPERS, BURSTS, DROPS, RIDES } from '../src/travel/index.js';
+import { createBumperMesh, createDropMesh, createLiftMesh, createPyroMesh } from 'madness-engine/scenery/gear/machinery';
+import { BUMPERS, BURSTS, DROPS, RIDES } from 'madness-engine/scenery/gear/travel';
 import { createGig } from '../src/gig.js';
 import { VENUES } from '../src/venues/index.js';
 
@@ -66,7 +66,8 @@ test('every bumper is built, and flashes when it throws Metroll', () => {
     assert.ok(made.group.children.length > 0, `${look} has parts`);
     for (const since of [-1, 0, 0.1, 1]) assert.doesNotThrow(() => made.update(since), `${look} flashes`);
     const box = SIZE(made.group);
-    assert.ok(box.max.y > 0.3 && box.max.y < 1.6, `${look} stands ${box.max.y.toFixed(2)} tall`);
+    // Squat, all but the world tour's Venetian mooring pole, which stands up out of the canal.
+    assert.ok(box.max.y > 0.3 && box.max.y < (look === 'pole' ? 2.2 : 1.6), `${look} stands ${box.max.y.toFixed(2)} tall`);
     assert.ok(box.max.x - box.min.x < 1.6, `${look} is ${(box.max.x - box.min.x).toFixed(2)} wide`);
   }
 });
