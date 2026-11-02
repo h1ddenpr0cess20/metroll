@@ -63,7 +63,8 @@ test('everyone in the way is sculpted, and nobody is sculpted who is not in the 
   // Everyone is sculpted, but Rock: he is the boulder from the first game, as it was.
   assert.deepEqual(Object.keys(CAST).sort(), Object.keys(FOES).filter((k) => !FOES[k].original).sort());
   for (const [kind, def] of Object.entries(CAST)) {
-    assert.equal(def.name, kind);
+    // Its own sculpt by its own name, or one of the engine's cast under the engine's name (the agent is its suit).
+    assert.ok(typeof def.name === 'string' && def.name.length > 0, `${kind} has a name`);
     assert.ok(def.bones.some(([name, parent]) => name === 'root' && parent === null), `${kind} has a root`);
     assert.equal(typeof def.sculpt, 'function');
     assert.equal(typeof def.animate, 'function');

@@ -1,8 +1,8 @@
-import { createRock } from 'madness-engine/heroes/boulder';
+import { createBoulder } from 'madness-engine/heroes/rock';
 
 /**
  * Rock, the final boss at Wacken. Not sculpted, not re-drawn, not dressed:
- * the boulder from the first game (the engine's `heroes/boulder`, untouched),
+ * the boulder from the first game (the engine's `createBoulder`, untouched),
  * at the size the boss is, rolling when it goes, hopping when somebody is in
  * reach and tipping over when it is beaten. It stands on (0, 0, 0), as every
  * foe does, with its middle one radius up, which is where the games always
@@ -16,7 +16,7 @@ const SOURCE_RADIUS = 0.95;
 const ROLL = 2.4;
 
 export function createRockMesh(GFX, radius) {
-  const asset = createRock(GFX);
+  const asset = createBoulder(GFX);
   const group = new GFX.Group();
   group.name = 'rock';
   const body = new GFX.Group();
