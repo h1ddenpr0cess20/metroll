@@ -375,3 +375,24 @@ kbd {
  * haze of sand over everything in a sandstorm): that is the track's mood,
  * and the engine's film puts it on the picture (`stage.js`).
  */
+
+/* The loading screen: while the models bake in the background (loading.js). */
+#loading {
+  position: fixed; inset: 0; z-index: 40; display: grid; place-items: center;
+  padding: 24px 16px; background: var(--ink); pointer-events: auto;
+}
+.loading-card { width: min(360px, 100%); text-align: center; }
+.loading-title {
+  margin: 0 0 22px; font-family: var(--display); font-weight: 400; font-size: clamp(30px, 7vw, 44px);
+  line-height: 1; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text);
+}
+.loading-bar { height: 8px; background: var(--ink-2); border: 1px solid var(--line); overflow: hidden; }
+.loading-bar i {
+  display: block; height: 100%; background: var(--sun); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.25s ease-out;
+}
+.loading-count {
+  margin: 12px 0 0; font-weight: 600; font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--dim); font-variant-numeric: tabular-nums;
+}
+@media (prefers-reduced-motion: reduce) { .loading-bar i { transition: none; } }
