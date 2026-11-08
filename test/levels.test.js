@@ -26,7 +26,7 @@ for (let i = 0; i < VENUES.length; i++) {
   test(`track ${i + 1}, ${loadVenue(i).name}, can be played start to finish with all three demo tapes`, () => {
     const result = drive(i);
     assert.ok(result.finished, `stuck: ${JSON.stringify(result.stuck)}`);
-    assert.equal(result.gig.stats.demos, 3);
-    assert.ok(result.gig.troll.hp > 0);
+    assert.equal(result.gig.stats.tokens, 3);
+    assert.ok(result.gig.hero.hp > 0);
   });
 }

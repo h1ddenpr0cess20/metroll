@@ -1,6 +1,6 @@
-import { digger } from '../dig.js';
+import { digger } from 'madness-engine/venue/dig';
 import { Venue } from '../venue.js';
-import { across, backTile, barred, branch, flat, loop, toBack, wallTile } from './helpers.js';
+import { across, backTile, barred, branch, flat, loop, toBack, wallTile } from 'madness-engine/venue/helpers';
 
 /**
  * Track 1: Birmingham, 1970. Heavy metal is invented here, in the rain, by

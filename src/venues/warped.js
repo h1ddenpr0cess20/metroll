@@ -1,6 +1,6 @@
-import { digger } from '../dig.js';
+import { digger } from 'madness-engine/venue/dig';
 import { Venue } from '../venue.js';
-import { across, backTile, barred, branch, flat, frontHeading, loop, wallTile, wash } from './helpers.js';
+import { across, backTile, barred, branch, flat, frontHeading, loop, wallTile, wash } from 'madness-engine/venue/helpers';
 
 /**
  * Track 11: Warped Tour, 2005. Screamo: a car park in July, as full of vans
