@@ -1,6 +1,6 @@
-import { digger } from '../dig.js';
+import { digger } from 'madness-engine/venue/dig';
 import { Venue } from '../venue.js';
-import { across, backTile, barred, branch, flat, frontHeading, loop, toBack, wallTile, wash } from './helpers.js';
+import { across, backTile, barred, branch, flat, frontHeading, loop, toBack, wallTile, wash } from 'madness-engine/venue/helpers';
 
 /**
  * Track 3: the Bay Area, 1986. Thrash: everything is faster, and then it

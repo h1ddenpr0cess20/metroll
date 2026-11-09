@@ -19,7 +19,7 @@ test('every track can be played through to the stage door in one piece, with all
     const demos = r.gig.actors.pickups.filter((p) => p.kind === 'demo');
     assert.equal(demos.length, DEMOS, `${name} hides ${DEMOS} demo tapes`);
     assert.ok(demos.every((p) => p.taken), `${name}: every snow globe can be got`);
-    assert.ok(r.gig.troll.hp > 0, `${name}: Metroll got there whole`);
+    assert.ok(r.gig.hero.hp > 0, `${name}: Metroll got there whole`);
   }
 });
 

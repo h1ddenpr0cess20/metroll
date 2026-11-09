@@ -1,6 +1,6 @@
-import { digger } from '../dig.js';
+import { digger } from 'madness-engine/venue/dig';
 import { Venue } from '../venue.js';
-import { across, backTile, barred, branch, flat, loop, wallTile, wash } from './helpers.js';
+import { across, backTile, barred, branch, flat, loop, wallTile, wash } from 'madness-engine/venue/helpers';
 
 /**
  * Track 7: Norway, 1993. Black metal: a car park outside a very old wooden
