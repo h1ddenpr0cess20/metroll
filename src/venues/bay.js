@@ -44,14 +44,14 @@ export function bay() {
   g.start = { x: 5, z: 9 };
   const d = digger(g, { x: 9, z: 7, h: 40, heading: '+x' });
 
-  // The street: moshers on the corner, a skater or two, a tape trader with a shoebox, tyres to bounce off, a boombox on a crate.
+  // The street: moshers on the corner, a skater or two, a tape trader with a shoebox, tires to bounce off, a boombox on a crate.
   const street = d.hall(15, { width: 5, wall: 'brick', floor: 'asphalt' });
   for (const a of [1, 2, 3]) g.pick(...street.tile(a, 0), 5);
   g.pick(...street.tile(8, 1), 5).pick(...street.tile(12, -1), 10);
   g.foe('mosher', ...street.tile(5, 1), { range: 4 }).foe('skater', ...street.tile(9, 0), { range: 6 });
   g.foe('tapetrader', ...street.tile(12, 1), { range: 4 });
-  g.bumper(...street.tile(6, -1), { radius: 0.4, look: 'tyres' });
-  g.bumper(...street.tile(11, 1), { radius: 0.4, look: 'tyres' });
+  g.bumper(...street.tile(6, -1), { radius: 0.4, look: 'tires' });
+  g.bumper(...street.tile(11, 1), { radius: 0.4, look: 'tires' });
   g.pillar(...backTile(street, 9), 0.6, { prop: 'boombox' });
   lamppost(street, 3);
   sign(street, 7, 'ALL AGES', FOG[0], 0.5, 1.7);
@@ -70,7 +70,7 @@ export function bay() {
   g.bowl(...park.rect(3, 11, -3, 7), d.h, 0.9, { tex: 'concrete' });
   g.foe('skater', ...park.tile(7, -1), { range: 4 }).foe('skater', ...park.tile(10, 2), { range: 4 }).foe('mosher', ...park.tile(14, -3), { range: 4 });
   g.pick(...park.tile(2, 0), 10).pick(...park.tile(6, 0), 5).pick(...park.tile(9, 0), 5).pick(...park.tile(12, 1), 10).pick(...park.tile(15, 5), 5);
-  g.bumper(...park.tile(4, 5), { radius: 0.4, look: 'tyres' });
+  g.bumper(...park.tile(4, 5), { radius: 0.4, look: 'tires' });
   g.pillar(...backTile(park, 13), 0.6, { prop: 'boombox' });
   lamppost(park, 4);
   sign(park, 8, 'NO SKATING', FOG[3], 0.5, 1.7);

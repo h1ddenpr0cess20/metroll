@@ -63,7 +63,7 @@ export function woodstock() {
   g.foe('nuguy', ...midway.tile(16, -2), { range: 5 });
   g.pick(...midway.tile(14, 0), 10).pick(...midway.tile(17, 1), 5).pick(...midway.tile(21, 0), 10);
   g.bumper(...midway.tile(10, 3), { radius: 0.4, look: 'firebarrel' });
-  g.bumper(...midway.tile(15, -3), { radius: 0.4, look: 'tyres' });
+  g.bumper(...midway.tile(15, -3), { radius: 0.4, look: 'tires' });
   g.whetstone(...midway.tile(23, 2));
   lamppost(midway, 3);
   sign(midway, 16, 'WATER $4', HEAT[0], 0.5, 1.7);
@@ -92,7 +92,7 @@ export function woodstock() {
   g.foe('mosher', ...pit.tile(5, -2), { range: 5 }).foe('mosher', ...pit.tile(10, 3), { range: 5 }).foe('nuguy', ...pit.tile(14, -2), { range: 5 });
   g.foe('diver', ...pit.tile(9, 0), { path: loop(pit, 2, 3, 18) });
   g.pick(...pit.tile(2, 0), 5).pick(...pit.tile(7, 0), 10).pick(...pit.tile(12, 0), 10).pick(...pit.tile(17, 3), 10).pick(...pit.tile(17, -3), 5);
-  g.bumper(...pit.tile(8, -4), { radius: 0.4, look: 'tyres' });
+  g.bumper(...pit.tile(8, -4), { radius: 0.4, look: 'tires' });
   g.bumper(...pit.tile(15, 4), { radius: 0.4, look: 'firebarrel' });
   g.lighter(...pit.tile(2, 5));
   lamppost(pit, 3);

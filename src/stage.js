@@ -5,9 +5,9 @@
  * isometric corner and can be turned, tilted and zoomed round Metroll
  * (`views/arcade`).
  *
- * The lighting is for a night out: a dim wash that takes its colour from
+ * The lighting is for a night out: a dim wash that takes its color from
  * the track; a weak key light from high up for the shadows; a lantern over
- * Metroll; and the real, coloured, flashing lights of the rig's fixtures
+ * Metroll; and the real, colored, flashing lights of the rig's fixtures
  * nearest it (`lightshow` drives those; they are lights the stage owns, a
  * fixed number, so no shader ever has to change). Every other fixture is
  * baked into the floor (`venue.js`). Each track's light, its sky and what

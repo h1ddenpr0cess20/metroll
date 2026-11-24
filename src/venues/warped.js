@@ -40,10 +40,10 @@ export function warped() {
   const lamppost = (p, along) => g.light('streetlamp', ...wallTile(p, along), { height: 2.4 });
   const LOT = { floor: 'asphalt', wall: 'flats' };
 
-  // The back of the car park, where the buses are: a band's van with its doors open, a stack of tyres, a bin on fire for no reason.
+  // The back of the car park, where the buses are: a band's van with its doors open, a stack of tires, a bin on fire for no reason.
   g.room(2, 14, 9, 9, 36, { lamps: 2, floor: 'asphalt', wall: 'corrugated' });
   g.block(3, 15, 3, 2, 0.9, { prop: 'van' });
-  g.bumper(8, 16, { radius: 0.4, look: 'tyres' });
+  g.bumper(8, 16, { radius: 0.4, look: 'tires' });
   g.bumper(5, 21, { radius: 0.4, look: 'firebarrel' });
   g.start = { x: 6, z: 19 };
   const d = digger(g, { x: 11, z: 18, h: 36, heading: '+x' });

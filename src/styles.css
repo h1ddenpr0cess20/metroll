@@ -75,7 +75,7 @@ html, body {
 .label {
   font-family: var(--body); font-weight: 600; font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--dim);
 }
-/* A sign lit up at night: the paper's cream, glowing the colour it is given. */
+/* A sign lit up at night: the paper's cream, glowing the color it is given. */
 .neon {
   color: var(--paper);
   text-shadow: 0 0 2px #fff, 0 0 10px var(--glow, var(--sun)), 0 0 26px var(--glow, var(--sun)), 0 3px 0 rgba(0, 0, 0, 0.5);
@@ -250,7 +250,7 @@ kbd {
 @media (pointer: coarse) { .help .keys { display: none; } .help .touch { display: block; } }
 .best { margin-top: 6px; color: var(--sun-hi); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; font-size: 14px; }
 
-/* The tracklist: a flyer for every track, its poster colour down the edge, the track's number a stamp. */
+/* The tracklist: a flyer for every track, its poster color down the edge, the track's number a stamp. */
 .tour { align-content: start; overflow: auto; padding-top: calc(28px + var(--safe-t)); }
 .tour h2 { margin: 0 0 4px; font-family: var(--poster); font-weight: 400; font-size: clamp(34px, 6vw, 64px); text-transform: uppercase; letter-spacing: 0.04em; }
 .tour .sub { color: var(--dim); letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600; font-size: 13px; margin-bottom: 18px; }

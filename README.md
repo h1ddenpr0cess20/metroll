@@ -115,7 +115,7 @@ music.
 | 1 | **Birmingham, 1970** · Heavy metal | In the rain. Down a wet street of terraces, a steelworks with the anvils coming down and the furnaces going off on the beat, a canal and its narrowboat, a works gate that wants a pass, a pub with a folkie in the corner, and a stage in the back. Nobody has invented the genre yet. Somebody has to roll over it. Slow, heavy, a tritone on the riff. |
 | 2 | **The Sunset Strip, 1986** · Hair metal | Pink limousines, hot tubs and motorbikes, a lot of hairspray (and the cans come down on the beat), a velvet rope, and the club, where it is all fireworks. A major-key anthem, a big gated snare, a flashy lead. |
 | 3 | **The Bay Area, 1986** · Thrash | A van, a car park, a skate park, a pit with the crowd surging from one side to the other on conveyors, and kick drums off the ceiling. Faster. Faster. Flat out. |
-| 4 | **Whitby, 1988** · Goth | An abbey on the cliff, a churchyard in the fog, the coffins on chains in the crypt stairs, the hearse across the harbour, a pavilion that wants a pass, and **the Count**, who has been waiting a long time for somebody to come down the stairs. A clean guitar going round, strings, a theremin. |
+| 4 | **Whitby, 1988** · Goth | An abbey on the cliff, a churchyard in the fog, the coffins on chains in the crypt stairs, the hearse across the harbor, a pavilion that wants a pass, and **the Count**, who has been waiting a long time for somebody to come down the stairs. A clean guitar going round, strings, a theremin. |
 | 5 | **New York, 1989** · Hardcore | A Sunday matinee in a basement, the whole show over in half an hour. Off the stoop and along the avenue with the steam coming up and the dumpsters coming down, a subway car across the tracks, a door with a policy, and a cellar full of kids with X's on their hands. A d-beat. Short. No encores. |
 | 6 | **Tampa, 1991** · Death metal | A car park behind a strip mall, a boardwalk over the swamp with the gators under it and the green gas coming up, a churchyard with the headstones on chains, an airboat across the bayou, a morgue with a steel door, and a recording studio where somebody is doing the vocals through a bucket. Blast beats, the lowest guitars there are. |
 | 7 | **Norway, 1993** · Black metal | A car park outside a very old wooden church (it is fine; do not ask), a forest road in the snow, black ice, a mountain pass with snowballs coming down on the beat, a longship over the fjord, a toll booth with **a troll** in it who does not take cards, and a hall where nobody is smiling. Tremolo-picked, high and cold. |
@@ -139,7 +139,7 @@ music.
 Each track is graded in its own light (`look.grade`): steel for Birmingham,
 neon for the Strip, faded denim for the Bay, violet mist in Whitby, bare
 bulbs in a basement, green dark in Tampa, the cold of Norway, the haze of the
-bayou, the grey of a factory, the dust of Woodstock, a sunset over a car park,
+bayou, the gray of a factory, the dust of Woodstock, a sunset over a car park,
 and a storm over Wacken. Its sky is painted behind it, with a horizon (`look.horizon`)
 of a steel town, the Strip, the Bay, an abbey, Manhattan, a swamp, a fjord,
 a bayou, a power plant, an air base, a fairground or a festival, and the weather falls

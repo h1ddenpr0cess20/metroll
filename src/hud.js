@@ -13,7 +13,7 @@ import { VENUES } from './venues/index.js';
 
 const SEGMENTS = 24;
 
-/** The tracks' names, places and poster colours, read once. */
+/** The tracks' names, places and poster colors, read once. */
 const INFO = VENUES.map((make) => {
   const v = make();
   return { name: v.name, act: v.act, intro: v.intro, place: `${v.look.year ?? ''} · ${v.look.genre ?? ''}`, tint: v.look.poster ?? v.palette.walls?.[0] ?? '#2a1a3a', grade: v.look.grade ?? '' };
