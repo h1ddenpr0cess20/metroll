@@ -183,7 +183,7 @@ const FESTIVAL = Object.freeze({
   smash: ['True metal? Prove it. By getting rolled.', 'Mud. Beer. Helmets with horns. Authentic.', 'Wall of Death? Walls lose.', 'Your vest has four hundred patches. Not one of them is yours.'],
   crit: ['Not very true. Very flat.'],
   bonk: ['A guy in a viking helmet. Fair enough.'],
-  tap: ['Bounced off a guy in armour. Bold of me.'],
+  tap: ['Bounced off a guy in armor. Bold of me.'],
   fell: ['Down. In a field. In the mud. Of course.'],
   demo: ['Demo tape. Last of the lot. I can\'t hear it. It\'s a festival.'],
   ready: ['Wacken. Everyone is here. Every genre. Every opinion. Let\'s ruin the day.', 'The last track. I\'m going to pretend this means something.'],

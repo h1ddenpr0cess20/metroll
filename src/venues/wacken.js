@@ -84,7 +84,7 @@ export function wacken() {
   d.turn('+z', MUD);
   d.hall(3, MUD);
 
-  // The mud: knee deep, sticky as anything, a lot of knights going down in it in their armour; the purist at the edge, watching, unmoved, and entirely dry.
+  // The mud: knee deep, sticky as anything, a lot of knights going down in it in their armor; the purist at the edge, watching, unmoved, and entirely dry.
   const swamp = d.room(20, 15, { floor: 'mud', wall: 'plywood' });
   g.sticky(...swamp.rect(4, 4, swamp.lo + 2, 3));
   g.sticky(...swamp.rect(11, 4, swamp.lo + 8, 3));
@@ -129,11 +129,11 @@ export function wacken() {
   g.whetstone(...village.tile(2, -5)).whetstone(...village.tile(2, 5));
   wash(g, village, [FEST[0], FEST[1]], { cans: 3, program: 'pulse', every: 1 });
   sign(village, 12, 'HERE BE METAL', FEST[0], 0.45, 1.9);
-  // The armoury, off the front of the village, behind a timber screen: the last demo tape.
-  const armoury = branch(d, village, 12, 'front', 9);
-  const screen = armoury.hall(7, { width: 3, wall: 'timber' });
+  // The armory, off the front of the village, behind a timber screen: the last demo tape.
+  const armory = branch(d, village, 12, 'front', 9);
+  const screen = armory.hall(7, { width: 3, wall: 'timber' });
   flat(g, screen, 6, { look: 'wood', breakAt: 6.5 });
-  const store = armoury.room(5, 5, { wall: 'timber', floor: 'planks' });
+  const store = armory.room(5, 5, { wall: 'timber', floor: 'planks' });
   g.demo(...store.tile(3, 0));
   g.vinyl(...store.tile(1, 1), 70);
   // The artist gate: a barrier arm, a guard, and a sign that says what the guard has been saying all day.

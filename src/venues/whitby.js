@@ -5,7 +5,7 @@ import { across, backTile, barred, branch, flat, loop, toBack, wallTile, wash } 
 /**
  * Track 4: Whitby, 1988. Goth: a clifftop abbey in ruins, a churchyard full
  * of the dead and of people dressed for it, a hundred and ninety-nine steps
- * down, a harbour, and a pavilion at the bottom with a band in it. It is
+ * down, a harbor, and a pavilion at the bottom with a band in it. It is
  * foggy. It is always foggy. Bats go over; a black cat goes across; the
  * coffins in the crypt stairs are hung on chains and come down on the beat,
  * to a clean guitar and a theremin. The way into the pavilion is a gate that
@@ -123,7 +123,7 @@ export function whitby() {
   d.stairs(8, 4, { ...STONE, width: 3 });
   d.turn('+z', STONE);
 
-  // The harbour: the water black under the lamps, the hearse that goes across the gap at the pace of one, the bats over it.
+  // The harbor: the water black under the lamps, the hearse that goes across the gap at the pace of one, the bats over it.
   const quay = d.hall(7, { width: 3, floor: 'cobble', wall: 'stone' });
   g.foe('dracfan', ...quay.tile(3, 0), { range: 3 });
   g.pick(...quay.tile(1, 0), 5).pick(...quay.tile(5, 1), 10);
